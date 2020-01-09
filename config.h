@@ -1,22 +1,5 @@
 /* See LICENSE file for copyright and license details. */
 
-/************************************************************************************************************/
-/* For sound */
-#include <X11/XF86keysym.h>
-
-/* commands */
-static const char *upvol[] = { "amixer", "set", "Master", "5+", NULL };
-static const char *downvol[] = { "amixer", "set", "Master", "5-", NULL };
-
-/* for muting/unmuting */
-static const char *mute[] = { "amixer", "-q", "set", "Master", "toggle", NULL };
-
-/* for pulse compatible */
-/* static const char *upvol[] = { "amixer", "-q", "sset", "Master", "1%+", NULL }; */
-/* static const char *downvol[] = { "amixer", "-q", "sset", "Master", "1%-", NULL }; */
-/* static const char *mute[] = { "amixer", "-q", "-D", "pulse", "sset", "Master", "toggle", NULL }; */
-/*************************************************************************************************************/
-
 /* appearance */
 static const unsigned int borderpx           = 1;        /* border pixel of windows */
 static const unsigned int snap               = 32;       /* snap pixel */
@@ -43,9 +26,24 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	/*{ "Gimp",     NULL,       NULL,       0,            1,           -1 },*/
-	{ "Firefox",  NULL,       NULL,       0 << 1,       0,           -1 },
+	/* class                        instance                        title       tags mask       isfloating   monitor */
+        /* Configuring floating windows */
+        { "Caja",                       "caja",                         NULL,           0,            1,           -1 },
+        { "Engrampa",                   "engrampa",                     NULL,           0,            1,           -1 },
+        { "Leafpad",                    "leafpad",                      NULL,           0,            1,           -1 },
+        { "Pavucontrol",                "pavucontrol",                  NULL,           0,            1,           -1 },
+        { "GParted",                    "gpartedbin",                   NULL,           0,            1,           -1 },
+        { "Lxappearance",               "lxappearance",                 NULL,           0,            1,           -1 },
+        /* Other programs without floating setting */
+	{ "Firefox",                    NULL,                           NULL,           1,            0,           -1 },
+        { "vlc",                        "vlc",                          NULL,           1 << 1,       0,           -1 },
+        { "KeePassXC",                  "keepassxc",                    NULL,           1 << 2,       0,           -1 },
+        { "qBittorrent",                "qbittorrent",                  NULL,           1 << 3,       0,           -1 },
+        { "libreoffice-startcenter",    "libreoffice",                  NULL,           1 << 5,       0,           -1 },
+        { "DB Browser for SQLite",      "sqlitebrowser",                NULL,           1 << 6,       0,           -1 },
+        { "TelegramDesktop",            "Telegram",                     NULL,           1 << 7,       0,           -1 },
+        { "SimpleScreenRecorder",       "simplescreenrecorder",         NULL,           1 << 8,       0,           -1 },
+        { "Atril",                      "atril",                        NULL,           1 << 8,       0,           -1 },
 };
 
 /* layout(s) */
@@ -89,12 +87,26 @@ static const char *qbittorrent[]                = { "qbittorrent", NULL };
 static const char *spotify[]                    = { "spotify", NULL };
 static const char *libreoffice[]                = { "libreoffice", NULL };
 static const char *sqlitebrowser[]              = { "sqlitebrowser", NULL };
-static const char *telegram[]                   = { "Telegram", NULL };
-/* static const char *engrampa[]                   = { "engrampa", NULL }; */
+static const char *telegram[]                   = { "/opt/Telegram/Telegram", NULL };
 static const char *caja[]                       = { "caja", NULL };
 static const char *wireshark[]                  = { "wireshark", NULL };
 static const char *simplescreenrecorder[]       = { "simplescreenrecorder", NULL };
 static const char *atril[]                      = { "atril", NULL };
+static const char *energy[]                     = { "xfce4-power-manager-settings", NULL };
+static const char *pavucontrol[]                = { "pavucontrol", NULL };
+
+/* For sound */
+#include <X11/XF86keysym.h>
+
+/* commands */
+/* static const char *upvol[] = { "amixer", "set", "Master", "2+", NULL }; */
+/* static const char *downvol[] = { "amixer", "set", "Master", "2-", NULL }; */
+/* static const char *mute[] = { "amixer", "-q", "set", "Master", "toggle", NULL }; /1* for muting/unmuting *1/ */
+
+/* for pulse compatible */
+static const char *upvol[] = { "amixer", "-q", "sset", "Master", "5%+", NULL };
+static const char *downvol[] = { "amixer", "-q", "sset", "Master", "5%-", NULL };
+static const char *mute[] = { "amixer", "-q", "-D", "pulse", "sset", "Master", "toggle", NULL }; /* for muting/unmuting */
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -142,24 +154,23 @@ static Key keys[] = {
         /* Key bindings for change the keyboard layout */
         { MODKEY|ShiftMask,             XK_x,       spawn,         {.v = k_latam } },
         { MODKEY|ShiftMask,             XK_z,       spawn,         {.v = k_us_intl } },
-        /* Key bindings for launch programs */
+        /* Key bindings for launch programs. Ordered alphabetically. (Mainly) */
+        { MODKEY|ShiftMask,             XK_a,       spawn,         {.v = atril } }, /* Atril */
+        { MODKEY|ShiftMask,             XK_c,       spawn,         {.v = caja } }, /* Caja */
+        { MODKEY,                       XK_e,       spawn,         {.v = energy } }, /* xfce-power-manager */
         { MODKEY|ShiftMask,             XK_f,       spawn,         {.v = firefox } }, /* Firefox */
-        { MODKEY|ShiftMask,             XK_v,       spawn,         {.v = vlc } }, /* VLC */
         { MODKEY|ShiftMask,             XK_k,       spawn,         {.v = keepassxc } }, /* KeePassXC */
-        { MODKEY|ControlMask,           XK_q,       spawn,         {.v = qbittorrent } }, /* qBittorrent - Meta + Control + Q
-                                                                                             by collision with exit command. */
-
-        { MODKEY|ShiftMask,             XK_s,       spawn,         {.v = spotify } }, /* Spotify */
         { MODKEY|ControlMask|ShiftMask, XK_l,       spawn,         {.v = libreoffice } }, /* LibreOffice */
+        { MODKEY|ShiftMask,             XK_p,       spawn,         {.v = pavucontrol } }, /* Pavucontrol */
         { MODKEY|ControlMask|ShiftMask, XK_q,       spawn,         {.v = sqlitebrowser } }, /* SQLiteBrowser - Meta + Control + Shift + Q
                                                                                              by collision with exit command and qbittorrent */
-
-        { MODKEY|ShiftMask,             XK_t,       spawn,         {.v = telegram } }, /* Telegram */
-        { MODKEY|ShiftMask,             XK_c,       spawn,         {.v = caja } }, /* Caja */
-        { MODKEY|ShiftMask,             XK_w,       spawn,         {.v = wireshark } }, /* Wireshark */
+        { MODKEY|ControlMask,           XK_q,       spawn,         {.v = qbittorrent } }, /* qBittorrent - Meta + Control + Q
+                                                                                             by collision with exit command. */
+        { MODKEY|ShiftMask,             XK_s,       spawn,         {.v = spotify } }, /* Spotify */
         { MODKEY|ControlMask|ShiftMask, XK_s,       spawn,         {.v = simplescreenrecorder } }, /* SimpleScreenRecorder */
-        { MODKEY|ShiftMask,             XK_a,       spawn,         {.v = atril } }, /* Atril */
-
+        { MODKEY|ShiftMask,             XK_t,       spawn,         {.v = telegram } }, /* Telegram */
+        { MODKEY|ShiftMask,             XK_v,       spawn,         {.v = vlc } }, /* VLC */
+        { MODKEY|ShiftMask,             XK_w,       spawn,         {.v = wireshark } }, /* Wireshark */
 };
 
 /* button definitions */
