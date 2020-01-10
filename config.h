@@ -69,6 +69,9 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
+/* Some keybindings. By example: XK_Print */
+#include <X11/keysymdef.h>
+
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 /* static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL }; */
@@ -94,6 +97,13 @@ static const char *simplescreenrecorder[]       = { "simplescreenrecorder", NULL
 static const char *atril[]                      = { "atril", NULL };
 static const char *energy[]                     = { "xfce4-power-manager-settings", NULL };
 static const char *pavucontrol[]                = { "pavucontrol", NULL };
+static const char *scrot[]                      = { "scrot", "BrookieShot_\%a-\%d\%b%y_%H.%M.\%S.png", NULL };
+static const char *syspoweradmin[]              = { "syspoweradmin", NULL };
+static const char *poweroff[]                   = { "syspoweradmin", "--poweroff", NULL };
+static const char *eclipse[]                    = { "/home/brookie/.eclipse/java-2019-12/eclipse/eclipse", NULL };
+static const char *torbrowser[]                 = { "/opt/tor-browser_es-ES/Browser/start-tor-browser",
+                                                "--detach || ([ ! -x /opt/tor-browser_es-ES/Browser/start-tor-browser ]",
+                                                "&& /opt/tor-browser_es-ES/start-tor-browser", "--detach)'", "dummy %k", NULL };
 
 /* For sound */
 #include <X11/XF86keysym.h>
@@ -158,6 +168,7 @@ static Key keys[] = {
         { MODKEY|ShiftMask,             XK_a,       spawn,         {.v = atril } }, /* Atril */
         { MODKEY|ShiftMask,             XK_c,       spawn,         {.v = caja } }, /* Caja */
         { MODKEY,                       XK_e,       spawn,         {.v = energy } }, /* xfce-power-manager */
+        { MODKEY|ShiftMask,             XK_e,       spawn,         {.v = eclipse } }, /* Eclipse IDE for Java Developers. */
         { MODKEY|ShiftMask,             XK_f,       spawn,         {.v = firefox } }, /* Firefox */
         { MODKEY|ShiftMask,             XK_k,       spawn,         {.v = keepassxc } }, /* KeePassXC */
         { MODKEY|ControlMask|ShiftMask, XK_l,       spawn,         {.v = libreoffice } }, /* LibreOffice */
@@ -167,8 +178,12 @@ static Key keys[] = {
         { MODKEY|ControlMask,           XK_q,       spawn,         {.v = qbittorrent } }, /* qBittorrent - Meta + Control + Q
                                                                                              by collision with exit command. */
         { MODKEY|ShiftMask,             XK_s,       spawn,         {.v = spotify } }, /* Spotify */
+        { 0,                            XK_Print,   spawn,         {.v = scrot } }, /* For screenshots */
+        { 0,                            XF86XK_PowerOff,spawn,     {.v = syspoweradmin } }, /* Power management */
+        { MODKEY|ControlMask|ShiftMask, XF86XK_PowerOff,spawn,     {.v = poweroff } }, /* Power management without ask */
         { MODKEY|ControlMask|ShiftMask, XK_s,       spawn,         {.v = simplescreenrecorder } }, /* SimpleScreenRecorder */
         { MODKEY|ShiftMask,             XK_t,       spawn,         {.v = telegram } }, /* Telegram */
+        { MODKEY|ControlMask,           XK_t,       spawn,         {.v = torbrowser } }, /* Tor Browser */
         { MODKEY|ShiftMask,             XK_v,       spawn,         {.v = vlc } }, /* VLC */
         { MODKEY|ShiftMask,             XK_w,       spawn,         {.v = wireshark } }, /* Wireshark */
 };
