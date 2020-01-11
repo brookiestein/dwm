@@ -7,6 +7,20 @@ dwm is an extremely fast, small, and dynamic window manager for X.
 ------------
 In order to build dwm you need the Xlib header files.
 
+Optionally you need:
+
+```setxkbmap```
+
+[syspoweradmin](https://github.com/brookiestein/syspoweradmin/)
+
+```scrot```
+
+[slock](https://github.com/brookiestein/slock/)
+
+Note that there are a number of keyboard shortcuts that you may not need.
+
+In that case, tell them or delete them directly.
+
 
 **Installation**
 ------------
