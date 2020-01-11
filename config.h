@@ -51,11 +51,14 @@ static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] 
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 
+#include "gaplessgrid.c"
+
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+        { "###",      gaplessgrid },
 };
 
 /* key definitions */
@@ -100,6 +103,12 @@ static const char *pavucontrol[]                = { "pavucontrol", NULL };
 static const char *scrot[]                      = { "scrot", "BrookieShot_\%a-\%d\%b%y_%H.%M.\%S.png", NULL };
 static const char *syspoweradmin[]              = { "syspoweradmin", NULL };
 static const char *poweroff[]                   = { "syspoweradmin", "--poweroff", NULL };
+static const char *suspend[]                    = { "syspoweradmin" "--suspend", NULL };
+static const char *disable_tpad[]               = { "xinput", "disable", "12", NULL }; /* Use xinput for know the id of your touchpad */
+static const char *enable_tpad[]                = { "xinput", "enable", "12", NULL }; /* The same */
+static const char *reboot[]                     = { "syspoweradmin", "--reboot", NULL };
+/* static const char *inc_brightness[]             = { "xbacklight", "-inc", "10", NULL }; */
+/* static const char *dec_brightness[]             = { "xbacklight", "-dec", "10", NULL }; */
 static const char *eclipse[]                    = { "/home/brookie/.eclipse/java-2019-12/eclipse/eclipse", NULL };
 static const char *torbrowser[]                 = { "/opt/tor-browser_es-ES/Browser/start-tor-browser",
                                                 "--detach || ([ ! -x /opt/tor-browser_es-ES/Browser/start-tor-browser ]",
@@ -135,6 +144,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_g,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -161,6 +171,12 @@ static Key keys[] = {
         { 0,              XF86XK_AudioRaiseVolume, spawn,          {.v = upvol } },
         { 0,              XF86XK_AudioLowerVolume, spawn,          {.v = downvol } },
         { 0,              XF86XK_AudioMute,        spawn,          {.v = mute } },
+        /* Increase and decrease the screen brightness */
+        /* { 0,              XF86XK_MonBrightnessUp,  spawn,          {.v = inc_brightness } }, */
+        /* { 0,              XF86XK_MonBrightnessDown,spawn,          {.v = dec_brightness } }, */
+        /* Enable and disable touchpad */
+        { 0,              XF86XK_TouchpadOn,       spawn,          {.v = enable_tpad } },
+        { 0,              XF86XK_TouchpadOff,      spawn,          {.v = disable_tpad } },
         /* Key bindings for change the keyboard layout */
         { MODKEY|ShiftMask,             XK_x,       spawn,         {.v = k_latam } },
         { MODKEY|ShiftMask,             XK_z,       spawn,         {.v = k_us_intl } },
@@ -168,20 +184,23 @@ static Key keys[] = {
         { MODKEY|ShiftMask,             XK_a,       spawn,         {.v = atril } }, /* Atril */
         { MODKEY|ShiftMask,             XK_c,       spawn,         {.v = caja } }, /* Caja */
         { MODKEY,                       XK_e,       spawn,         {.v = energy } }, /* xfce-power-manager */
-        { MODKEY|ShiftMask,             XK_e,       spawn,         {.v = eclipse } }, /* Eclipse IDE for Java Developers. */
+        { MODKEY|ControlMask|ShiftMask, XK_e,       spawn,         {.v = eclipse } }, /* Eclipse IDE for Java Developers. */
         { MODKEY|ShiftMask,             XK_f,       spawn,         {.v = firefox } }, /* Firefox */
         { MODKEY|ShiftMask,             XK_k,       spawn,         {.v = keepassxc } }, /* KeePassXC */
         { MODKEY|ControlMask|ShiftMask, XK_l,       spawn,         {.v = libreoffice } }, /* LibreOffice */
+        { MODKEY|ControlMask|ShiftMask, XK_Delete,  spawn,         {.v = reboot } }, /* Reboot */
         { MODKEY|ShiftMask,             XK_p,       spawn,         {.v = pavucontrol } }, /* Pavucontrol */
         { MODKEY|ControlMask|ShiftMask, XK_q,       spawn,         {.v = sqlitebrowser } }, /* SQLiteBrowser - Meta + Control + Shift + Q
                                                                                              by collision with exit command and qbittorrent */
         { MODKEY|ControlMask,           XK_q,       spawn,         {.v = qbittorrent } }, /* qBittorrent - Meta + Control + Q
                                                                                              by collision with exit command. */
-        { MODKEY|ShiftMask,             XK_s,       spawn,         {.v = spotify } }, /* Spotify */
+        { 0,                            XF86XK_AudioPlay,spawn,    {.v = spotify } }, /* Spotify */
         { 0,                            XK_Print,   spawn,         {.v = scrot } }, /* For screenshots */
-        { 0,                            XF86XK_PowerOff,spawn,     {.v = syspoweradmin } }, /* Power management */
-        { MODKEY|ControlMask|ShiftMask, XF86XK_PowerOff,spawn,     {.v = poweroff } }, /* Power management without ask */
-        { MODKEY|ControlMask|ShiftMask, XK_s,       spawn,         {.v = simplescreenrecorder } }, /* SimpleScreenRecorder */
+        /* Manage options of energy */
+        { 0,                            XF86XK_PowerOff,spawn,     {.v = syspoweradmin } }, /* Execute a window with options for shutdown, reboot, etc. */
+        { 0,                            XF86XK_Suspend,spawn,      {.v = suspend } }, /* Suspend to RAM */
+        { MODKEY|ControlMask|ShiftMask, XF86XK_PowerOff,spawn,     {.v = poweroff } }, /* Shutdown */
+        { MODKEY|ShiftMask,             XK_s,       spawn,         {.v = simplescreenrecorder } }, /* SimpleScreenRecorder */
         { MODKEY|ShiftMask,             XK_t,       spawn,         {.v = telegram } }, /* Telegram */
         { MODKEY|ControlMask,           XK_t,       spawn,         {.v = torbrowser } }, /* Tor Browser */
         { MODKEY|ShiftMask,             XK_v,       spawn,         {.v = vlc } }, /* VLC */
