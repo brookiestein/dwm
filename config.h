@@ -61,10 +61,10 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
+        { "###",      gaplessgrid }, /* first entry is default */
+	{ "[]=",      tile },
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
-        { "###",      gaplessgrid },
 };
 
 /* key definitions */
@@ -112,6 +112,7 @@ static const char *poweroff[]                   = { "syspoweradmin", "--poweroff
 static const char *suspend[]                    = { "syspoweradmin" "--suspend", NULL };
 static const char *disable_tpad[]               = { "xinput", "disable", "12", NULL }; /* Use xinput for know the id of your touchpad */
 static const char *enable_tpad[]                = { "xinput", "enable", "12", NULL }; /* The same */
+static const char *slock[]                      = { "slock", NULL }; /* Lock the screen */
 static const char *reboot[]                     = { "syspoweradmin", "--reboot", NULL };
 /* static const char *inc_brightness[]             = { "xbacklight", "-inc", "10", NULL }; */
 /* static const char *dec_brightness[]             = { "xbacklight", "-dec", "10", NULL }; */
@@ -147,10 +148,10 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	/* { MODKEY|ShiftMask,             XK_c,      killclient,     {0} }, */
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_g,      setlayout,      {.v = &layouts[3]} },
+	{ MODKEY,                       XK_g,      setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[1]} },
+	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -194,7 +195,7 @@ static Key keys[] = {
         { MODKEY|ShiftMask,             XK_f,       spawn,         {.v = firefox } }, /* Firefox */
         { MODKEY|ShiftMask,             XK_k,       spawn,         {.v = keepassxc } }, /* KeePassXC */
         { MODKEY|ControlMask|ShiftMask, XK_l,       spawn,         {.v = libreoffice } }, /* LibreOffice */
-        { MODKEY|ControlMask|ShiftMask, XK_Delete,  spawn,         {.v = reboot } }, /* Reboot */
+        { MODKEY|ShiftMask,             XK_l,       spawn,         {.v = slock } }, /* Lock the screen */
         { MODKEY|ShiftMask,             XK_p,       spawn,         {.v = pavucontrol } }, /* Pavucontrol */
         { MODKEY|ControlMask|ShiftMask, XK_q,       spawn,         {.v = sqlitebrowser } }, /* SQLiteBrowser - Meta + Control + Shift + Q
                                                                                              by collision with exit command and qbittorrent */
@@ -203,8 +204,9 @@ static Key keys[] = {
         { 0,                            XF86XK_AudioPlay,spawn,    {.v = spotify } }, /* Spotify */
         { 0,                            XK_Print,   spawn,         {.v = scrot } }, /* For screenshots */
         /* Manage options of energy */
-        { 0,                            XF86XK_PowerOff,spawn,     {.v = syspoweradmin } }, /* Execute a window with options for shutdown, reboot, etc. */
         { 0,                            XF86XK_Suspend,spawn,      {.v = suspend } }, /* Suspend to RAM */
+        { MODKEY|ControlMask|ShiftMask, XK_Delete,  spawn,         {.v = reboot } }, /* Reboot */
+        { 0,                            XF86XK_PowerOff,spawn,     {.v = syspoweradmin } }, /* Execute a window with options for shutdown, reboot, etc. */
         { MODKEY|ControlMask|ShiftMask, XF86XK_PowerOff,spawn,     {.v = poweroff } }, /* Shutdown */
         { MODKEY|ShiftMask,             XK_s,       spawn,         {.v = simplescreenrecorder } }, /* SimpleScreenRecorder */
         { MODKEY|ShiftMask,             XK_t,       spawn,         {.v = telegram } }, /* Telegram */
