@@ -121,6 +121,7 @@ static const char *torbrowser[]                 = { "/opt/tor-browser_es-ES/Brow
                                                 "--detach || ([ ! -x /opt/tor-browser_es-ES/Browser/start-tor-browser ]",
                                                 "&& /opt/tor-browser_es-ES/start-tor-browser", "--detach)'", "dummy %k", NULL };
 
+
 /* For sound */
 #include <X11/XF86keysym.h>
 
@@ -182,8 +183,8 @@ static Key keys[] = {
         /* { 0,              XF86XK_MonBrightnessUp,  spawn,          {.v = inc_brightness } }, */
         /* { 0,              XF86XK_MonBrightnessDown,spawn,          {.v = dec_brightness } }, */
         /* Enable and disable touchpad */
-        { 0,              XF86XK_TouchpadOn,       spawn,          {.v = enable_tpad } },
-        { 0,              XF86XK_TouchpadOff,      spawn,          {.v = disable_tpad } },
+        { MODKEY|ControlMask|ShiftMask,XK_Return,   spawn,          {.v = disable_tpad } },
+        { MODKEY|ControlMask|ShiftMask,XK_Tab,      spawn,          {.v = enable_tpad } },
         /* Key bindings for change the keyboard layout */
         { MODKEY|ShiftMask,             XK_x,       spawn,         {.v = k_latam } },
         { MODKEY|ShiftMask,             XK_z,       spawn,         {.v = k_us_intl } },
