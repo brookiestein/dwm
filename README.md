@@ -11,9 +11,11 @@ Optionally you need:
 
 ```setxkbmap```
 
-[syspoweradmin](https://github.com/brookiestein/syspoweradmin/)
-
 ```scrot```
+
+```xinput```
+
+[syspoweradmin](https://github.com/brookiestein/syspoweradmin/)
 
 [slock](https://github.com/brookiestein/slock/)
 
@@ -21,6 +23,29 @@ Note that there are a number of keyboard shortcuts that you may not need.
 
 In that case, tell them or delete them directly.
 
+If you use this setting, these keyboard shortcuts might interest you:
+```
+Windows key + Shift key + X = Set keyboard layout in Latin American Spanish
+Windows key + Shift key + Z = Set keyboard layout in alternative American English
+Windows key + Shift key + Play music key = Spotify launch
+
+# For these keyboard shortcuts you will need: syspoweradmin
+Windows key + Control key + Shift key + Turn off Botton = Turn off the system
+Windows key + Control key + Shift key + Delete key = Reboot the system
+
+# Check out what xinput shows and change id 12 in the config.h for your touchpad
+Windows key + Control key + Shift key + Tab key = Enable touchpad
+Windows key + Control key + Shift key + Enter = Disable touchpad.
+```
+In this configuration the keyboard shortcut was changed to exit the environment to:
+```
+Windows key + Shift key + e
+```
+And to close a window:
+```
+Windows key + Shift key + q
+```
+**The alacritty terminal is used**
 
 **Installation**
 ------------
