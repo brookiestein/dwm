@@ -19,17 +19,21 @@ Optionally you need:
 
 [slock](https://github.com/brookiestein/slock/)
 
-Note that there are a number of keyboard shortcuts that you may not need.
+**Note that there are a number of keyboard shortcuts that you may not need.**
 
 In that case, tell them or delete them directly.
 
-If you use this setting, these keyboard shortcuts might interest you:
+**If you use this setting, these keyboard shortcuts might interest you:**
 ```
 Windows key + Shift key + X = Set keyboard layout in Latin American Spanish
 Windows key + Shift key + Z = Set keyboard layout in alternative American English
 Play music key = Spotify launch
 
 # For these keyboard shortcuts you will need: syspoweradmin
+Turn off Botton = Shown window with options for: Shutdown, hibernate, reboot and suspend the system.
+
+# The following keyboard shortcuts are shortcuts to the functions offered by the previous keyboard
+# shortcut. In other words, the window is not shown and the corresponding signal is output directly.
 Windows key + Control key + Shift key + Turn off Botton = Turn off the system
 Windows key + Control key + Shift key + Delete key = Reboot the system
 
@@ -37,18 +41,18 @@ Windows key + Control key + Shift key + Delete key = Reboot the system
 Windows key + Control key + Shift key + Tab key = Enable touchpad
 Windows key + Control key + Shift key + Enter = Disable touchpad
 ```
-In this configuration the keyboard shortcut was changed to exit the environment to:
+**In this configuration the keyboard shortcut was changed to exit the environment to:**
 ```
 Windows key + Shift key + e
 ```
-And to close a window:
+**And to close a window:**
 ```
 Windows key + Shift key + q
 ```
 **The alacritty terminal is used**
 
-In regards to the status bar. Look at my repository of 
-[dotfiles](https://github.com/brookiestein/dotfiles/tree/master/.config/dwm)
+**In regards to the status bar. Look at my repository of 
+[dotfiles](https://github.com/brookiestein/dotfiles/tree/master/.config/dwm)**
 
 **Installation**
 ------------
@@ -88,6 +92,6 @@ exec dwm
 The configuration of dwm is done by creating a custom config.h
 and (re)compiling the source code.
 
-Some screenshots:
+**Some screenshots:**
 
 ![](screenshots/1.png)
