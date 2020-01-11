@@ -47,6 +47,9 @@ Windows key + Shift key + q
 ```
 **The alacritty terminal is used**
 
+In regards to the status bar. Look at my repository of 
+[dotfiles](https://github.com/brookiestein/dotfiles/tree/master/.config/dwm)
+
 **Installation**
 ------------
 Edit config.mk to match your local setup (dwm is installed into
