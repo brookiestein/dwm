@@ -1,5 +1,13 @@
 /* See LICENSE file for copyright and license details. */
 
+/* Libraries utilised */
+/* For some keys */
+#include <X11/XF86keysym.h>
+#include <X11/keysymdef.h>
+
+#include "gaplessgrid.c" /* Grid Layout */
+#include "selfrestart.c" /* Reboot dwm */
+
 /* appearance */
 /* Systray settings */
 static const unsigned int systraypinning = 0;  /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
@@ -57,8 +65,6 @@ static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] 
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 
-#include "gaplessgrid.c"
-
 static const Layout layouts[] = {
 	/* symbol     arrange function */
         { "###",      gaplessgrid }, /* first entry is default */
@@ -77,9 +83,6 @@ static const Layout layouts[] = {
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
-
-/* Some keybindings. By example: XK_Print */
-#include <X11/keysymdef.h>
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
@@ -109,21 +112,16 @@ static const char *pavucontrol[]                = { "pavucontrol", NULL };
 static const char *scrot[]                      = { "scrot", "BrookieShot_\%a-\%d\%b%y_%H.%M.\%S.png", NULL };
 static const char *syspoweradmin[]              = { "syspoweradmin", NULL };
 static const char *poweroff[]                   = { "syspoweradmin", "--poweroff", NULL };
-static const char *suspend[]                    = { "syspoweradmin" "--suspend", NULL };
-static const char *disable_tpad[]               = { "xinput", "disable", "12", NULL }; /* Use xinput for know the id of your touchpad */
-static const char *enable_tpad[]                = { "xinput", "enable", "12", NULL }; /* The same */
-static const char *slock[]                      = { "slock", NULL }; /* Lock the screen */
 static const char *reboot[]                     = { "syspoweradmin", "--reboot", NULL };
+static const char *disable_tpad[]               = { "xinput", "disable", "11", NULL }; /* Use xinput for know the id of your touchpad */
+static const char *enable_tpad[]                = { "xinput", "enable", "11", NULL }; /* The same */
+static const char *slock[]                      = { "slock", NULL }; /* Lock the screen */
 /* static const char *inc_brightness[]             = { "xbacklight", "-inc", "10", NULL }; */
 /* static const char *dec_brightness[]             = { "xbacklight", "-dec", "10", NULL }; */
 static const char *eclipse[]                    = { "/home/brookie/.eclipse/java-2019-12/eclipse/eclipse", NULL };
 static const char *torbrowser[]                 = { "/opt/tor-browser_es-ES/Browser/start-tor-browser",
                                                 "--detach || ([ ! -x /opt/tor-browser_es-ES/Browser/start-tor-browser ]",
                                                 "&& /opt/tor-browser_es-ES/start-tor-browser", "--detach)'", "dummy %k", NULL };
-
-
-/* For sound */
-#include <X11/XF86keysym.h>
 
 /* commands */
 /* static const char *upvol[] = { "amixer", "set", "Master", "2+", NULL }; */
@@ -134,6 +132,9 @@ static const char *torbrowser[]                 = { "/opt/tor-browser_es-ES/Brow
 static const char *upvol[] = { "amixer", "-q", "sset", "Master", "5%+", NULL };
 static const char *downvol[] = { "amixer", "-q", "sset", "Master", "5%-", NULL };
 static const char *mute[] = { "amixer", "-q", "-D", "pulse", "sset", "Master", "toggle", NULL }; /* for muting/unmuting */
+
+static const char *upvol2[] = { "amixer", "-q", "sset", "Master", "10%+", NULL };
+static const char *downvol2[] = { "amixer", "-q", "sset", "Master", "10%-", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -174,11 +175,15 @@ static Key keys[] = {
 	/* { MODKEY|ShiftMask,             XK_q,      quit,           {0} }, */
         /* Reconfiguring key bindings for kill a window and exit of dwm */
         { MODKEY|ShiftMask,             XK_e,      quit,           {0} },
+        { MODKEY|ShiftMask,             XK_r,      self_restart,   {0} }, /* Reboot dwm */
         { MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
         /* Sound config */
         { 0,              XF86XK_AudioRaiseVolume, spawn,          {.v = upvol } },
         { 0,              XF86XK_AudioLowerVolume, spawn,          {.v = downvol } },
         { 0,              XF86XK_AudioMute,        spawn,          {.v = mute } },
+        /* Increase and decrease 10+ the volume */
+        { ShiftMask,      XF86XK_AudioRaiseVolume, spawn,          {.v = upvol2 } },
+        { ShiftMask,      XF86XK_AudioLowerVolume, spawn,          {.v = downvol2 } },
         /* Increase and decrease the screen brightness */
         /* { 0,              XF86XK_MonBrightnessUp,  spawn,          {.v = inc_brightness } }, */
         /* { 0,              XF86XK_MonBrightnessDown,spawn,          {.v = dec_brightness } }, */
@@ -202,10 +207,8 @@ static Key keys[] = {
                                                                                              by collision with exit command and qbittorrent */
         { MODKEY|ControlMask,           XK_q,       spawn,         {.v = qbittorrent } }, /* qBittorrent - Meta + Control + Q
                                                                                              by collision with exit command. */
-        { 0,                            XF86XK_AudioPlay,spawn,    {.v = spotify } }, /* Spotify */
         { 0,                            XK_Print,   spawn,         {.v = scrot } }, /* For screenshots */
         /* Manage options of energy */
-        { 0,                            XF86XK_Suspend,spawn,      {.v = suspend } }, /* Suspend to RAM */
         { MODKEY|ControlMask|ShiftMask, XK_Delete,  spawn,         {.v = reboot } }, /* Reboot */
         { 0,                            XF86XK_PowerOff,spawn,     {.v = syspoweradmin } }, /* Execute a window with options for shutdown, reboot, etc. */
         { MODKEY|ControlMask|ShiftMask, XF86XK_PowerOff,spawn,     {.v = poweroff } }, /* Shutdown */
@@ -213,7 +216,6 @@ static Key keys[] = {
         { MODKEY|ShiftMask,             XK_t,       spawn,         {.v = telegram } }, /* Telegram */
         { MODKEY|ControlMask,           XK_t,       spawn,         {.v = torbrowser } }, /* Tor Browser */
         { MODKEY|ShiftMask,             XK_v,       spawn,         {.v = vlc } }, /* VLC */
-        { MODKEY|ShiftMask,             XK_w,       spawn,         {.v = wireshark } }, /* Wireshark */
 };
 
 /* button definitions */

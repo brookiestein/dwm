@@ -27,10 +27,9 @@ In that case, tell them or delete them directly.
 ```
 Windows key + Shift key + X = Set keyboard layout in Latin American Spanish
 Windows key + Shift key + Z = Set keyboard layout in alternative American English
-Play music key = Spotify launch
 
 # For these keyboard shortcuts you will need: syspoweradmin
-Turn off Botton = Shown window with options for: Shutdown, hibernate, reboot and suspend the system.
+Turn off Botton = Shown window with options for: Shutdown and/or reboot the system.
 
 # The following keyboard shortcuts are shortcuts to the functions offered by the previous keyboard
 # shortcut. In other words, the window is not shown and the corresponding signal is output directly.
@@ -49,6 +48,11 @@ Windows key + Shift key + e
 ```
 Windows key + Shift key + q
 ```
+**For reboot dwm**
+```
+Windows key + Shift key + r
+```
+
 **The alacritty terminal is used**
 
 **In regards to the status bar. Look at my repository of 
