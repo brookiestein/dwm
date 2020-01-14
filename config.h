@@ -40,24 +40,24 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class                        instance                        title       tags mask       isfloating   monitor */
+	/* class                        instance                        title       tags mask       iscentered       isfloating   monitor */
         /* Configuring floating windows */
-        { "Caja",                       "caja",                         NULL,           0,            1,           -1 },
-        { "Engrampa",                   "engrampa",                     NULL,           0,            1,           -1 },
-        { "Leafpad",                    "leafpad",                      NULL,           0,            1,           -1 },
-        { "Pavucontrol",                "pavucontrol",                  NULL,           0,            1,           -1 },
-        { "GParted",                    "gpartedbin",                   NULL,           0,            1,           -1 },
-        { "Lxappearance",               "lxappearance",                 NULL,           0,            1,           -1 },
+        { "Caja",                       "caja",                         NULL,           0,            1,                 1,           -1 },
+        { "Engrampa",                   "engrampa",                     NULL,           0,            1,                 1,           -1 },
+        { "Leafpad",                    "leafpad",                      NULL,           0,            1,                 1,           -1 },
+        { "Pavucontrol",                "pavucontrol",                  NULL,           0,            1,                 1,           -1 },
+        { "GParted",                    "gpartedbin",                   NULL,           0,            1,                 1,           -1 },
+        { "Lxappearance",               "lxappearance",                 NULL,           0,            1,                 1,           -1 },
         /* Other programs without floating setting */
-	{ "Firefox",                    NULL,                           NULL,           1,            0,           -1 },
-        { "vlc",                        "vlc",                          NULL,           1 << 1,       0,           -1 },
-        { "KeePassXC",                  "keepassxc",                    NULL,           1 << 2,       0,           -1 },
-        { "qBittorrent",                "qbittorrent",                  NULL,           1 << 3,       0,           -1 },
-        { "libreoffice-startcenter",    "libreoffice",                  NULL,           1 << 5,       0,           -1 },
-        { "DB Browser for SQLite",      "sqlitebrowser",                NULL,           1 << 6,       0,           -1 },
-        { "TelegramDesktop",            "Telegram",                     NULL,           1 << 7,       0,           -1 },
-        { "SimpleScreenRecorder",       "simplescreenrecorder",         NULL,           1 << 8,       0,           -1 },
-        { "Atril",                      "atril",                        NULL,           1 << 8,       0,           -1 },
+        { "Firefox",                    NULL,                           NULL,           1,            0,                 0,           -1 },
+        { "vlc",                        "vlc",                          NULL,           1 << 1,       0,                 0,           -1 },
+        { "KeePassXC",                  "keepassxc",                    NULL,           1 << 2,       0,                 0,           -1 },
+        { "qBittorrent",                "qbittorrent",                  NULL,           1 << 3,       0,                 0,           -1 },
+        { "libreoffice-startcenter",    "libreoffice",                  NULL,           1 << 5,       0,                 0,           -1 },
+        { "DB Browser for SQLite",      "sqlitebrowser",                NULL,           1 << 6,       0,                 0,           -1 },
+        { "TelegramDesktop",            "Telegram",                     NULL,           1 << 7,       0,                 0,           -1 },
+        { "SimpleScreenRecorder",       "simplescreenrecorder",         NULL,           1 << 8,       0,                 0,           -1 },
+        { "Atril",                      "atril",                        NULL,           1 << 8,       0,                 0,           -1 },
 };
 
 /* layout(s) */
@@ -96,17 +96,15 @@ static const char *k_us_intl[]                  = { "setxkbmap", "-layout", "us"
 /* Most used programs */
 static const char *termcmd[]                    = { "alacritty", NULL };
 static const char *firefox[]                    = { "firefox", NULL };
+static const char *atril[]                      = { "atril", NULL };
 static const char *vlc[]                        = { "vlc", NULL };
 static const char *keepassxc[]                  = { "keepassxc", NULL };
 static const char *qbittorrent[]                = { "qbittorrent", NULL };
-static const char *spotify[]                    = { "spotify", NULL };
 static const char *libreoffice[]                = { "libreoffice", NULL };
 static const char *sqlitebrowser[]              = { "sqlitebrowser", NULL };
 static const char *telegram[]                   = { "/opt/Telegram/Telegram", NULL };
 static const char *caja[]                       = { "caja", NULL };
-static const char *wireshark[]                  = { "wireshark", NULL };
 static const char *simplescreenrecorder[]       = { "simplescreenrecorder", NULL };
-static const char *atril[]                      = { "atril", NULL };
 static const char *energy[]                     = { "xfce4-power-manager-settings", NULL };
 static const char *pavucontrol[]                = { "pavucontrol", NULL };
 static const char *scrot[]                      = { "scrot", "BrookieShot_\%a-\%d\%b%y_%H.%M.\%S.png", NULL };
