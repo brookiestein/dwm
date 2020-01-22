@@ -48,9 +48,11 @@ static const Rule rules[] = {
         { "Pavucontrol",                "pavucontrol",                  NULL,           0,            1,                 1,           -1 },
         { "GParted",                    "gpartedbin",                   NULL,           0,            1,                 1,           -1 },
         { "Lxappearance",               "lxappearance",                 NULL,           0,            1,                 1,           -1 },
+        { "xfce4-power-manager-settings","Xfce4-power-manager-settings",NULL,           0,            1,                 1,           -1 },
         /* Other programs without floating setting */
         { "Firefox",                    NULL,                           NULL,           1,            0,                 0,           -1 },
         { "vlc",                        "vlc",                          NULL,           1 << 1,       0,                 0,           -1 },
+        { "Eclipse",                    "Eclipse",                      NULL,           1 << 1,       0,                 0,           -1 },
         { "KeePassXC",                  "keepassxc",                    NULL,           1 << 2,       0,                 0,           -1 },
         { "qBittorrent",                "qbittorrent",                  NULL,           1 << 3,       0,                 0,           -1 },
         { "libreoffice-startcenter",    "libreoffice",                  NULL,           1 << 5,       0,                 0,           -1 },
@@ -111,11 +113,11 @@ static const char *scrot[]                      = { "scrot", "BrookieShot_\%a-\%
 static const char *syspoweradmin[]              = { "syspoweradmin", NULL };
 static const char *poweroff[]                   = { "syspoweradmin", "--poweroff", NULL };
 static const char *reboot[]                     = { "syspoweradmin", "--reboot", NULL };
-static const char *disable_tpad[]               = { "xinput", "disable", "11", NULL }; /* Use xinput for know the id of your touchpad */
-static const char *enable_tpad[]                = { "xinput", "enable", "11", NULL }; /* The same */
+static const char *disable_tpad[]               = { "xinput", "disable", "AlpsPS/2 ALPS DualPoint TouchPad", NULL }; /* Use xinput for know the id of your touchpad */
+static const char *enable_tpad[]                = { "xinput", "enable", "AlpsPS/2 ALPS DualPoint TouchPad", NULL }; /* The same */
 static const char *slock[]                      = { "slock", NULL }; /* Lock the screen */
-/* static const char *inc_brightness[]             = { "xbacklight", "-inc", "10", NULL }; */
-/* static const char *dec_brightness[]             = { "xbacklight", "-dec", "10", NULL }; */
+static const char *inc_brightness[]             = { "xbacklight", "-inc", "10", NULL };
+static const char *dec_brightness[]             = { "xbacklight", "-dec", "10", NULL };
 static const char *eclipse[]                    = { "/home/brookie/.eclipse/java-2019-12/eclipse/eclipse", NULL };
 static const char *torbrowser[]                 = { "/opt/tor-browser_es-ES/Browser/start-tor-browser",
                                                 "--detach || ([ ! -x /opt/tor-browser_es-ES/Browser/start-tor-browser ]",
@@ -183,8 +185,8 @@ static Key keys[] = {
         { ShiftMask,      XF86XK_AudioRaiseVolume, spawn,          {.v = upvol2 } },
         { ShiftMask,      XF86XK_AudioLowerVolume, spawn,          {.v = downvol2 } },
         /* Increase and decrease the screen brightness */
-        /* { 0,              XF86XK_MonBrightnessUp,  spawn,          {.v = inc_brightness } }, */
-        /* { 0,              XF86XK_MonBrightnessDown,spawn,          {.v = dec_brightness } }, */
+        { MODKEY,         XK_Up,                   spawn,          {.v = inc_brightness } },
+        { MODKEY,         XK_Down,                 spawn,          {.v = dec_brightness } },
         /* Enable and disable touchpad */
         { MODKEY|ControlMask|ShiftMask,XK_Return,   spawn,          {.v = disable_tpad } },
         { MODKEY|ControlMask|ShiftMask,XK_Tab,      spawn,          {.v = enable_tpad } },
