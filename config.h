@@ -48,11 +48,11 @@ static const Rule rules[] = {
         { "Pavucontrol",                "pavucontrol",                  NULL,           0,            1,                 1,           -1 },
         { "GParted",                    "gpartedbin",                   NULL,           0,            1,                 1,           -1 },
         { "Lxappearance",               "lxappearance",                 NULL,           0,            1,                 1,           -1 },
-        { "xfce4-power-manager-settings","Xfce4-power-manager-settings",NULL,           0,            1,                 1,           -1 },
+        { "Xfce4-power-manager-settings","xfce4-power-manager-settings",NULL,           0,            1,                 1,           -1 },
+        { "Viewnior",                   "viewnior",                     NULL,           0,            1,                 1,           -1 },
         /* Other programs without floating setting */
         { "Firefox",                    NULL,                           NULL,           1,            0,                 0,           -1 },
         { "vlc",                        "vlc",                          NULL,           1 << 1,       0,                 0,           -1 },
-        { "Eclipse",                    "Eclipse",                      NULL,           1 << 1,       0,                 0,           -1 },
         { "KeePassXC",                  "keepassxc",                    NULL,           1 << 2,       0,                 0,           -1 },
         { "qBittorrent",                "qbittorrent",                  NULL,           1 << 3,       0,                 0,           -1 },
         { "libreoffice-startcenter",    "libreoffice",                  NULL,           1 << 5,       0,                 0,           -1 },
@@ -97,8 +97,8 @@ static const char *k_latam[]                    = { "setxkbmap", "-layout", "lat
 static const char *k_us_intl[]                  = { "setxkbmap", "-layout", "us", "-variant", "intl", NULL };
 /* Most used programs */
 static const char *termcmd[]                    = { "alacritty", NULL };
-static const char *firefox[]                    = { "firefox", NULL };
 static const char *atril[]                      = { "atril", NULL };
+static const char *firefox[]                    = { "firefox", NULL };
 static const char *vlc[]                        = { "vlc", NULL };
 static const char *keepassxc[]                  = { "keepassxc", NULL };
 static const char *qbittorrent[]                = { "qbittorrent", NULL };
@@ -106,8 +106,8 @@ static const char *libreoffice[]                = { "libreoffice", NULL };
 static const char *sqlitebrowser[]              = { "sqlitebrowser", NULL };
 static const char *telegram[]                   = { "/opt/Telegram/Telegram", NULL };
 static const char *caja[]                       = { "caja", NULL };
+static const char *xfce_power_manager[]         = { "xfce4-power-manager-settings", NULL };
 static const char *simplescreenrecorder[]       = { "simplescreenrecorder", NULL };
-static const char *energy[]                     = { "xfce4-power-manager-settings", NULL };
 static const char *pavucontrol[]                = { "pavucontrol", NULL };
 static const char *scrot[]                      = { "scrot", "BrookieShot_\%a-\%d\%b%y_%H.%M.\%S.png", NULL };
 static const char *syspoweradmin[]              = { "syspoweradmin", NULL };
@@ -118,10 +118,10 @@ static const char *enable_tpad[]                = { "xinput", "enable", "AlpsPS/
 static const char *slock[]                      = { "slock", NULL }; /* Lock the screen */
 static const char *inc_brightness[]             = { "xbacklight", "-inc", "10", NULL };
 static const char *dec_brightness[]             = { "xbacklight", "-dec", "10", NULL };
-static const char *eclipse[]                    = { "/home/brookie/.eclipse/java-2019-12/eclipse/eclipse", NULL };
-static const char *torbrowser[]                 = { "/opt/tor-browser_es-ES/Browser/start-tor-browser",
-                                                "--detach || ([ ! -x /opt/tor-browser_es-ES/Browser/start-tor-browser ]",
-                                                "&& /opt/tor-browser_es-ES/start-tor-browser", "--detach)'", "dummy %k", NULL };
+static const char *eclipse[]                    = { "/home/brookie/.eclipse/java-latest-released/eclipse/eclipse", NULL };
+static const char *torbrowser[]                 = { "/opt/tor-browser_en-US/Browser/start-tor-browser",
+                                                "--detach || ([ ! -x /opt/tor-browser_en-US/Browser/start-tor-browser ]",
+                                                "&& /opt/tor-browser_en-US/start-tor-browser", "--detach)'", "dummy %k", NULL };
 
 /* commands */
 /* static const char *upvol[] = { "amixer", "set", "Master", "2+", NULL }; */
@@ -194,9 +194,7 @@ static Key keys[] = {
         { MODKEY|ShiftMask,             XK_x,       spawn,         {.v = k_latam } },
         { MODKEY|ShiftMask,             XK_z,       spawn,         {.v = k_us_intl } },
         /* Key bindings for launch programs. Ordered alphabetically. (Mainly) */
-        { MODKEY|ShiftMask,             XK_a,       spawn,         {.v = atril } }, /* Atril */
         { MODKEY|ShiftMask,             XK_c,       spawn,         {.v = caja } }, /* Caja */
-        { MODKEY,                       XK_e,       spawn,         {.v = energy } }, /* xfce-power-manager */
         { MODKEY|ControlMask|ShiftMask, XK_e,       spawn,         {.v = eclipse } }, /* Eclipse IDE for Java Developers. */
         { MODKEY|ShiftMask,             XK_f,       spawn,         {.v = firefox } }, /* Firefox */
         { MODKEY|ShiftMask,             XK_k,       spawn,         {.v = keepassxc } }, /* KeePassXC */
@@ -216,6 +214,7 @@ static Key keys[] = {
         { MODKEY|ShiftMask,             XK_t,       spawn,         {.v = telegram } }, /* Telegram */
         { MODKEY|ControlMask,           XK_t,       spawn,         {.v = torbrowser } }, /* Tor Browser */
         { MODKEY|ShiftMask,             XK_v,       spawn,         {.v = vlc } }, /* VLC */
+        { MODKEY,                       XK_e,       spawn,         {.v = xfce_power_manager } }, /* XFCE 4 Power Manager */
 };
 
 /* button definitions */
