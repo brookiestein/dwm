@@ -15,6 +15,8 @@ Optionally you need:
 
 ```xinput```
 
+```xsetroot```
+
 [syspoweradmin](https://github.com/brookiestein/syspoweradmin/)
 
 [slock](https://github.com/brookiestein/slock/)
@@ -85,9 +87,10 @@ DISPLAY=foo.bar:1 exec dwm
 ```
 (This will start dwm on display :1 of the host foo.bar.)
 
-How be will show the status bar, will depend of which you choose.
+**How be will show the status bar, will depend of which you choose.**
+
 If you choosed the first option, is say:
-[my repository of dwmrc](https://github.com/brookiestein/dotfiles/tree/master/.config/dwm/)
+My repository of [dwmrc](https://github.com/brookiestein/dotfiles/tree/master/.config/dwm/)
 
 Then you can do something like this in your .xinitrc:
 ```
@@ -103,7 +106,8 @@ exec dwm
 ```
 
 In case of that you choosed [slstatus:](https://github.com/brookiestein/slstatus)
-Only add this to your .xinitrc:
+
+**Only add this to your .xinitrc:**
 ```
 slstatus &
 ```
@@ -115,4 +119,8 @@ and (re)compiling the source code.
 
 **Some screenshots:**
 
+**With dwmrc statusbar**
 ![](screenshots/1.png)
+
+**With slstatus**
+![](screenshots/2.png)
