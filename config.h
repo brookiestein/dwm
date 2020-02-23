@@ -97,7 +97,6 @@ static const char *k_latam[]                    = { "setxkbmap", "-layout", "lat
 static const char *k_us_intl[]                  = { "setxkbmap", "-layout", "us", "-variant", "intl", NULL };
 /* Most used programs */
 static const char *termcmd[]                    = { "alacritty", NULL };
-static const char *atril[]                      = { "atril", NULL };
 static const char *firefox[]                    = { "firefox", NULL };
 static const char *vlc[]                        = { "vlc", NULL };
 static const char *keepassxc[]                  = { "keepassxc", NULL };
@@ -109,7 +108,7 @@ static const char *caja[]                       = { "caja", NULL };
 static const char *xfce_power_manager[]         = { "xfce4-power-manager-settings", NULL };
 static const char *simplescreenrecorder[]       = { "simplescreenrecorder", NULL };
 static const char *pavucontrol[]                = { "pavucontrol", NULL };
-static const char *scrot[]                      = { "scrot", "BrookieShot_\%a-\%d\%b%y_%H.%M.\%S.png", "-e", "viewnior ~/$f", NULL };
+static const char *scrot[]                      = { "scrot", "BrookieShot_\\%a-\\%d\\%b%y_%H.%M.\\%S.png", "-e", "viewnior ~/$f", NULL };
 static const char *syspoweradmin[]              = { "syspoweradmin", NULL };
 static const char *poweroff[]                   = { "syspoweradmin", "--poweroff", NULL };
 static const char *reboot[]                     = { "syspoweradmin", "--reboot", NULL };

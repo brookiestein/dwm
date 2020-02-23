@@ -68,6 +68,7 @@ the /usr/local namespace by default).
 Afterwards enter the following command to build and install dwm (if
 necessary as root):
 ```
+# for i in $(ls -1 patches/); do patch -i patches/$i; done
 # make clean install
 ```
 
@@ -84,13 +85,27 @@ DISPLAY=foo.bar:1 exec dwm
 ```
 (This will start dwm on display :1 of the host foo.bar.)
 
-In order to display status info in the bar, you can do something
-like this in your .xinitrc:
+How be will show the status bar, will depend of which you choose.
+If you choosed the first option, is say:
+[my repository of dwmrc](https://github.com/brookiestein/dotfiles/tree/master/.config/dwm/)
+
+Then you can do something like this in your .xinitrc:
 ```
-while xsetroot -name "`date` `uptime | sed 's/.*,//'`"; do
-      sleep 1
-done &
+DIR=${HOME}/.dwm
+if [ -f "${DIR}"/dwmrc ]; then
+        /bin/sh "${DIR}"/dwmrc &
+else
+        while xsetroot -name "`date` `uptime | sed 's/.*,//'`"; do
+              sleep 1
+        done &
+fi
 exec dwm
+```
+
+In case of that you choosed [slstatus:](https://github.com/brookiestein/slstatus)
+Only add this to your .xinitrc:
+```
+slstatus &
 ```
 
 **Configuration**
