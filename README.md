@@ -56,7 +56,9 @@ Windows key + Shift key + r
 **The alacritty terminal is used**
 
 **In regards to the status bar. Look at my repository of 
-[dotfiles](https://github.com/brookiestein/dotfiles/tree/master/.config/dwm)**
+[dotfiles.](https://github.com/brookiestein/dotfiles/tree/master/.config/dwm/)**
+
+**Also, you can use [slstatus.](https://github.com/brookiestein/slstatus/)**
 
 **Installation**
 ------------
