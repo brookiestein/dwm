@@ -55,11 +55,8 @@ static const Rule rules[] = {
         { "vlc",                        "vlc",                          NULL,           1 << 1,       0,                 0,           -1 },
         { "KeePassXC",                  "keepassxc",                    NULL,           1 << 2,       0,                 0,           -1 },
         { "qBittorrent",                "qbittorrent",                  NULL,           1 << 3,       0,                 0,           -1 },
-        { "libreoffice-startcenter",    "libreoffice",                  NULL,           1 << 5,       0,                 0,           -1 },
-        { "DB Browser for SQLite",      "sqlitebrowser",                NULL,           1 << 6,       0,                 0,           -1 },
         { "TelegramDesktop",            "Telegram",                     NULL,           1 << 7,       0,                 0,           -1 },
         { "SimpleScreenRecorder",       "simplescreenrecorder",         NULL,           1 << 8,       0,                 0,           -1 },
-        { "Atril",                      "atril",                        NULL,           1 << 8,       0,                 0,           -1 },
 };
 
 /* layout(s) */
@@ -88,10 +85,11 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-/* static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL }; */
-static const char *dmenucmd[]                   = { "rofi", "-lines", "12", "-padding", "18", "-width", "60",
+/* static const char *dmenucmd[]                   = { "rofi", "-lines", "12", "-padding", "18", "-width", "60",
                                                 "-location", "0", "-show", "drun", "-sidebar-mode",
-                                                "-columns", "3", "-font", "monospace 8" };
+                                                "-columns", "3", "-font", "monospace 8" }; */
+static const char *dmenucmd[]                   = { "dmenu_run", "-l", "20", "-c", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1,
+                                                "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 /* Keyboard layout key bindings */
 static const char *k_latam[]                    = { "setxkbmap", "-layout", "latam", NULL };
 static const char *k_us_intl[]                  = { "setxkbmap", "-layout", "us", "-variant", "intl", NULL };
@@ -101,23 +99,21 @@ static const char *firefox[]                    = { "firefox", NULL };
 static const char *vlc[]                        = { "vlc", NULL };
 static const char *keepassxc[]                  = { "keepassxc", NULL };
 static const char *qbittorrent[]                = { "qbittorrent", NULL };
-static const char *libreoffice[]                = { "libreoffice", NULL };
-static const char *sqlitebrowser[]              = { "sqlitebrowser", NULL };
 static const char *telegram[]                   = { "/opt/Telegram/Telegram", NULL };
 static const char *caja[]                       = { "caja", NULL };
 static const char *xfce_power_manager[]         = { "xfce4-power-manager-settings", NULL };
-static const char *simplescreenrecorder[]       = { "simplescreenrecorder", NULL };
 static const char *pavucontrol[]                = { "pavucontrol", NULL };
 static const char *scrot[]                      = { "scrot", "BrookieShot_\\%a-\\%d\\%b%y_%H.%M.\\%S.png", "-e", "viewnior ~/$f", NULL };
 static const char *syspoweradmin[]              = { "syspoweradmin", NULL };
 static const char *poweroff[]                   = { "syspoweradmin", "--poweroff", NULL };
 static const char *reboot[]                     = { "syspoweradmin", "--reboot", NULL };
-static const char *disable_tpad[]               = { "xinput", "disable", "AlpsPS/2 ALPS DualPoint TouchPad", NULL }; /* Use xinput for know the id of your touchpad */
-static const char *enable_tpad[]                = { "xinput", "enable", "AlpsPS/2 ALPS DualPoint TouchPad", NULL }; /* The same */
+static const char *disable_tpad[]               = { "xinput", "disable", "SynPS/2 Synaptics TouchPad", NULL }; /* Use xinput for know the id of your touchpad */
+static const char *enable_tpad[]                = { "xinput", "enable", "SynPS/2 Synaptics TouchPad", NULL }; /* The same */
 static const char *slock[]                      = { "slock", NULL }; /* Lock the screen */
 static const char *inc_brightness[]             = { "xbacklight", "-inc", "10", NULL };
 static const char *dec_brightness[]             = { "xbacklight", "-dec", "10", NULL };
 static const char *eclipse[]                    = { "/home/brookie/.eclipse/java-latest-released/eclipse/eclipse", NULL };
+static const char *spotify[]			= { "spotify", NULL };
 static const char *torbrowser[]                 = { "/opt/tor-browser_en-US/Browser/start-tor-browser",
                                                 "--detach || ([ ! -x /opt/tor-browser_en-US/Browser/start-tor-browser ]",
                                                 "&& /opt/tor-browser_en-US/start-tor-browser", "--detach)'", "dummy %k", NULL };
@@ -184,11 +180,11 @@ static Key keys[] = {
         { ShiftMask,      XF86XK_AudioRaiseVolume, spawn,          {.v = upvol2 } },
         { ShiftMask,      XF86XK_AudioLowerVolume, spawn,          {.v = downvol2 } },
         /* Increase and decrease the screen brightness */
-        { MODKEY,         XK_Up,                   spawn,          {.v = inc_brightness } },
-        { MODKEY,         XK_Down,                 spawn,          {.v = dec_brightness } },
+	{ 0,		XF86XK_MonBrightnessDown,  spawn,	   {.v = dec_brightness } },
+	{ 0, 		XF86XK_MonBrightnessUp,	   spawn, 	   {.v = inc_brightness } },
         /* Enable and disable touchpad */
-        { MODKEY|ControlMask|ShiftMask,XK_Return,   spawn,          {.v = disable_tpad } },
-        { MODKEY|ControlMask|ShiftMask,XK_Tab,      spawn,          {.v = enable_tpad } },
+        { MODKEY,			XK_F1,     spawn,          {.v = disable_tpad } },
+        { MODKEY,			XK_F2,     spawn,          {.v = enable_tpad } },
         /* Key bindings for change the keyboard layout */
         { MODKEY|ShiftMask,             XK_x,       spawn,         {.v = k_latam } },
         { MODKEY|ShiftMask,             XK_z,       spawn,         {.v = k_us_intl } },
@@ -197,19 +193,16 @@ static Key keys[] = {
         { MODKEY|ControlMask|ShiftMask, XK_e,       spawn,         {.v = eclipse } }, /* Eclipse IDE for Java Developers. */
         { MODKEY|ShiftMask,             XK_f,       spawn,         {.v = firefox } }, /* Firefox */
         { MODKEY|ShiftMask,             XK_k,       spawn,         {.v = keepassxc } }, /* KeePassXC */
-        { MODKEY|ControlMask|ShiftMask, XK_l,       spawn,         {.v = libreoffice } }, /* LibreOffice */
         { MODKEY|ShiftMask,             XK_l,       spawn,         {.v = slock } }, /* Lock the screen */
         { MODKEY|ShiftMask,             XK_p,       spawn,         {.v = pavucontrol } }, /* Pavucontrol */
-        { MODKEY|ControlMask|ShiftMask, XK_q,       spawn,         {.v = sqlitebrowser } }, /* SQLiteBrowser - Meta + Control + Shift + Q
-                                                                                             by collision with exit command and qbittorrent */
         { MODKEY|ControlMask,           XK_q,       spawn,         {.v = qbittorrent } }, /* qBittorrent - Meta + Control + Q
                                                                                              by collision with exit command. */
         { 0,                            XK_Print,   spawn,         {.v = scrot } }, /* For screenshots */
         /* Manage options of energy */
-        { MODKEY|ControlMask|ShiftMask, XK_Delete,  spawn,         {.v = reboot } }, /* Reboot */
-        { 0,                            XF86XK_PowerOff,spawn,     {.v = syspoweradmin } }, /* Execute a window with options for shutdown, reboot, etc. */
-        { MODKEY|ControlMask|ShiftMask, XF86XK_PowerOff,spawn,     {.v = poweroff } }, /* Shutdown */
-        { MODKEY|ShiftMask,             XK_s,       spawn,         {.v = simplescreenrecorder } }, /* SimpleScreenRecorder */
+        { MODKEY|ShiftMask, 		XK_BackSpace,spawn,        {.v = reboot } }, /* Reboot */
+        { MODKEY|ShiftMask,             XK_Delete,  spawn,         {.v = syspoweradmin } }, /* Execute a window with options for shutdown, reboot, etc. */
+        { MODKEY|ShiftMask, 		XK_Escape,  spawn,         {.v = poweroff } }, /* Shutdown */
+        { 0,  			        XF86XK_AudioPlay,spawn,    {.v = spotify } }, /* Spotify */
         { MODKEY|ShiftMask,             XK_t,       spawn,         {.v = telegram } }, /* Telegram */
         { MODKEY|ControlMask,           XK_t,       spawn,         {.v = torbrowser } }, /* Tor Browser */
         { MODKEY|ShiftMask,             XK_v,       spawn,         {.v = vlc } }, /* VLC */
