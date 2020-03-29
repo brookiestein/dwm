@@ -42,14 +42,13 @@ static const Rule rules[] = {
 	 */
 	/* class                        instance                        title       tags mask       iscentered       isfloating   monitor */
         /* Configuring floating windows */
-        { "Caja",                       "caja",                         NULL,           0,            1,                 1,           -1 },
-        { "Engrampa",                   "engrampa",                     NULL,           0,            1,                 1,           -1 },
+        { "Pcmanfm",                    "pcmanfm",                      NULL,           0,            1,                 1,           -1 },
         { "Leafpad",                    "leafpad",                      NULL,           0,            1,                 1,           -1 },
         { "Pavucontrol",                "pavucontrol",                  NULL,           0,            1,                 1,           -1 },
-        { "GParted",                    "gpartedbin",                   NULL,           0,            1,                 1,           -1 },
         { "Lxappearance",               "lxappearance",                 NULL,           0,            1,                 1,           -1 },
         { "Xfce4-power-manager-settings","xfce4-power-manager-settings",NULL,           0,            1,                 1,           -1 },
         { "Viewnior",                   "viewnior",                     NULL,           0,            1,                 1,           -1 },
+        { "Xarchiver",                  "xarchiver",                    NULL,           0,            1,                 1,           -1 },
         /* Other programs without floating setting */
         { "Firefox",                    NULL,                           NULL,           1,            0,                 0,           -1 },
         { "vlc",                        "vlc",                          NULL,           1 << 1,       0,                 0,           -1 },
@@ -100,19 +99,20 @@ static const char *vlc[]                        = { "vlc", NULL };
 static const char *keepassxc[]                  = { "keepassxc", NULL };
 static const char *qbittorrent[]                = { "qbittorrent", NULL };
 static const char *telegram[]                   = { "/opt/Telegram/Telegram", NULL };
-static const char *caja[]                       = { "caja", NULL };
+static const char *pcmanfm[]                    = { "pcmanfm", NULL };
 static const char *xfce_power_manager[]         = { "xfce4-power-manager-settings", NULL };
 static const char *pavucontrol[]                = { "pavucontrol", NULL };
 static const char *scrot[]                      = { "scrot", "BrookieShot_\\%a-\\%d\\%b%y_%H.%M.\\%S.png", "-e", "viewnior ~/$f", NULL };
 static const char *syspoweradmin[]              = { "syspoweradmin", NULL };
 static const char *poweroff[]                   = { "syspoweradmin", "--poweroff", NULL };
 static const char *reboot[]                     = { "syspoweradmin", "--reboot", NULL };
+static const char *suspend[]                    = { "syspoweradmin", "--suspend", NULL };
 static const char *disable_tpad[]               = { "xinput", "disable", "SynPS/2 Synaptics TouchPad", NULL }; /* Use xinput for know the id of your touchpad */
 static const char *enable_tpad[]                = { "xinput", "enable", "SynPS/2 Synaptics TouchPad", NULL }; /* The same */
 static const char *slock[]                      = { "slock", NULL }; /* Lock the screen */
 static const char *inc_brightness[]             = { "xbacklight", "-inc", "10", NULL };
 static const char *dec_brightness[]             = { "xbacklight", "-dec", "10", NULL };
-static const char *eclipse[]                    = { "/home/brookie/.eclipse/java-latest-released/eclipse/eclipse", NULL };
+static const char *eclipse[]                    = { "/home/brookie/.eclipse/java-2020-03/eclipse/eclipse", NULL };
 static const char *spotify[]			= { "spotify", NULL };
 static const char *torbrowser[]                 = { "/opt/tor-browser_en-US/Browser/start-tor-browser",
                                                 "--detach || ([ ! -x /opt/tor-browser_en-US/Browser/start-tor-browser ]",
@@ -189,7 +189,7 @@ static Key keys[] = {
         { MODKEY|ShiftMask,             XK_x,       spawn,         {.v = k_latam } },
         { MODKEY|ShiftMask,             XK_z,       spawn,         {.v = k_us_intl } },
         /* Key bindings for launch programs. Ordered alphabetically. (Mainly) */
-        { MODKEY|ShiftMask,             XK_c,       spawn,         {.v = caja } }, /* Caja */
+        { MODKEY|ShiftMask,             XK_c,       spawn,         {.v = pcmanfm } }, /* PCManFM */
         { MODKEY|ControlMask|ShiftMask, XK_e,       spawn,         {.v = eclipse } }, /* Eclipse IDE for Java Developers. */
         { MODKEY|ShiftMask,             XK_f,       spawn,         {.v = firefox } }, /* Firefox */
         { MODKEY|ShiftMask,             XK_k,       spawn,         {.v = keepassxc } }, /* KeePassXC */
@@ -202,6 +202,7 @@ static Key keys[] = {
         { MODKEY|ShiftMask, 		XK_BackSpace,spawn,        {.v = reboot } }, /* Reboot */
         { MODKEY|ShiftMask,             XK_Delete,  spawn,         {.v = syspoweradmin } }, /* Execute a window with options for shutdown, reboot, etc. */
         { MODKEY|ShiftMask, 		XK_Escape,  spawn,         {.v = poweroff } }, /* Shutdown */
+        { 0,                            XF86XK_Sleep,spawn,        {.v = suspend } }, /* Put the system to sleep */
         { 0,  			        XF86XK_AudioPlay,spawn,    {.v = spotify } }, /* Spotify */
         { MODKEY|ShiftMask,             XK_t,       spawn,         {.v = telegram } }, /* Telegram */
         { MODKEY|ControlMask,           XK_t,       spawn,         {.v = torbrowser } }, /* Tor Browser */
