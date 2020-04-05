@@ -105,7 +105,7 @@ static const char *inc_brightness[]             = { "xbacklight", "-inc", "10", 
 static const char *dec_brightness[]             = { "xbacklight", "-dec", "10", NULL };
 static const char *eclipse[]                    = { "/home/brookie/.eclipse/java-2020-03/eclipse/eclipse", NULL };
 static const char *cheese[]			= { "cheese", NULL };
-static const char *cmus[]                       = { "st -e cmus", NULL };
+static const char *cmus[]                       = { "st", "-e", "cmus", NULL };
 static const char *torbrowser[]                 = { "/opt/tor-browser_en-US/Browser/start-tor-browser",
                                                 "--detach || ([ ! -x /opt/tor-browser_en-US/Browser/start-tor-browser ]",
                                                 "&& /opt/tor-browser_en-US/start-tor-browser", "--detach)'", "dummy %k", NULL };
@@ -158,10 +158,9 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
         /* Custom binding keys */
-        /* { MODKEY|ShiftMask,             XK_q,      quit,           {0} }, */
+	/* { MODKEY|ShiftMask,             XK_q,      quit,           {0} }, */
         /* Reconfiguring key bindings for kill a window and exit of dwm */
         { MODKEY|ShiftMask,             XK_e,      quit,           {0} },
-        /* { MODKEY|ShiftMask,             XK_r,      self_restart,   {0} }, */
         { MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
         /* Sound config */
         { 0,              XF86XK_AudioRaiseVolume, spawn,          {.v = upvol } },
@@ -172,10 +171,17 @@ static Key keys[] = {
         { ShiftMask,      XF86XK_AudioLowerVolume, spawn,          {.v = downvol2 } },
         /* Increase and decrease the screen brightness. */
         /* It works only if your user belongs to video's group and is allowed by udev. */
-        /* If you don't know if your user belongs to that group, please see: */
+        /* If that isn't so, please see the next repository for make a rule that allow it. */
         /* https://github.com/brookiestein/dotfiles/tree/master/etc/udev/rules.d/ */
-        { 0,            XF86XK_MonBrightnessDown,  spawn,          {.v = dec_brightness } },
-        { 0,            XF86XK_MonBrightnessUp,    spawn,          {.v = inc_brightness } },
+        /* Only copy that file to the same directory (as root obviously). */
+        /* If you wish know if your user belongs to video's group, execute the next command in a terminal: */
+        /* $ groups $USER | grep video */
+        /* If command's output is empty, log in as root and add your user to that group: */
+        /* # gpasswd -a $USER video */
+        /* Note: Here is important that you change $USER to your user's name, since so like is, it will add */
+        /* to root user to that group. */
+	{ 0,            XF86XK_MonBrightnessDown,  spawn,          {.v = dec_brightness } },
+	{ 0,            XF86XK_MonBrightnessUp,    spawn,          {.v = inc_brightness } },
         /* Enable and disable touchpad. See xinput's output if you want know your touchpad's name. */
         { MODKEY,                       XK_F1,      spawn,         {.v = disable_tpad } },
         { MODKEY,                       XK_F2,      spawn,         {.v = enable_tpad } },
@@ -191,10 +197,9 @@ static Key keys[] = {
         { MODKEY|ShiftMask,             XK_p,       spawn,         {.v = pavucontrol } }, /* Sound devices manager */
         { MODKEY|ControlMask,           XK_q,       spawn,         {.v = qbittorrent } }, /* Bittorrent admin */
         { 0,                            XK_Print,   spawn,         {.v = scrot } }, /* Take screenshots */
-        /* Manage options of energy */
         { MODKEY|ShiftMask,             XK_Delete,  spawn,         {.v = syspoweradmin } }, /* GUI with options for shutdown, reboot, etc. */
         { 0,                            XF86XK_Sleep,spawn,        {.v = suspend } }, /* Put the system to sleep */
-        { 0,                            XF86XK_WebCam,spawn,       {.v = cheese } }, /* Launch camera's app. */
+	{ 0,                            XF86XK_WebCam,spawn,       {.v = cheese } }, /* Launch camera's app. */
         { 0,                            XF86XK_AudioPlay,spawn,    {.v = cmus } }, /* Launch music's reproductor. */
         { MODKEY|ShiftMask,             XK_t,       spawn,         {.v = telegram } }, /* Telegram */
         { MODKEY|ControlMask,           XK_t,       spawn,         {.v = torbrowser } }, /* Tor Browser */
