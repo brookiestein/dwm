@@ -17,7 +17,7 @@ Optionally you need:
 
 ```xsetroot```
 
-[syspoweradmin](https://github.com/brookiestein/syspoweradmin/)
+[syspowermanager](https://github.com/brookiestein/syspowermanager/)
 
 [slock](https://github.com/brookiestein/slock/)
 
@@ -31,16 +31,11 @@ Windows key + Shift key + X = Set keyboard layout in Latin American Spanish
 Windows key + Shift key + Z = Set keyboard layout in alternative American English
 
 # For these keyboard shortcuts you will need: syspoweradmin
-Turn off Botton = Shown window with options for: Shutdown and/or reboot the system.
-
-# The following keyboard shortcuts are shortcuts to the functions offered by the previous keyboard
-# shortcut. In other words, the window is not shown and the corresponding signal is output directly.
-Windows key + Control key + Shift key + Turn off Botton = Turn off the system
-Windows key + Control key + Shift key + Delete key = Reboot the system
+Windows key + Shift key + Delete = Show a window with power options
 
 # Check out what xinput shows and change id 12 in the config.h for your touchpad
-Windows key + Control key + Shift key + Tab key = Enable touchpad
-Windows key + Control key + Shift key + Enter = Disable touchpad
+Windows key + Delete = Enable touchpad
+Windows key + Escape = Disable touchpad
 ```
 **In this configuration the keyboard shortcut was changed to exit the environment to:**
 ```
@@ -50,12 +45,6 @@ Windows key + Shift key + e
 ```
 Windows key + Shift key + q
 ```
-**For reboot dwm**
-```
-Windows key + Shift key + r
-```
-
-**The alacritty terminal is used**
 
 **In regards to the status bar. Look at my repository of 
 [dotfiles.](https://github.com/brookiestein/dotfiles/tree/master/.config/dwm/)**
