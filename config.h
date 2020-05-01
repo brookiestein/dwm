@@ -43,7 +43,6 @@ static const Rule rules[] = {
         { "Leafpad",                    "leafpad",                      NULL,           0,            1,                 1,           -1 },
         { "Pavucontrol",                "pavucontrol",                  NULL,           0,            1,                 1,           -1 },
         { "Lxappearance",               "lxappearance",                 NULL,           0,            1,                 1,           -1 },
-        { "Xfce4-power-manager-settings","xfce4-power-manager-settings",NULL,           0,            1,                 1,           -1 },
         { "Viewnior",                   "viewnior",                     NULL,           0,            1,                 1,           -1 },
         { "Engrampa",                   "engrampa",                     NULL,           0,            1,                 1,           -1 },
         /* Other programs without floating setting */
@@ -108,7 +107,7 @@ static const char *slock[]                      = { "slock", NULL }; /* Lock the
 static const char *telegram[]                   = { "/opt/Telegram/Telegram", NULL };
 static const char *termcmd[]                    = { "st", NULL };
 static const char *vlc[]                        = { "vlc", NULL };
-static const char *xfce4_power_manager[]        = { "xfce4-power-manager-settings", NULL };
+
 static const char *torbrowser[]                 = { "/opt/tor-browser_en-US/Browser/start-tor-browser",
                                                 "--detach || ([ ! -x /opt/tor-browser_en-US/Browser/start-tor-browser ]",
                                                 "&& /opt/tor-browser_en-US/start-tor-browser", "--detach)'", "dummy %k", NULL };
@@ -125,6 +124,10 @@ static const char *mute[] = { "amixer", "-q", "-D", "pulse", "sset", "Master", "
 
 static const char *upvol2[] = { "amixer", "-q", "sset", "Master", "10%+", NULL };
 static const char *downvol2[] = { "amixer", "-q", "sset", "Master", "10%-", NULL };
+
+/* Microphone */
+static const char *micon[]      = { "amixer", "-q", "set", "Capture", "cap", NULL };
+static const char *micoff[]     = { "amixer", "-q", "set", "Capture", "nocap", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -170,6 +173,9 @@ static Key keys[] = {
         /* Increase and decrease 10+ the volume */
         { ShiftMask,      XF86XK_AudioRaiseVolume, spawn,          {.v = upvol2 } },
         { ShiftMask,      XF86XK_AudioLowerVolume, spawn,          {.v = downvol2 } },
+        /* Microphone */
+        { MODKEY|ShiftMask,             XK_n,       spawn,         {.v = micon } },
+        { MODKEY|ShiftMask,             XK_m,       spawn,         {.v = micoff } },
         /* Increase and decrease the screen brightness. */
         /* It works only if your user belongs to video's group and is allowed by udev. */
         /* If that isn't so, please see the next repository for make a rule that allow it. */
@@ -187,7 +193,7 @@ static Key keys[] = {
         { MODKEY,                       XK_F1,      spawn,         {.v = k_latam } }, /* Put the keyboard layout to LATAM. */
         { MODKEY,                       XK_F2,      spawn,         {.v = k_us_intl } }, /* Put the keyboard layout to US-Intl. */
         { MODKEY,                       XK_F3,      spawn,         {.v = slock } }, /* Lock the screen */
-	{ MODKEY,                       XK_F6,      spawn,         {.v = cheese } }, /* Launch camera's app. */
+        { MODKEY,                       XK_F6,      spawn,         {.v = cheese } }, /* Launch camera's app. */
         { MODKEY,                       XK_Escape,  spawn,         {.v = disable_tpad } },
         { MODKEY,                       XK_Delete,  spawn,         {.v = enable_tpad } },
         /* Key bindings for change the keyboard layout */
@@ -207,7 +213,6 @@ static Key keys[] = {
         { MODKEY|ShiftMask,             XK_t,       spawn,         {.v = telegram } }, /* Telegram */
         { MODKEY|ControlMask,           XK_t,       spawn,         {.v = torbrowser } }, /* Tor Browser */
         { MODKEY|ShiftMask,             XK_v,       spawn,         {.v = vlc } }, /* Media reproductor */
-        { MODKEY,                       XK_e,       spawn,         {.v = xfce4_power_manager } }, /* XFCE 4's power manager */
 };
 
 /* button definitions */
