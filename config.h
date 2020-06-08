@@ -45,14 +45,17 @@ static const Rule rules[] = {
         { "Lxappearance",               "lxappearance",                 NULL,           0,            1,                 1,           -1 },
         { "Viewnior",                   "viewnior",                     NULL,           0,            1,                 1,           -1 },
         { "Engrampa",                   "engrampa",                     NULL,           0,            1,                 1,           -1 },
+        { "Blueman-manager",            "blueman-manager",              NULL,           0,            1,                 1,           -1 },
         /* Other programs without floating setting */
         { "Firefox",                    NULL,                           NULL,           1,            0,                 0,           -1 },
-        { "vlc",                        "vlc",                          NULL,           1 << 1,       0,                 0,           -1 },
-        { "KeePassXC",                  "keepassxc",                    NULL,           1 << 2,       0,                 0,           -1 },
-        { "qBittorrent",                "qbittorrent",                  NULL,           1 << 3,       0,                 0,           -1 },
-        { "libreoffice-startcenter",    "libreoffice",                  NULL,           1 << 4,       0,                 0,           -1 },
-        { "TelegramDesktop",            "Telegram",                     NULL,           1 << 7,       0,                 0,           -1 },
-        { "SimpleScreenRecorder",       "simplescreenrecorder",         NULL,           1 << 8,       0,                 0,           -1 },
+        { "vlc",                        "vlc",                          NULL,           1 << 1,       1,                 0,           -1 },
+        { "Eclipse",                    "Eclipse",                      NULL,           1 << 1,       1,                 0,           -1 },
+        { "KeePassXC",                  "keepassxc",                    NULL,           1 << 2,       1,                 0,           -1 },
+        { "qBittorrent",                "qbittorrent",                  NULL,           1 << 3,       1,                 0,           -1 },
+        { "libreoffice-startcenter",    "libreoffice",                  NULL,           1 << 4,       1,                 0,           -1 },
+        { "Gimp",                       "gimp",                         NULL,           1 << 5,       1,                 0,           -1 },
+        { "TelegramDesktop",            "Telegram",                     NULL,           1 << 7,       1,                 0,           -1 },
+        { "SimpleScreenRecorder",       "simplescreenrecorder",         NULL,           1 << 8,       1,                 0,           -1 },
 };
 
 /* layout(s) */
@@ -86,6 +89,7 @@ static const char *dmenucmd[]                   = { "dmenu_run", "-l", "20", "-c
 static const char *k_latam[]                    = { "setxkbmap", "-layout", "latam", NULL };
 static const char *k_us_intl[]                  = { "setxkbmap", "-layout", "us", "-variant", "intl", NULL };
 /* Most used programs */
+static const char *blueman[]                    = { "blueman-manager", NULL };
 static const char *caja[]                       = { "caja", NULL };
 static const char *cheese[]			= { "cheese", NULL };
 static const char *cmus[]                       = { "st", "-e", "cmus", NULL };
@@ -93,19 +97,21 @@ static const char *dec_brightness[]             = { "xbacklight", "-dec", "10", 
 static const char *inc_brightness[]             = { "xbacklight", "-inc", "10", NULL };
 static const char *disable_tpad[]               = { "xinput", "disable", "SynPS/2 Synaptics TouchPad", NULL }; /* Use xinput for know your touchpad's id */
 static const char *enable_tpad[]                = { "xinput", "enable", "SynPS/2 Synaptics TouchPad", NULL }; /* The same */
-static const char *eclipse[]                    = { "/home/brookie/.eclipse/java-2020-03/eclipse/eclipse", NULL };
+static const char *eclipse[]                    = { "/opt/bin/eclipse", NULL };
 static const char *firefox[]                    = { "firefox", NULL };
 static const char *flameshot[]                  = { "flameshot", NULL };
+static const char *gimp[]                       = { "gimp", NULL };
 static const char *libreoffice[]                = { "libreoffice", NULL };
 static const char *keepassxc[]                  = { "keepassxc", NULL };
 static const char *pavucontrol[]                = { "pavucontrol", NULL };
 static const char *qbittorrent[]                = { "qbittorrent", NULL };
 static const char *scrot[]                      = { "scrot", "BrookieShot_\\%a-\\%d\\%b%y_%H.%M.\\%S.png", "-e", "viewnior ~/$f", NULL };
+static const char *simplescreenrecorder[]       = { "simplescreenrecorder", NULL };
 static const char *syspowermanager[]            = { "syspowermanager", NULL };
 static const char *suspend[]                    = { "syspowermanager", "--suspend", NULL };
 static const char *slock[]                      = { "slock", NULL }; /* Lock the screen */
 static const char *telegram[]                   = { "/opt/Telegram/Telegram", NULL };
-static const char *termcmd[]                    = { "st", NULL };
+static const char *termcmd[]                    = { "mate-terminal", NULL };
 static const char *vlc[]                        = { "vlc", NULL };
 
 static const char *torbrowser[]                 = { "/opt/tor-browser_en-US/Browser/start-tor-browser",
@@ -198,21 +204,24 @@ static Key keys[] = {
         { MODKEY,                       XK_Delete,  spawn,         {.v = enable_tpad } },
         /* Key bindings for change the keyboard layout */
         /* Key bindings for launch programs. Ordered alphabetically. (Mainly) */
-        { MODKEY|ShiftMask,             XK_c,       spawn,         {.v = caja } }, /* File manager */
-        { MODKEY|ControlMask|ShiftMask, XK_e,       spawn,         {.v = eclipse } }, /* IDE for Java Developers Edition. */
-        { MODKEY|ShiftMask,             XK_f,       spawn,         {.v = firefox } }, /* Web explorer */
-        { MODKEY|ControlMask,           XK_f,       spawn,         {.v = flameshot } }, /* Screenshotter */
-        { MODKEY|ShiftMask,             XK_k,       spawn,         {.v = keepassxc } }, /* Password manager */
-        { MODKEY|ShiftMask,             XK_l,       spawn,         {.v = libreoffice } }, /* Office suite */
-        { MODKEY|ShiftMask,             XK_p,       spawn,         {.v = pavucontrol } }, /* Sound devices manager */
-        { MODKEY|ControlMask,           XK_q,       spawn,         {.v = qbittorrent } }, /* Bittorrent admin */
-        { 0,                            XK_Print,   spawn,         {.v = scrot } }, /* Take screenshots */
-        { MODKEY|ShiftMask,             XK_Delete,  spawn,         {.v = syspowermanager } }, /* GUI with options for shutdown, reboot, etc. */
-        { 0,                      XF86XK_Sleep,     spawn,         {.v = suspend } }, /* Put the system to sleep */
-        { 0,                      XF86XK_AudioPlay, spawn,         {.v = cmus } }, /* Launch music's reproductor. */
-        { MODKEY|ShiftMask,             XK_t,       spawn,         {.v = telegram } }, /* Telegram */
-        { MODKEY|ControlMask,           XK_t,       spawn,         {.v = torbrowser } }, /* Tor Browser */
-        { MODKEY|ShiftMask,             XK_v,       spawn,         {.v = vlc } }, /* Media reproductor */
+        { MODKEY|ShiftMask,             XK_b,           spawn,          {.v = blueman } }, /* GUI to manage bluetooth devices. */
+        { MODKEY|ShiftMask,             XK_c,           spawn,          {.v = caja } }, /* File manager. */
+        { MODKEY|ControlMask,           XK_e,           spawn,          {.v = eclipse } }, /* IDE for Java Developers Edition. */
+        { MODKEY|ShiftMask,             XK_f,           spawn,          {.v = firefox } }, /* Web explorer. */
+        { MODKEY|ControlMask,           XK_f,           spawn,          {.v = flameshot } }, /* Screenshoter. */
+        { MODKEY|ShiftMask,             XK_g,           spawn,          {.v = gimp } }, /* Photo editor. */
+        { MODKEY|ShiftMask,             XK_k,           spawn,          {.v = keepassxc } }, /* Password manager. */
+        { MODKEY|ShiftMask,             XK_l,           spawn,          {.v = libreoffice } }, /* Office suite. */
+        { MODKEY|ShiftMask,             XK_p,           spawn,          {.v = pavucontrol } }, /* Sound devices manager. */
+        { MODKEY|ControlMask,           XK_q,           spawn,          {.v = qbittorrent } }, /* Bittorrent admin. */
+        { 0,                            XK_Print,       spawn,          {.v = scrot } }, /* Take screenshots. */
+        { MODKEY|ShiftMask,             XK_s,           spawn,          {.v = simplescreenrecorder } }, /* Screen recorder. */
+        { MODKEY|ShiftMask,             XK_Delete,      spawn,          {.v = syspowermanager } }, /* GUI to shutdown, reboot, etc. */
+        { 0,                      XF86XK_Sleep,         spawn,          {.v = suspend } }, /* Put the system to sleep. */
+        { 0,                      XF86XK_AudioPlay,     spawn,          {.v = cmus } }, /* Launch music's reproductor. */
+        { MODKEY|ShiftMask,             XK_t,           spawn,          {.v = telegram } }, /* Telegram messenger. */
+        { MODKEY|ControlMask,           XK_t,           spawn,          {.v = torbrowser } }, /* Tor Browser. */
+        { MODKEY|ShiftMask,             XK_v,           spawn,          {.v = vlc } }, /* Media reproductor. */
 };
 
 /* button definitions */
