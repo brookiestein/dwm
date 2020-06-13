@@ -39,23 +39,26 @@ static const Rule rules[] = {
 	 */
 	/* class                        instance                        title       tags mask       iscentered       isfloating   monitor */
         /* Configuring floating windows */
-        { "Caja",                       "caja",                         NULL,           0,            1,                 1,           -1 },
-        { "Leafpad",                    "leafpad",                      NULL,           0,            1,                 1,           -1 },
-        { "Pavucontrol",                "pavucontrol",                  NULL,           0,            1,                 1,           -1 },
-        { "Lxappearance",               "lxappearance",                 NULL,           0,            1,                 1,           -1 },
-        { "Viewnior",                   "viewnior",                     NULL,           0,            1,                 1,           -1 },
-        { "Engrampa",                   "engrampa",                     NULL,           0,            1,                 1,           -1 },
-        { "Blueman-manager",            "blueman-manager",              NULL,           0,            1,                 1,           -1 },
+        { "Caja",                       "caja",                         NULL,           0,              1,              1,              -1 },
+        { "Leafpad",                    "leafpad",                      NULL,           0,              1,              1,              -1 },
+        { "Pavucontrol",                "pavucontrol",                  NULL,           0,              1,              1,              -1 },
+        { "Lxappearance",               "lxappearance",                 NULL,           0,              1,              1,              -1 },
+        { "Viewnior",                   "viewnior",                     NULL,           0,              1,              1,              -1 },
+        { "Engrampa",                   "engrampa",                     NULL,           0,              1,              1,              -1 },
+        { "Blueman-manager",            "blueman-manager",              NULL,           0,              1,              1,              -1 },
+        { "wpa_gui",                    "wpa_gui",                      NULL,           0,              1,              1,              -1 },
+        { "MEGAsync",                   "megasync",                     NULL,           0,              0,              1,              -1 },
+        { "zoom",                       "zoom",                         NULL,           0,              1,              1,              -1 },
         /* Other programs without floating setting */
-        { "Firefox",                    NULL,                           NULL,           1,            0,                 0,           -1 },
-        { "vlc",                        "vlc",                          NULL,           1 << 1,       1,                 0,           -1 },
-        { "Eclipse",                    "Eclipse",                      NULL,           1 << 1,       1,                 0,           -1 },
-        { "KeePassXC",                  "keepassxc",                    NULL,           1 << 2,       1,                 0,           -1 },
-        { "qBittorrent",                "qbittorrent",                  NULL,           1 << 3,       1,                 0,           -1 },
-        { "libreoffice-startcenter",    "libreoffice",                  NULL,           1 << 4,       1,                 0,           -1 },
-        { "Gimp",                       "gimp",                         NULL,           1 << 5,       1,                 0,           -1 },
-        { "TelegramDesktop",            "Telegram",                     NULL,           1 << 7,       1,                 0,           -1 },
-        { "SimpleScreenRecorder",       "simplescreenrecorder",         NULL,           1 << 8,       1,                 0,           -1 },
+        { "Firefox",                    NULL,                           NULL,           1,              0,              0,              -1 },
+        { "vlc",                        "vlc",                          NULL,           1 << 1,         1,              0,              -1 },
+        { "Eclipse",                    "Eclipse",                      NULL,           1 << 1,         1,              0,              -1 },
+        { "KeePassXC",                  "keepassxc",                    NULL,           1 << 2,         1,              0,              -1 },
+        { "qBittorrent",                "qbittorrent",                  NULL,           1 << 3,         1,              0,              -1 },
+        { "libreoffice-startcenter",    "libreoffice",                  NULL,           1 << 4,         1,              0,              -1 },
+        { "Gimp",                       "gimp",                         NULL,           1 << 5,         1,              0,              -1 },
+        { "TelegramDesktop",            "Telegram",                     NULL,           1 << 7,         1,              0,              -1 },
+        { "SimpleScreenRecorder",       "simplescreenrecorder",         NULL,           1 << 8,         1,              0,              -1 },
 };
 
 /* layout(s) */
@@ -92,7 +95,7 @@ static const char *k_us_intl[]                  = { "setxkbmap", "-layout", "us"
 static const char *blueman[]                    = { "blueman-manager", NULL };
 static const char *caja[]                       = { "caja", NULL };
 static const char *cheese[]			= { "cheese", NULL };
-static const char *cmus[]                       = { "st", "-e", "cmus", NULL };
+static const char *cmus[]                       = { "mate-terminal", "-e", "cmus", NULL };
 static const char *dec_brightness[]             = { "xbacklight", "-dec", "10", NULL };
 static const char *inc_brightness[]             = { "xbacklight", "-inc", "10", NULL };
 static const char *disable_tpad[]               = { "xinput", "disable", "SynPS/2 Synaptics TouchPad", NULL }; /* Use xinput for know your touchpad's id */
@@ -112,6 +115,7 @@ static const char *suspend[]                    = { "syspowermanager", "--suspen
 static const char *slock[]                      = { "slock", NULL }; /* Lock the screen */
 static const char *telegram[]                   = { "/opt/Telegram/Telegram", NULL };
 static const char *termcmd[]                    = { "mate-terminal", NULL };
+static const char *termsu[]                     = { "mate-terminal", "-e", "su -", NULL };
 static const char *vlc[]                        = { "vlc", NULL };
 
 static const char *torbrowser[]                 = { "/opt/tor-browser_en-US/Browser/start-tor-browser",
@@ -212,9 +216,10 @@ static Key keys[] = {
         { MODKEY|ShiftMask,             XK_g,           spawn,          {.v = gimp } }, /* Photo editor. */
         { MODKEY|ShiftMask,             XK_k,           spawn,          {.v = keepassxc } }, /* Password manager. */
         { MODKEY|ShiftMask,             XK_l,           spawn,          {.v = libreoffice } }, /* Office suite. */
+        { 0,                            XK_Print,       spawn,          {.v = scrot } }, /* Take screenshots. */
         { MODKEY|ShiftMask,             XK_p,           spawn,          {.v = pavucontrol } }, /* Sound devices manager. */
         { MODKEY|ControlMask,           XK_q,           spawn,          {.v = qbittorrent } }, /* Bittorrent admin. */
-        { 0,                            XK_Print,       spawn,          {.v = scrot } }, /* Take screenshots. */
+        { MODKEY|ControlMask|ShiftMask, XK_Return,      spawn,          {.v = termsu } }, /* Execute a terminal as super user */
         { MODKEY|ShiftMask,             XK_s,           spawn,          {.v = simplescreenrecorder } }, /* Screen recorder. */
         { MODKEY|ShiftMask,             XK_Delete,      spawn,          {.v = syspowermanager } }, /* GUI to shutdown, reboot, etc. */
         { 0,                      XF86XK_Sleep,         spawn,          {.v = suspend } }, /* Put the system to sleep. */
