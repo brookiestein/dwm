@@ -49,14 +49,16 @@ static const Rule rules[] = {
         { "wpa_gui",                    "wpa_gui",                      NULL,           0,              1,              1,              -1 },
         { "MEGAsync",                   "megasync",                     NULL,           0,              0,              1,              -1 },
         { "zoom",                       "zoom",                         NULL,           0,              1,              1,              -1 },
+        { "Glade-previewer",            "glade-previewer",              NULL,           0,              1,              1,              -1 },
         /* Other programs without floating setting */
         { "Firefox",                    NULL,                           NULL,           1,              0,              0,              -1 },
         { "vlc",                        "vlc",                          NULL,           1 << 1,         1,              0,              -1 },
-        { "Eclipse",                    "Eclipse",                      NULL,           1 << 1,         1,              0,              -1 },
-        { "KeePassXC",                  "keepassxc",                    NULL,           1 << 2,         1,              0,              -1 },
-        { "qBittorrent",                "qbittorrent",                  NULL,           1 << 3,         1,              0,              -1 },
-        { "libreoffice-startcenter",    "libreoffice",                  NULL,           1 << 4,         1,              0,              -1 },
-        { "Gimp",                       "gimp",                         NULL,           1 << 5,         1,              0,              -1 },
+        { "Glade",                      "glade",                        NULL,           1 << 1,         1,              0,              -1 },
+        { "Eclipse",                    "Eclipse",                      NULL,           1 << 2,         1,              0,              -1 },
+        { "KeePassXC",                  "keepassxc",                    NULL,           1 << 3,         1,              0,              -1 },
+        { "qBittorrent",                "qbittorrent",                  NULL,           1 << 4,         1,              0,              -1 },
+        { "libreoffice-startcenter",    "libreoffice",                  NULL,           1 << 5,         1,              0,              -1 },
+        { "Gimp",                       "gimp",                         NULL,           1 << 6,         1,              0,              -1 },
         { "TelegramDesktop",            "Telegram",                     NULL,           1 << 7,         1,              0,              -1 },
         { "SimpleScreenRecorder",       "simplescreenrecorder",         NULL,           1 << 8,         1,              0,              -1 },
 };
@@ -104,14 +106,15 @@ static const char *eclipse[]                    = { "/opt/bin/eclipse", NULL };
 static const char *firefox[]                    = { "firefox", NULL };
 static const char *flameshot[]                  = { "flameshot", NULL };
 static const char *gimp[]                       = { "gimp", NULL };
+static const char *glade[]                      = { "glade", NULL };
 static const char *libreoffice[]                = { "libreoffice", NULL };
 static const char *keepassxc[]                  = { "keepassxc", NULL };
 static const char *pavucontrol[]                = { "pavucontrol", NULL };
 static const char *qbittorrent[]                = { "qbittorrent", NULL };
 static const char *scrot[]                      = { "scrot", "BrookieShot_\\%a-\\%d\\%b%y_%H.%M.\\%S.png", "-e", "viewnior ~/$f", NULL };
 static const char *simplescreenrecorder[]       = { "simplescreenrecorder", NULL };
-static const char *syspowermanager[]            = { "syspowermanager", NULL };
-static const char *suspend[]                    = { "syspowermanager", "--suspend", NULL };
+static const char *spm[]                        = { "spm", NULL };
+static const char *suspend[]                    = { "spm", "--suspend", NULL };
 static const char *slock[]                      = { "slock", NULL }; /* Lock the screen */
 static const char *telegram[]                   = { "/opt/Telegram/Telegram", NULL };
 static const char *termcmd[]                    = { "mate-terminal", NULL };
@@ -214,6 +217,7 @@ static Key keys[] = {
         { MODKEY|ShiftMask,             XK_f,           spawn,          {.v = firefox } }, /* Web explorer. */
         { MODKEY|ControlMask,           XK_f,           spawn,          {.v = flameshot } }, /* Screenshoter. */
         { MODKEY|ShiftMask,             XK_g,           spawn,          {.v = gimp } }, /* Photo editor. */
+        { MODKEY|ControlMask,           XK_g,           spawn,          {.v = glade } }, /* User interface designer. */
         { MODKEY|ShiftMask,             XK_k,           spawn,          {.v = keepassxc } }, /* Password manager. */
         { MODKEY|ShiftMask,             XK_l,           spawn,          {.v = libreoffice } }, /* Office suite. */
         { 0,                            XK_Print,       spawn,          {.v = scrot } }, /* Take screenshots. */
@@ -221,7 +225,7 @@ static Key keys[] = {
         { MODKEY|ControlMask,           XK_q,           spawn,          {.v = qbittorrent } }, /* Bittorrent admin. */
         { MODKEY|ControlMask|ShiftMask, XK_Return,      spawn,          {.v = termsu } }, /* Execute a terminal as super user */
         { MODKEY|ShiftMask,             XK_s,           spawn,          {.v = simplescreenrecorder } }, /* Screen recorder. */
-        { MODKEY|ShiftMask,             XK_Delete,      spawn,          {.v = syspowermanager } }, /* GUI to shutdown, reboot, etc. */
+        { MODKEY|ShiftMask,             XK_Delete,      spawn,          {.v = spm } }, /* GUI to shutdown, reboot, etc. */
         { 0,                      XF86XK_Sleep,         spawn,          {.v = suspend } }, /* Put the system to sleep. */
         { 0,                      XF86XK_AudioPlay,     spawn,          {.v = cmus } }, /* Launch music's reproductor. */
         { MODKEY|ShiftMask,             XK_t,           spawn,          {.v = telegram } }, /* Telegram messenger. */
