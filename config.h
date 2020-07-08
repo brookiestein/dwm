@@ -4,6 +4,8 @@
 /* For some keys */
 #include <X11/XF86keysym.h>
 #include <X11/keysymdef.h>
+/* For GaplessGrid patch */
+#include "gaplessgrid.c"
 
 /* appearance */
 /* Systray settings */
@@ -53,7 +55,6 @@ static const Rule rules[] = {
         /* Other programs without floating setting */
         { "Firefox",                    NULL,                           NULL,           1,              0,              0,              -1 },
         { "vlc",                        "vlc",                          NULL,           1 << 1,         1,              0,              -1 },
-        { "Glade",                      "glade",                        NULL,           1 << 1,         1,              0,              -1 },
         { "Eclipse",                    "Eclipse",                      NULL,           1 << 2,         1,              0,              -1 },
         { "KeePassXC",                  "keepassxc",                    NULL,           1 << 3,         1,              0,              -1 },
         { "qBittorrent",                "qbittorrent",                  NULL,           1 << 4,         1,              0,              -1 },
@@ -70,9 +71,10 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile }, /* First entry is default. */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[M]",      monocle },
+	{ "[]=",        tile }, /* First entry is default. */
+        { "###",        gaplessgrid },
+	{ "><>",        NULL },    /* no layout function means floating behavior */
+	{ "[M]",        monocle },
 };
 
 /* key definitions */
@@ -157,8 +159,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	/* { MODKEY|ShiftMask,             XK_c,      killclient,     {0} }, */
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_g,      setlayout,      {.v = &layouts[1]} },
+	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -216,8 +219,8 @@ static Key keys[] = {
         { MODKEY|ControlMask,           XK_e,           spawn,          {.v = eclipse } }, /* IDE for Java Developers Edition. */
         { MODKEY|ShiftMask,             XK_f,           spawn,          {.v = firefox } }, /* Web explorer. */
         { MODKEY|ControlMask,           XK_f,           spawn,          {.v = flameshot } }, /* Screenshoter. */
-        { MODKEY|ShiftMask,             XK_g,           spawn,          {.v = gimp } }, /* Photo editor. */
-        { MODKEY|ControlMask,           XK_g,           spawn,          {.v = glade } }, /* User interface designer. */
+        { MODKEY|ShiftMask,             XK_g,           spawn,          {.v = glade } }, /* User interface designer. */
+        { MODKEY|ControlMask,           XK_g,           spawn,          {.v = gimp } }, /* Photo editor. */
         { MODKEY|ShiftMask,             XK_k,           spawn,          {.v = keepassxc } }, /* Password manager. */
         { MODKEY|ShiftMask,             XK_l,           spawn,          {.v = libreoffice } }, /* Office suite. */
         { 0,                            XK_Print,       spawn,          {.v = scrot } }, /* Take screenshots. */
