@@ -127,18 +127,21 @@ static const char *torbrowser[]                 = { "/opt/tor-browser_en-US/Brow
                                                 "--detach || ([ ! -x /opt/tor-browser_en-US/Browser/start-tor-browser ]",
                                                 "&& /opt/tor-browser_en-US/start-tor-browser", "--detach)'", "dummy %k", NULL };
 
+static const char *wpa_gui[]                    = { "wpa_gui", NULL };
+static const char *zoom_vt[]                    = { "zoom", NULL }; /* Zoom video transmission. */
+
 /* Commands */
 /* static const char *upvol[] = { "amixer", "set", "Master", "2+", NULL }; */
 /* static const char *downvol[] = { "amixer", "set", "Master", "2-", NULL }; */
 /* static const char *mute[] = { "amixer", "-q", "set", "Master", "toggle", NULL }; /1* for muting/unmuting *1/ */
 
 /* For pulse compatible */
-static const char *upvol[] = { "amixer", "-q", "sset", "Master", "5%+", NULL };
-static const char *downvol[] = { "amixer", "-q", "sset", "Master", "5%-", NULL };
-static const char *mute[] = { "amixer", "-q", "-D", "pulse", "sset", "Master", "toggle", NULL }; /* for muting/unmuting */
+static const char *upvol[]      = { "amixer", "-q", "sset", "Master", "5%+", NULL };
+static const char *downvol[]    = { "amixer", "-q", "sset", "Master", "5%-", NULL };
+static const char *mute[]       = { "amixer", "-q", "-D", "pulse", "sset", "Master", "toggle", NULL }; /* for muting/unmuting */
 
-static const char *upvol2[] = { "amixer", "-q", "sset", "Master", "10%+", NULL };
-static const char *downvol2[] = { "amixer", "-q", "sset", "Master", "10%-", NULL };
+static const char *upvol2[]     = { "amixer", "-q", "sset", "Master", "10%+", NULL };
+static const char *downvol2[]   = { "amixer", "-q", "sset", "Master", "10%-", NULL };
 
 /* Microphone */
 static const char *micon[]      = { "amixer", "-q", "set", "Capture", "cap", NULL };
@@ -183,15 +186,15 @@ static Key keys[] = {
         { MODKEY|ShiftMask,             XK_e,      quit,           {0} },
         { MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
         /* Sound config */
-        { 0,              XF86XK_AudioRaiseVolume, spawn,          {.v = upvol } },
-        { 0,              XF86XK_AudioLowerVolume, spawn,          {.v = downvol } },
-        { 0,              XF86XK_AudioMute,        spawn,          {.v = mute } },
+        { 0,              XF86XK_AudioRaiseVolume,      spawn,          {.v = upvol } },
+        { 0,              XF86XK_AudioLowerVolume,      spawn,          {.v = downvol } },
+        { 0,              XF86XK_AudioMute,             spawn,          {.v = mute } },
         /* Increase and decrease 10+ the volume */
-        { ShiftMask,      XF86XK_AudioRaiseVolume, spawn,          {.v = upvol2 } },
-        { ShiftMask,      XF86XK_AudioLowerVolume, spawn,          {.v = downvol2 } },
+        { ShiftMask,      XF86XK_AudioRaiseVolume,      spawn,          {.v = upvol2 } },
+        { ShiftMask,      XF86XK_AudioLowerVolume,      spawn,          {.v = downvol2 } },
         /* Microphone */
-        { MODKEY|ShiftMask,             XK_n,       spawn,         {.v = micon } },
-        { MODKEY|ShiftMask,             XK_m,       spawn,         {.v = micoff } },
+        { MODKEY|ShiftMask,             XK_n,           spawn,          {.v = micon } },
+        { MODKEY|ShiftMask,             XK_m,           spawn,          {.v = micoff } },
         /* Increase and decrease the screen brightness. */
         /* It works only if your user belongs to video's group and is allowed by udev. */
         /* If that isn't so, please see the next repository for make a rule that allow it. */
@@ -203,15 +206,15 @@ static Key keys[] = {
         /* # gpasswd -a $USER video */
         /* Note: Here is important that you change $USER to your user's name, since so like is, it will add */
         /* to root user to that group. */
-        { 0,            XF86XK_MonBrightnessDown,   spawn,         {.v = dec_brightness } },
-        { 0,            XF86XK_MonBrightnessUp,     spawn,         {.v = inc_brightness } },
+        { 0,            XF86XK_MonBrightnessDown,   	spawn,         	{.v = dec_brightness } },
+        { 0,            XF86XK_MonBrightnessUp,     	spawn,         	{.v = inc_brightness } },
         /* Enable and disable touchpad. See xinput's output if you want know your touchpad's name. */
-        { MODKEY,                       XK_F1,      spawn,         {.v = k_latam } }, /* Put the keyboard layout to LATAM. */
-        { MODKEY,                       XK_F2,      spawn,         {.v = k_us_intl } }, /* Put the keyboard layout to US-Intl. */
-        { MODKEY,                       XK_F3,      spawn,         {.v = slock } }, /* Lock the screen */
-        { MODKEY,                       XK_F6,      spawn,         {.v = cheese } }, /* Launch camera's app. */
-        { MODKEY,                       XK_Escape,  spawn,         {.v = disable_tpad } },
-        { MODKEY,                       XK_Delete,  spawn,         {.v = enable_tpad } },
+        { MODKEY,                       XK_F1,      	spawn,         	{.v = k_latam } }, /* Put the keyboard layout to LATAM. */
+        { MODKEY,                       XK_F2,      	spawn,         	{.v = k_us_intl } }, /* Put the keyboard layout to US-Intl. */
+        { MODKEY,                       XK_F3,      	spawn,         	{.v = slock } }, /* Lock the screen */
+        { MODKEY,                       XK_F6,      	spawn,         	{.v = cheese } }, /* Launch camera's app. */
+        { MODKEY,                       XK_Escape,  	spawn,         	{.v = disable_tpad } },
+        { MODKEY,                       XK_Delete,  	spawn,         	{.v = enable_tpad } },
         /* Key bindings for change the keyboard layout */
         /* Key bindings for launch programs. Ordered alphabetically. (Mainly) */
         { MODKEY|ShiftMask,             XK_b,           spawn,          {.v = blueman } }, /* GUI to manage bluetooth devices. */
@@ -234,6 +237,8 @@ static Key keys[] = {
         { MODKEY|ShiftMask,             XK_t,           spawn,          {.v = telegram } }, /* Telegram messenger. */
         { MODKEY|ControlMask,           XK_t,           spawn,          {.v = torbrowser } }, /* Tor Browser. */
         { MODKEY|ShiftMask,             XK_v,           spawn,          {.v = vlc } }, /* Media reproductor. */
+        { MODKEY|ShiftMask,             XK_w,           spawn,          {.v = wpa_gui } }, /* Wi-Fi networks manager. */
+        { MODKEY|ShiftMask,             XK_z,           spawn,          {.v = zoom_vt } } /* Video conferences. */
 };
 
 /* button definitions */
