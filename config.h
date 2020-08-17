@@ -4,8 +4,6 @@
 /* For some keys */
 #include <X11/XF86keysym.h>
 #include <X11/keysymdef.h>
-/* For GaplessGrid patch */
-#include "gaplessgrid.c"
 
 /* appearance */
 /* Systray settings */
@@ -42,7 +40,6 @@ static const Rule rules[] = {
 	/* class                        instance                        title       tags mask       iscentered       isfloating   monitor */
         /* Configuring floating windows */
         { "Caja",                       "caja",                         NULL,           0,              1,              1,              -1 },
-        { "Leafpad",                    "leafpad",                      NULL,           0,              1,              1,              -1 },
         { "Pavucontrol",                "pavucontrol",                  NULL,           0,              1,              1,              -1 },
         { "Lxappearance",               "lxappearance",                 NULL,           0,              1,              1,              -1 },
         { "Viewnior",                   "viewnior",                     NULL,           0,              1,              1,              -1 },
@@ -52,6 +49,7 @@ static const Rule rules[] = {
         { "MEGAsync",                   "megasync",                     NULL,           0,              0,              1,              -1 },
         { "zoom",                       "zoom",                         NULL,           0,              1,              1,              -1 },
         { "Glade-previewer",            "glade-previewer",              NULL,           0,              1,              1,              -1 },
+        { "Java",                       "java",                         "Eclipse",      0,              1,              1,              -1 },
         /* Other programs without floating setting */
         { "Firefox",                    NULL,                           NULL,           1,              0,              0,              -1 },
         { "vlc",                        "vlc",                          NULL,           1 << 1,         1,              0,              -1 },
@@ -72,7 +70,6 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",        tile }, /* First entry is default. */
-        { "###",        gaplessgrid },
 	{ "><>",        NULL },    /* no layout function means floating behavior */
 	{ "[M]",        monocle },
 };
@@ -99,7 +96,7 @@ static const char *k_us_intl[]                  = { "setxkbmap", "-layout", "us"
 static const char *blueman[]                    = { "blueman-manager", NULL };
 static const char *caja[]                       = { "caja", NULL };
 static const char *cheese[]			= { "cheese", NULL };
-static const char *cmus[]                       = { "mate-terminal", "-e", "cmus", NULL };
+static const char *cmus[]                       = { "st", "-e", "cmus", NULL };
 static const char *dec_brightness[]             = { "xbacklight", "-dec", "10", NULL };
 static const char *inc_brightness[]             = { "xbacklight", "-inc", "10", NULL };
 static const char *disable_tpad[]               = { "xinput", "disable", "SynPS/2 Synaptics TouchPad", NULL }; /* Use xinput for know your touchpad's id */
@@ -119,8 +116,8 @@ static const char *spm[]                        = { "spm", NULL };
 static const char *suspend[]                    = { "spm", "--suspend", NULL };
 static const char *slock[]                      = { "slock", NULL }; /* Lock the screen */
 static const char *telegram[]                   = { "/opt/Telegram/Telegram", NULL };
-static const char *termcmd[]                    = { "mate-terminal", NULL };
-static const char *termsu[]                     = { "mate-terminal", "-e", "su -", NULL };
+static const char *termcmd[]                    = { "st", NULL };
+static const char *termsu[]                     = { "st", "-e", "su", "-", NULL };
 static const char *vlc[]                        = { "vlc", NULL };
 
 static const char *torbrowser[]                 = { "/opt/tor-browser_en-US/Browser/start-tor-browser",
@@ -162,9 +159,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	/* { MODKEY|ShiftMask,             XK_c,      killclient,     {0} }, */
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_g,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[3]} },
+	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
+	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
