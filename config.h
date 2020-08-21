@@ -1,9 +1,10 @@
 /* See LICENSE file for copyright and license details. */
 
-/* Libraries utilised */
-/* For some keys */
+/* Used Libraries */
+/* To have some keys */
 #include <X11/XF86keysym.h>
 #include <X11/keysymdef.h>
+#include "selfrestart.c" /* See 'selfrestart' patch */
 
 /* appearance */
 /* Systray settings */
@@ -24,22 +25,23 @@ static const char col_gray3[]                = "#bbbbbb";
 static const char col_gray4[]                = "#eeeeee";
 static const char col_cyan[]                 = "#005577";
 static const char *colors[][3]               = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+        /*               fg         bg         border   */
+        [SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
+        [SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
 };
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
-	/* xprop(1):
-	 *	WM_CLASS(STRING) = instance, class
-	 *	WM_NAME(STRING) = title
-	 */
-	/* class                        instance                        title       tags mask       iscentered       isfloating   monitor */
+        /* xprop(1):
+         *      WM_CLASS(STRING) = instance, class
+         *       WM_NAME(STRING) = title
+         */
+        /* class                        instance                        title       tags mask       iscentered       isfloating   monitor */
         /* Configuring floating windows */
         { "Caja",                       "caja",                         NULL,           0,              1,              1,              -1 },
+        { "Leafpad",                    "leafpad",                      NULL,           0,              1,              1,              -1 },
         { "Pavucontrol",                "pavucontrol",                  NULL,           0,              1,              1,              -1 },
         { "Lxappearance",               "lxappearance",                 NULL,           0,              1,              1,              -1 },
         { "Viewnior",                   "viewnior",                     NULL,           0,              1,              1,              -1 },
@@ -52,12 +54,9 @@ static const Rule rules[] = {
         { "Java",                       "java",                         "Eclipse",      0,              1,              1,              -1 },
         /* Other programs without floating setting */
         { "Firefox",                    NULL,                           NULL,           1,              0,              0,              -1 },
-        { "vlc",                        "vlc",                          NULL,           1 << 1,         1,              0,              -1 },
-        { "Eclipse",                    "Eclipse",                      NULL,           1 << 2,         1,              0,              -1 },
-        { "KeePassXC",                  "keepassxc",                    NULL,           1 << 3,         1,              0,              -1 },
-        { "qBittorrent",                "qbittorrent",                  NULL,           1 << 4,         1,              0,              -1 },
-        { "libreoffice-startcenter",    "libreoffice",                  NULL,           1 << 5,         1,              0,              -1 },
-        { "Gimp",                       "gimp",                         NULL,           1 << 6,         1,              0,              -1 },
+        { "Eclipse",                    "Eclipse",                      NULL,           1 << 1,         1,              0,              -1 },
+        { "KeePassXC",                  "keepassxc",                    NULL,           1 << 2,         1,              0,              -1 },
+        { "qBittorrent",                "qbittorrent",                  NULL,           1 << 3,         1,              0,              -1 },
         { "TelegramDesktop",            "Telegram",                     NULL,           1 << 7,         1,              0,              -1 },
         { "SimpleScreenRecorder",       "simplescreenrecorder",         NULL,           1 << 8,         1,              0,              -1 },
 };
@@ -95,17 +94,16 @@ static const char *k_us_intl[]                  = { "setxkbmap", "-layout", "us"
 /* Most used programs */
 static const char *blueman[]                    = { "blueman-manager", NULL };
 static const char *caja[]                       = { "caja", NULL };
-static const char *cheese[]			= { "cheese", NULL };
 static const char *cmus[]                       = { "st", "-e", "cmus", NULL };
 static const char *dec_brightness[]             = { "xbacklight", "-dec", "10", NULL };
 static const char *inc_brightness[]             = { "xbacklight", "-inc", "10", NULL };
-static const char *disable_tpad[]               = { "xinput", "disable", "SynPS/2 Synaptics TouchPad", NULL }; /* Use xinput for know your touchpad's id */
+static const char *disable_tpad[]               = { "xinput", "disable", "SynPS/2 Synaptics TouchPad", NULL }; /* Use xinput to know your touchpad's id */
 static const char *enable_tpad[]                = { "xinput", "enable", "SynPS/2 Synaptics TouchPad", NULL }; /* The same */
 static const char *eclipse[]                    = { "/opt/bin/eclipse", NULL };
-static const char *firefox[]                    = { "firefox", NULL };
+static const char *evince[]                     = { "gtk3-nocsd", "evince", NULL }; /* You must have installed gtk3-nocsd! */
 static const char *flameshot[]                  = { "flameshot", NULL };
 static const char *gimp[]                       = { "gimp", NULL };
-static const char *glade[]                      = { "glade", NULL };
+static const char *glade[]                      = { "gtk3-nocsd", "glade", NULL }; /* You must have installed gtk3-nocsd! */
 static const char *libreoffice[]                = { "libreoffice", NULL };
 static const char *keepassxc[]                  = { "keepassxc", NULL };
 static const char *pavucontrol[]                = { "pavucontrol", NULL };
@@ -115,16 +113,10 @@ static const char *simplescreenrecorder[]       = { "simplescreenrecorder", NULL
 static const char *spm[]                        = { "spm", NULL };
 static const char *suspend[]                    = { "spm", "--suspend", NULL };
 static const char *slock[]                      = { "slock", NULL }; /* Lock the screen */
-static const char *telegram[]                   = { "/opt/Telegram/Telegram", NULL };
+static const char *telegram[]                   = { "telegram", NULL };
 static const char *termcmd[]                    = { "st", NULL };
-static const char *termsu[]                     = { "st", "-e", "su", "-", NULL };
-static const char *vlc[]                        = { "vlc", NULL };
-
-static const char *torbrowser[]                 = { "/opt/tor-browser_en-US/Browser/start-tor-browser",
-                                                "--detach || ([ ! -x /opt/tor-browser_en-US/Browser/start-tor-browser ]",
-                                                "&& /opt/tor-browser_en-US/start-tor-browser", "--detach)'", "dummy %k", NULL };
-
-static const char *wpa_gui[]                    = { "wpa_gui", NULL };
+static const char *torbrowser[]                 = { "/opt/tor-browser_en-US/Browser/start-tor-browser", "--detach", NULL };
+static const char *webbrowser[]                 = { "firefox", NULL };
 static const char *zoom_vt[]                    = { "zoom", NULL }; /* Zoom video transmission. */
 
 /* Commands */
@@ -145,40 +137,41 @@ static const char *micon[]      = { "amixer", "-q", "set", "Capture", "cap", NUL
 static const char *micoff[]     = { "amixer", "-q", "set", "Capture", "nocap", NULL };
 
 static Key keys[] = {
-	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
-	/* { MODKEY|ShiftMask,             XK_c,      killclient,     {0} }, */
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	TAGKEYS(                        XK_1,                      0)
-	TAGKEYS(                        XK_2,                      1)
-	TAGKEYS(                        XK_3,                      2)
-	TAGKEYS(                        XK_4,                      3)
-	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
-	TAGKEYS(                        XK_9,                      8)
+        /* modifier                     key        function        argument */
+        { MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+        { MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+        { MODKEY,                       XK_b,      togglebar,      {0} },
+        { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
+        { MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
+        { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
+        { MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+        { MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
+        { MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+        { MODKEY,                       XK_Return, zoom,           {0} },
+        { MODKEY,                       XK_Tab,    view,           {0} },
+        /* { MODKEY|ShiftMask,             XK_c,      killclient,     {0} }, */
+        { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+        { MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
+        { MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+        { MODKEY,                       XK_space,  setlayout,      {0} },
+        { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+        { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
+        { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
+        { MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
+        { MODKEY,                       XK_period, focusmon,       {.i = +1 } },
+        { MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
+        { MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+        TAGKEYS(                        XK_1,                      0)
+        TAGKEYS(                        XK_2,                      1)
+        TAGKEYS(                        XK_3,                      2)
+        TAGKEYS(                        XK_4,                      3)
+        TAGKEYS(                        XK_5,                      4)
+        TAGKEYS(                        XK_6,                      5)
+        TAGKEYS(                        XK_7,                      6)
+        TAGKEYS(                        XK_8,                      7)
+        TAGKEYS(                        XK_9,                      8)
         /* Custom binding keys */
+        { MODKEY|ShiftMask,             XK_r,      self_restart,   {0} },
         { MODKEY|ShiftMask,             XK_e,      quit,           {0} },
         { MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
         /* Sound config */
@@ -202,21 +195,21 @@ static Key keys[] = {
         /* # gpasswd -a $USER video */
         /* Note: Here is important that you change $USER to your user's name, since so like is, it will add */
         /* to root user to that group. */
-        { 0,            XF86XK_MonBrightnessDown,   	spawn,         	{.v = dec_brightness } },
-        { 0,            XF86XK_MonBrightnessUp,     	spawn,         	{.v = inc_brightness } },
+        { 0,            XF86XK_MonBrightnessDown,       spawn,          {.v = dec_brightness } },
+        { 0,            XF86XK_MonBrightnessUp,         spawn,          {.v = inc_brightness } },
         /* Enable and disable touchpad. See xinput's output if you want know your touchpad's name. */
-        { MODKEY,                       XK_F1,      	spawn,         	{.v = k_latam } }, /* Put the keyboard layout to LATAM. */
-        { MODKEY,                       XK_F2,      	spawn,         	{.v = k_us_intl } }, /* Put the keyboard layout to US-Intl. */
-        { MODKEY,                       XK_F3,      	spawn,         	{.v = slock } }, /* Lock the screen */
-        { MODKEY,                       XK_F6,      	spawn,         	{.v = cheese } }, /* Launch camera's app. */
-        { MODKEY,                       XK_Escape,  	spawn,         	{.v = disable_tpad } },
-        { MODKEY,                       XK_Delete,  	spawn,         	{.v = enable_tpad } },
+        { MODKEY,                       XK_F1,          spawn,          {.v = k_latam } }, /* Put the keyboard layout to LATAM. */
+        { MODKEY,                       XK_F2,          spawn,          {.v = k_us_intl } }, /* Put the keyboard layout to US-Intl. */
+        { MODKEY,                       XK_F3,          spawn,          {.v = slock } }, /* Lock the screen */
+        { MODKEY,                       XK_Escape,      spawn,          {.v = disable_tpad } },
+        { MODKEY,                       XK_Delete,      spawn,          {.v = enable_tpad } },
         /* Key bindings for change the keyboard layout */
         /* Key bindings for launch programs. Ordered alphabetically. (Mainly) */
         { MODKEY|ShiftMask,             XK_b,           spawn,          {.v = blueman } }, /* GUI to manage bluetooth devices. */
         { MODKEY|ShiftMask,             XK_c,           spawn,          {.v = caja } }, /* File manager. */
+        { MODKEY,                       XK_e,           spawn,          {.v = evince } }, /* PDF Viewer */
         { MODKEY|ControlMask,           XK_e,           spawn,          {.v = eclipse } }, /* IDE for Java Developers Edition. */
-        { MODKEY|ShiftMask,             XK_f,           spawn,          {.v = firefox } }, /* Web explorer. */
+        { MODKEY,                       XK_w,           spawn,          {.v = webbrowser } }, /* Web explorer. */
         { MODKEY|ControlMask,           XK_f,           spawn,          {.v = flameshot } }, /* Screenshoter. */
         { MODKEY|ShiftMask,             XK_g,           spawn,          {.v = glade } }, /* User interface designer. */
         { MODKEY|ControlMask,           XK_g,           spawn,          {.v = gimp } }, /* Photo editor. */
@@ -225,32 +218,29 @@ static Key keys[] = {
         { 0,                            XK_Print,       spawn,          {.v = scrot } }, /* Take screenshots. */
         { MODKEY|ShiftMask,             XK_p,           spawn,          {.v = pavucontrol } }, /* Sound devices manager. */
         { MODKEY|ControlMask,           XK_q,           spawn,          {.v = qbittorrent } }, /* Bittorrent admin. */
-        { MODKEY|ControlMask|ShiftMask, XK_Return,      spawn,          {.v = termsu } }, /* Execute a terminal as super user */
         { MODKEY|ShiftMask,             XK_s,           spawn,          {.v = simplescreenrecorder } }, /* Screen recorder. */
         { MODKEY|ShiftMask,             XK_Delete,      spawn,          {.v = spm } }, /* GUI to shutdown, reboot, etc. */
         { 0,                      XF86XK_Sleep,         spawn,          {.v = suspend } }, /* Put the system to sleep. */
         { 0,                      XF86XK_AudioPlay,     spawn,          {.v = cmus } }, /* Launch music's reproductor. */
         { MODKEY|ShiftMask,             XK_t,           spawn,          {.v = telegram } }, /* Telegram messenger. */
         { MODKEY|ControlMask,           XK_t,           spawn,          {.v = torbrowser } }, /* Tor Browser. */
-        { MODKEY|ShiftMask,             XK_v,           spawn,          {.v = vlc } }, /* Media reproductor. */
-        { MODKEY|ShiftMask,             XK_w,           spawn,          {.v = wpa_gui } }, /* Wi-Fi networks manager. */
         { MODKEY|ShiftMask,             XK_z,           spawn,          {.v = zoom_vt } } /* Video conferences. */
 };
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
-	/* click                event mask      button          function        argument */
-	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
-	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
-	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
-	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
-	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
-	{ ClkTagBar,            0,              Button1,        view,           {0} },
-	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
-	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+        /* click                event mask      button          function        argument */
+        { ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
+        { ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
+        { ClkWinTitle,          0,              Button2,        zoom,           {0} },
+        { ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
+        { ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
+        { ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
+        { ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
+        { ClkTagBar,            0,              Button1,        view,           {0} },
+        { ClkTagBar,            0,              Button3,        toggleview,     {0} },
+        { ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
+        { ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
 
