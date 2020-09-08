@@ -116,6 +116,7 @@ static const char *telegram[]                   = { "telegram", NULL };
 static const char *termcmd[]                    = { "st", NULL };
 static const char *torbrowser[]                 = { "/opt/tor-browser_en-US/Browser/start-tor-browser", "--detach", NULL };
 static const char *webbrowser[]                 = { "firefox", NULL };
+static const char *privatebrowser[]             = { "firefox", "--private-window", NULL };
 
 /* Commands */
 /* static const char *upvol[] = { "amixer", "set", "Master", "2+", NULL }; */
@@ -221,7 +222,8 @@ static Key keys[] = {
         { 0,                      XF86XK_Sleep,         spawn,          {.v = suspend } }, /* Put the system to sleep. */
         { MODKEY|ShiftMask,             XK_t,           spawn,          {.v = telegram } }, /* Telegram messenger. */
         { MODKEY|ControlMask,           XK_t,           spawn,          {.v = torbrowser } }, /* Tor Browser. */
-        { MODKEY,                       XK_w,           spawn,          {.v = webbrowser } }, /* Web explorer. */
+        { MODKEY,                       XK_w,           spawn,          {.v = webbrowser } }, /* Web browser. */
+        { MODKEY|ShiftMask,             XK_w,           spawn,          {.v = privatebrowser } }, /* Web browser in private mode. */
 };
 
 /* button definitions */
