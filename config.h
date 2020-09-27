@@ -43,17 +43,12 @@ static const Rule rules[] = {
         { "Lxappearance",               "lxappearance",                 NULL,           0,              1,              1,              -1 },
         { "Viewnior",                   "viewnior",                     NULL,           0,              1,              1,              -1 },
         { "Engrampa",                   "engrampa",                     NULL,           0,              1,              1,              -1 },
-        { "Blueman-manager",            "blueman-manager",              NULL,           0,              1,              1,              -1 },
-        { "wpa_gui",                    "wpa_gui",                      NULL,           0,              1,              1,              -1 },
-        { "MEGAsync",                   "megasync",                     NULL,           0,              0,              1,              -1 },
-        { "zoom",                       "zoom",                         NULL,           0,              1,              1,              -1 },
         { "Glade-previewer",            "glade-previewer",              NULL,           0,              1,              1,              -1 },
         { "mpv",                        "gl",                           NULL,           0,              1,              1,              -1 },
         /* Other programs without floating setting */
         { "Firefox",                    NULL,                           NULL,           1,              0,              0,              -1 },
         { "KeePassXC",                  "keepassxc",                    NULL,           1 << 2,         1,              0,              -1 },
         { "qBittorrent",                "qbittorrent",                  NULL,           1 << 3,         1,              0,              -1 },
-        { "TelegramDesktop",            "telegram",                     NULL,           1 << 7,         1,              0,              -1 },
 };
 
 /* layout(s) */
@@ -87,7 +82,6 @@ static const char *dmenucmd[]                   = { "dmenu_run", "-l", "20", "-c
 static const char *k_latam[]                    = { "setxkbmap", "-layout", "latam", NULL };
 static const char *k_us_intl[]                  = { "setxkbmap", "-layout", "us", "-variant", "intl", NULL };
 /* Most used programs */
-static const char *blueman[]                    = { "blueman-manager", NULL };
 static const char *dec_brightness[]             = { "xbacklight", "-dec", "10", NULL };
 static const char *inc_brightness[]             = { "xbacklight", "-inc", "10", NULL };
 static const char *disable_tpad[]               = { "xinput", "disable", "SynPS/2 Synaptics TouchPad", NULL }; /* Use xinput to know your touchpad's id */
@@ -100,7 +94,6 @@ static const char *pavucontrol[]                = { "pavucontrol", NULL };
 static const char *qbittorrent[]                = { "qbittorrent", NULL };
 static const char *scrot[]                      = { "scrot", "BrookieShot_\\%a-\\%d\\%b%y_%H.%M.\\%S.png", "-e", "viewnior ~/$f", NULL };
 static const char *spm[]                        = { "spm", NULL };
-static const char *suspend[]                    = { "spm", "--suspend", NULL };
 static const char *slock[]                      = { "slock", NULL }; /* Lock the screen */
 static const char *telegram[]                   = { "telegram", NULL };
 static const char *termcmd[]                    = { "st", "-e", "tmux", NULL };
@@ -108,12 +101,7 @@ static const char *torbrowser[]                 = { "/opt/tor-browser_en-US/Brow
 static const char *webbrowser[]                 = { "firefox", NULL };
 static const char *privatebrowser[]             = { "firefox", "--private-window", NULL };
 
-/* Commands */
-/* static const char *upvol[] = { "amixer", "set", "Master", "2+", NULL }; */
-/* static const char *downvol[] = { "amixer", "set", "Master", "2-", NULL }; */
-/* static const char *mute[] = { "amixer", "-q", "set", "Master", "toggle", NULL }; /1* for muting/unmuting *1/ */
-
-/* For pulse compatible */
+/* Multimedia commands */
 static const char *upvol[]      = { "amixer", "-q", "sset", "Master", "5%+", NULL };
 static const char *downvol[]    = { "amixer", "-q", "sset", "Master", "5%-", NULL };
 static const char *mute[]       = { "amixer", "-q", "-D", "pulse", "sset", "Master", "toggle", NULL }; /* for muting/unmuting */
@@ -121,7 +109,6 @@ static const char *mute[]       = { "amixer", "-q", "-D", "pulse", "sset", "Mast
 static const char *upvol2[]     = { "amixer", "-q", "sset", "Master", "10%+", NULL };
 static const char *downvol2[]   = { "amixer", "-q", "sset", "Master", "10%-", NULL };
 
-/* Microphone */
 static const char *micon[]      = { "amixer", "-q", "set", "Capture", "cap", NULL };
 static const char *micoff[]     = { "amixer", "-q", "set", "Capture", "nocap", NULL };
 
@@ -193,7 +180,6 @@ static Key keys[] = {
         { MODKEY,                       XK_Delete,      spawn,          {.v = enable_tpad } },
         /* Key bindings for change the keyboard layout */
         /* Key bindings for launch programs. Ordered alphabetically. (Mainly) */
-        { MODKEY|ShiftMask,             XK_b,           spawn,          {.v = blueman } }, /* GUI to manage bluetooth devices. */
         { MODKEY,                       XK_e,           spawn,          {.v = evince } }, /* PDF Viewer */
         { MODKEY,                       XK_Print,       spawn,          {.v = flameshot } }, /* "Professional screenshoter." */
         { MODKEY|ShiftMask,             XK_k,           spawn,          {.v = keepassxc } }, /* Password manager. */
@@ -202,7 +188,6 @@ static Key keys[] = {
         { MODKEY|ShiftMask,             XK_p,           spawn,          {.v = pavucontrol } }, /* Sound devices manager. */
         { MODKEY,                       XK_q,           spawn,          {.v = qbittorrent } }, /* Bittorrent admin. */
         { MODKEY|ShiftMask,             XK_Delete,      spawn,          {.v = spm } }, /* GUI to shutdown, reboot, etc. */
-        { 0,                      XF86XK_Sleep,         spawn,          {.v = suspend } }, /* Put the system to sleep. */
         { MODKEY|ShiftMask,             XK_t,           spawn,          {.v = telegram } }, /* Telegram messenger. */
         { MODKEY|ControlMask,           XK_t,           spawn,          {.v = torbrowser } }, /* Tor Browser. */
         { MODKEY,                       XK_w,           spawn,          {.v = webbrowser } }, /* Web browser. */
