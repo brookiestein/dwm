@@ -41,10 +41,13 @@ static const Rule rules[] = {
         /* Configuring floating windows */
         { "Pavucontrol",                "pavucontrol",                  NULL,           0,              1,              1,              -1 },
         { "Lxappearance",               "lxappearance",                 NULL,           0,              1,              1,              -1 },
-        { "Viewnior",                   "viewnior",                     NULL,           0,              1,              1,              -1 },
         { "Engrampa",                   "engrampa",                     NULL,           0,              1,              1,              -1 },
+        { "Viewnior",                   "viewnior",                     NULL,           0,              1,              1,              -1 },
         { "Glade-previewer",            "glade-previewer",              NULL,           0,              1,              1,              -1 },
         { "mpv",                        "gl",                           NULL,           0,              1,              1,              -1 },
+        { "wpa_gui",                    "wpa_gui",                      NULL,           0,              1,              1,              -1 },
+        { "Thunar",                     "thunar",                       NULL,           0,              1,              1,              -1 },
+        { "Java",                       "java",                         "Eclipse",      0,              1,              1,              -1 },
         /* Other programs without floating setting */
         { "Firefox",                    NULL,                           NULL,           1,              0,              0,              -1 },
         { "KeePassXC",                  "keepassxc",                    NULL,           1 << 2,         1,              0,              -1 },
@@ -79,6 +82,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[]                   = { "dmenu_run", "-l", "20", "-c", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1,
                                                 "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 /* Keyboard layout key bindings */
+static const char *thunar[]                       = { "thunar", NULL };
 static const char *k_latam[]                    = { "setxkbmap", "-layout", "latam", NULL };
 static const char *k_us_intl[]                  = { "setxkbmap", "-layout", "us", "-variant", "intl", NULL };
 /* Most used programs */
@@ -86,13 +90,20 @@ static const char *dec_brightness[]             = { "xbacklight", "-dec", "10", 
 static const char *inc_brightness[]             = { "xbacklight", "-inc", "10", NULL };
 static const char *disable_tpad[]               = { "xinput", "disable", "SynPS/2 Synaptics TouchPad", NULL }; /* Use xinput to know your touchpad's id */
 static const char *enable_tpad[]                = { "xinput", "enable", "SynPS/2 Synaptics TouchPad", NULL }; /* The same */
+static const char *eclipse[]                    = { "eclipse", NULL }; /* Eclipse IDE For Java Developers */
 static const char *evince[]                     = { "gtk3-nocsd", "evince", NULL }; /* You must have installed gtk3-nocsd! */
+static const char *glade[]                      = { "gtk3-nocsd", "glade", NULL }; /* The same */
 static const char *flameshot[]                  = { "flameshot", NULL };
 static const char *libreoffice[]                = { "libreoffice", NULL };
 static const char *keepassxc[]                  = { "keepassxc", NULL };
 static const char *pavucontrol[]                = { "pavucontrol", NULL };
 static const char *qbittorrent[]                = { "qbittorrent", NULL };
-static const char *scrot[]                      = { "scrot", "BrookieShot_\\%a-\\%d\\%b%y_%H.%M.\\%S.png", "-e", "viewnior ~/$f", NULL };
+static const char *scrot[]                      = {
+        "scrot", "BrookieShot_\\%F_\%T.png",
+        "-e", "viewnior ~/$f",
+        NULL
+};
+
 static const char *spm[]                        = { "spm", NULL };
 static const char *slock[]                      = { "slock", NULL }; /* Lock the screen */
 static const char *telegram[]                   = { "telegram", NULL };
@@ -102,15 +113,12 @@ static const char *webbrowser[]                 = { "firefox", NULL };
 static const char *privatebrowser[]             = { "firefox", "--private-window", NULL };
 
 /* Multimedia commands */
-static const char *upvol[]      = { "amixer", "-q", "sset", "Master", "5%+", NULL };
-static const char *downvol[]    = { "amixer", "-q", "sset", "Master", "5%-", NULL };
+static const char *upvol[]      = { "amixer", "-q", "sset", "Master", "5%+",    NULL };
+static const char *downvol[]    = { "amixer", "-q", "sset", "Master", "5%-",    NULL };
+static const char *upvol2[]     = { "amixer", "-q", "sset", "Master", "10%+",   NULL };
+static const char *downvol2[]   = { "amixer", "-q", "sset", "Master", "10%-",   NULL };
 static const char *mute[]       = { "amixer", "-q", "-D", "pulse", "sset", "Master", "toggle", NULL }; /* for muting/unmuting */
-
-static const char *upvol2[]     = { "amixer", "-q", "sset", "Master", "10%+", NULL };
-static const char *downvol2[]   = { "amixer", "-q", "sset", "Master", "10%-", NULL };
-
-static const char *micon[]      = { "amixer", "-q", "set", "Capture", "cap", NULL };
-static const char *micoff[]     = { "amixer", "-q", "set", "Capture", "nocap", NULL };
+static const char *mutemic[]    = { "amixer", "-q", "-D", "pulse", "sset", "Capture", "toggle", NULL }; /* The same, but for microphone */
 
 static Key keys[] = {
         /* modifier                     key        function        argument */
@@ -153,12 +161,10 @@ static Key keys[] = {
         { 0,              XF86XK_AudioRaiseVolume,      spawn,          {.v = upvol } },
         { 0,              XF86XK_AudioLowerVolume,      spawn,          {.v = downvol } },
         { 0,              XF86XK_AudioMute,             spawn,          {.v = mute } },
+        { 0,              XF86XK_AudioMicMute,          spawn,          {.v = mutemic} },
         /* Increase and decrease 10+ the volume */
         { ShiftMask,      XF86XK_AudioRaiseVolume,      spawn,          {.v = upvol2 } },
         { ShiftMask,      XF86XK_AudioLowerVolume,      spawn,          {.v = downvol2 } },
-        /* Microphone */
-        { MODKEY|ShiftMask,             XK_n,           spawn,          {.v = micon } },
-        { MODKEY|ShiftMask,             XK_m,           spawn,          {.v = micoff } },
         /* Increase and decrease the screen brightness. */
         /* It works only if your user belongs to video's group and is allowed by udev. */
         /* If that isn't so, please see the next repository for make a rule that allow it. */
@@ -181,7 +187,10 @@ static Key keys[] = {
         /* Key bindings for change the keyboard layout */
         /* Key bindings for launch programs. Ordered alphabetically. (Mainly) */
         { MODKEY,                       XK_e,           spawn,          {.v = evince } }, /* PDF Viewer */
+        { MODKEY|ControlMask,           XK_e,           spawn,          {.v = eclipse } }, /* Eclipse IDE For Java Developers */
+        { MODKEY|ShiftMask,             XK_f,           spawn,          {.v = thunar } }, /* File explorer */
         { MODKEY,                       XK_Print,       spawn,          {.v = flameshot } }, /* "Professional screenshoter." */
+        { MODKEY,                       XK_g,           spawn,          {.v = glade } },
         { MODKEY|ShiftMask,             XK_k,           spawn,          {.v = keepassxc } }, /* Password manager. */
         { MODKEY|ShiftMask,             XK_l,           spawn,          {.v = libreoffice } }, /* Office suite. */
         { 0,                            XK_Print,       spawn,          {.v = scrot } }, /* Take screenshots. */
