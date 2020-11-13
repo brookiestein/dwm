@@ -124,7 +124,6 @@ static const char *keepassxc[]                  = { "keepassxc", NULL };
 static const char *pavucontrol[]                = { "pavucontrol", NULL };
 static const char *qbittorrent[]                = { "qbittorrent", NULL };
 static const char *spm[]                        = { "spm", NULL };
-static const char *suspend[]                    = { "slock", "&", "spm", "--suspend", NULL };
 static const char *slock[]                      = { "slock", NULL };
 static const char *telegram[]                   = { "telegram", NULL };
 static const char *termcmd[]                    = { "st", "-e", "tmux", NULL };
@@ -240,7 +239,8 @@ static Key keys[] = {
         { MODKEY|ShiftMask,             XK_p,           spawn,          {.v = pavucontrol } }, /* Sound devices manager. */
         { MODKEY,                       XK_q,           spawn,          {.v = qbittorrent } }, /* Bittorrent admin. */
         { MODKEY|ShiftMask,             XK_Delete,      spawn,          {.v = spm } }, /* GUI to shutdown, reboot, etc. */
-        { 0,                            XF86XK_Sleep,   spawn,          {.v = suspend } }, /* System suspension with screen locking. */
+        /* Lock the screen because of double suspension in the old way. Look at: 55a8e9f */
+        { 0,                            XF86XK_Sleep,   spawn,          {.v = slock } },
         { MODKEY|ShiftMask,             XK_t,           spawn,          {.v = telegram } }, /* Telegram messenger. */
         { MODKEY|ControlMask,           XK_t,           spawn,          {.v = torbrowser } }, /* Tor Browser. */
         { 0,                            XF86XK_WebCam,  spawn,          {.v = webcam } }, /* Web browser. */
