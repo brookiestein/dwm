@@ -67,7 +67,7 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define MODKEY Mod4Mask /* Change from Mod1Mask (ALT key) to Mod4Mask ("Windows key") */
+#define MODKEY Mod4Mask /* Changed from Mod1Mask (ALT key) to Mod4Mask (Super key) */
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -79,46 +79,89 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[]                   = { "dmenu_run", "-l", "20", "-c", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1,
-                                                "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-/* Keyboard layout key bindings */
-static const char *thunar[]                       = { "thunar", NULL };
-static const char *k_latam[]                    = { "setxkbmap", "-layout", "latam", NULL };
-static const char *k_us_intl[]                  = { "setxkbmap", "-layout", "us", "-variant", "intl", NULL };
-/* Most used programs */
+static const char *dmenucmd[]                   = {
+        "dmenu_run", "-l", "20", "-c", "-m",
+        dmenumon, "-fn", dmenufont, "-nb",
+        col_gray1, "-nf", col_gray3, "-sb",
+        col_cyan, "-sf", col_gray4, NULL
+};
+static const char *scrot[]                      = {
+        "scrot", "BrookieShot_\%F_\%T.png",
+        "-e", "viewnior ~/$f",
+        NULL
+};
+/* Touchpad settings: Use xinput to know your touchpad's id. */
+static const char *turn_off_tpad[]              = {
+        "xinput", "disable",
+        "SynPS/2 Synaptics TouchPad", NULL
+};
+static const char *turn_on_tpad[]               = {
+        "xinput", "enable",
+        "SynPS/2 Synaptics TouchPad", NULL
+};
+static const char *torbrowser[]                 = {
+        "/opt/tor-browser_en-US/Browser/start-tor-browser",
+        "--detach", NULL
+};
+static const char *k_latam[]                    = {
+        "setxkbmap", "-layout",
+        "latam", NULL
+};
+static const char *k_us_intl[]                  = {
+        "setxkbmap", "-layout", "us",
+        "-variant", "intl", NULL
+};
+static const char *thunar[]                     = { "thunar", NULL };
 static const char *dec_brightness[]             = { "xbacklight", "-dec", "10", NULL };
 static const char *inc_brightness[]             = { "xbacklight", "-inc", "10", NULL };
-static const char *disable_tpad[]               = { "xinput", "disable", "SynPS/2 Synaptics TouchPad", NULL }; /* Use xinput to know your touchpad's id */
-static const char *enable_tpad[]                = { "xinput", "enable", "SynPS/2 Synaptics TouchPad", NULL }; /* The same */
-static const char *eclipse[]                    = { "eclipse", NULL }; /* Eclipse IDE For Java Developers */
-static const char *evince[]                     = { "gtk3-nocsd", "evince", NULL }; /* You must have installed gtk3-nocsd! */
-static const char *glade[]                      = { "gtk3-nocsd", "glade", NULL }; /* The same */
+static const char *eclipse[]                    = { "eclipse", NULL };
+/* You must have installed gtk3-nocsd! */
+static const char *evince[]                     = { "gtk3-nocsd", "evince", NULL };
+static const char *glade[]                      = { "gtk3-nocsd", "glade", NULL };
 static const char *flameshot[]                  = { "flameshot", NULL };
 static const char *libreoffice[]                = { "libreoffice", NULL };
 static const char *keepassxc[]                  = { "keepassxc", NULL };
 static const char *pavucontrol[]                = { "pavucontrol", NULL };
 static const char *qbittorrent[]                = { "qbittorrent", NULL };
-static const char *scrot[]                      = {
-        "scrot", "BrookieShot_\\%F_\%T.png",
-        "-e", "viewnior ~/$f",
-        NULL
-};
-
 static const char *spm[]                        = { "spm", NULL };
-static const char *slock[]                      = { "slock", NULL }; /* Lock the screen */
+static const char *suspend[]                    = { "slock", "&", "spm", "--suspend", NULL };
+static const char *slock[]                      = { "slock", NULL };
 static const char *telegram[]                   = { "telegram", NULL };
 static const char *termcmd[]                    = { "st", "-e", "tmux", NULL };
-static const char *torbrowser[]                 = { "/opt/tor-browser_en-US/Browser/start-tor-browser", "--detach", NULL };
+static const char *webcam[]                     = { "guvcview", NULL };
 static const char *webbrowser[]                 = { "firefox", NULL };
 static const char *privatebrowser[]             = { "firefox", "--private-window", NULL };
 
 /* Multimedia commands */
-static const char *upvol[]      = { "amixer", "-q", "sset", "Master", "5%+",    NULL };
-static const char *downvol[]    = { "amixer", "-q", "sset", "Master", "5%-",    NULL };
-static const char *upvol2[]     = { "amixer", "-q", "sset", "Master", "10%+",   NULL };
-static const char *downvol2[]   = { "amixer", "-q", "sset", "Master", "10%-",   NULL };
-static const char *mute[]       = { "amixer", "-q", "-D", "pulse", "sset", "Master", "toggle", NULL }; /* for muting/unmuting */
-static const char *mutemic[]    = { "amixer", "-q", "-D", "pulse", "sset", "Capture", "toggle", NULL }; /* The same, but for microphone */
+static const char *upvol[]      = {
+        "amixer", "-q", "-D", "pulse",
+        "sset", "Master", "5%+", NULL
+};
+
+static const char *downvol[]    = {
+        "amixer", "-q", "-D", "pulse",
+        "sset", "Master", "5%-", NULL
+};
+
+static const char *upvol2[]     = {
+        "amixer", "-q", "-D", "pulse",
+        "sset", "Master", "10%+", NULL
+};
+
+static const char *downvol2[]   = {
+        "amixer", "-q", "-D", "pulse",
+        "sset", "Master", "10%-", NULL
+};
+
+static const char *mute[]       = {
+        "amixer", "-q", "-D", "pulse",
+        "sset", "Master", "toggle", NULL
+}; /* for muting/unmuting */
+
+static const char *mutemic[]    = {
+        "amixer", "-q", "-D", "pulse",
+        "sset", "Capture", "toggle", NULL
+}; /* The same, but for microphone */
 
 static Key keys[] = {
         /* modifier                     key        function        argument */
@@ -161,7 +204,7 @@ static Key keys[] = {
         { 0,              XF86XK_AudioRaiseVolume,      spawn,          {.v = upvol } },
         { 0,              XF86XK_AudioLowerVolume,      spawn,          {.v = downvol } },
         { 0,              XF86XK_AudioMute,             spawn,          {.v = mute } },
-        { 0,              XF86XK_AudioMicMute,          spawn,          {.v = mutemic} },
+        { 0,              XF86XK_AudioMicMute,          spawn,          {.v = mutemic } },
         /* Increase and decrease 10+ the volume */
         { ShiftMask,      XF86XK_AudioRaiseVolume,      spawn,          {.v = upvol2 } },
         { ShiftMask,      XF86XK_AudioLowerVolume,      spawn,          {.v = downvol2 } },
@@ -182,8 +225,8 @@ static Key keys[] = {
         { MODKEY,                       XK_F1,          spawn,          {.v = k_latam } }, /* Put the keyboard layout to LATAM. */
         { MODKEY,                       XK_F2,          spawn,          {.v = k_us_intl } }, /* Put the keyboard layout to US-Intl. */
         { MODKEY,                       XK_F3,          spawn,          {.v = slock } }, /* Lock the screen */
-        { MODKEY,                       XK_Escape,      spawn,          {.v = disable_tpad } },
-        { MODKEY,                       XK_Delete,      spawn,          {.v = enable_tpad } },
+        { MODKEY|ControlMask,           XK_comma,       spawn,          {.v = turn_off_tpad } },
+        { MODKEY|ControlMask,           XK_period,      spawn,          {.v = turn_on_tpad } },
         /* Key bindings for change the keyboard layout */
         /* Key bindings for launch programs. Ordered alphabetically. (Mainly) */
         { MODKEY,                       XK_e,           spawn,          {.v = evince } }, /* PDF Viewer */
@@ -197,8 +240,10 @@ static Key keys[] = {
         { MODKEY|ShiftMask,             XK_p,           spawn,          {.v = pavucontrol } }, /* Sound devices manager. */
         { MODKEY,                       XK_q,           spawn,          {.v = qbittorrent } }, /* Bittorrent admin. */
         { MODKEY|ShiftMask,             XK_Delete,      spawn,          {.v = spm } }, /* GUI to shutdown, reboot, etc. */
+        { 0,                            XF86XK_Sleep,   spawn,          {.v = suspend } }, /* System suspension with screen locking. */
         { MODKEY|ShiftMask,             XK_t,           spawn,          {.v = telegram } }, /* Telegram messenger. */
         { MODKEY|ControlMask,           XK_t,           spawn,          {.v = torbrowser } }, /* Tor Browser. */
+        { 0,                            XF86XK_WebCam,  spawn,          {.v = webcam } }, /* Web browser. */
         { MODKEY,                       XK_w,           spawn,          {.v = webbrowser } }, /* Web browser. */
         { MODKEY|ShiftMask,             XK_w,           spawn,          {.v = privatebrowser } }, /* Web browser in private mode. */
 };
