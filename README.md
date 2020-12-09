@@ -9,12 +9,13 @@ In order to build dwm you need the Xlib header files.
 
 Optionally you need:
 
-```
 [syspowermanager](https://github.com/brookiestein/syspowermanager/)
+
 [slock](https://github.com/brookiestein/slock/)
+
 [dmenu](https://github.com/brookiestein/dmenu/)
+
 Among other utilities.
-```
 
 **Note that there's a number of keyboard shortcuts you may not need.**
 
