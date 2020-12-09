@@ -9,35 +9,30 @@ In order to build dwm you need the Xlib header files.
 
 Optionally you need:
 
-```setxkbmap```
-
-```scrot```
-
-```xinput```
-
-```xsetroot```
-
+```
 [syspowermanager](https://github.com/brookiestein/syspowermanager/)
-
 [slock](https://github.com/brookiestein/slock/)
+[dmenu](https://github.com/brookiestein/dmenu/)
+Among other utilities.
+```
 
-**Note that there are a number of keyboard shortcuts that you may not need.**
+**Note that there's a number of keyboard shortcuts you may not need.**
 
-In that case, tell them or delete them directly.
+In that case, delete them.
 
 **If you use this setting, these keyboard shortcuts might interest you:**
 ```
-Windows key + Shift key + X = Set keyboard layout in Latin American Spanish
-Windows key + Shift key + Z = Set keyboard layout in alternative American English
+Windows key + F1 = Set keyboard layout in Latin American Spanish
+Windows key + F2 = Set keyboard layout in alternative American English
 
-# For these keyboard shortcuts you will need: syspoweradmin
+# For this keyboard shortcuts you will need: syspoweradmin
 Windows key + Shift key + Delete = Show a window with power options
 
-# Check out what xinput shows and change id 12 in the config.h for your touchpad
-Windows key + Delete = Enable touchpad
-Windows key + Escape = Disable touchpad
+# Check out what xinput shows and change id in the config.h for your touchpad
+Windows key + Control key + Period = Enable touchpad
+Windows key + Control key + Comma  = Disable touchpad
 ```
-**In this configuration the keyboard shortcut was changed to exit the environment to:**
+**In this configuration the keyboard shortcut to close dwm itself was changed to:**
 ```
 Windows key + Shift key + e
 ```
@@ -59,7 +54,10 @@ the /usr/local namespace by default).
 Afterwards enter the following command to build and install dwm (if
 necessary as root):
 ```
-# for i in $(ls -1 patches/); do patch -i patches/$i; done
+$ p=patches
+$ for i in `ls -1 $p`; do
+        patch -i ${p}/${i}
+done
 # make clean install
 ```
 
@@ -67,7 +65,7 @@ necessary as root):
 -----------
 Add the following line to your .xinitrc to start dwm using startx:
 ```
-exec dwm
+exec /usr/bin/dwm
 ```
 In order to connect dwm to a specific display, make sure that
 the DISPLAY environment variable is set correctly, e.g.:
@@ -76,12 +74,12 @@ DISPLAY=foo.bar:1 exec dwm
 ```
 (This will start dwm on display :1 of the host foo.bar.)
 
-**How be will show the status bar, will depend of which you choose.**
+**How will the status bar be shown, will depend on which you had chose.**
 
-If you choosed the first option, is say:
+If you chose the first option, it's say:
 My repository of [dwmrc](https://github.com/brookiestein/dotfiles/tree/master/.config/dwm/)
 
-Then you can do something like this in your .xinitrc:
+In that case you can do something like this in your .xinitrc:
 ```
 DIR=${HOME}/.dwm
 if [ -f "${DIR}"/dwmrc ]; then
@@ -94,7 +92,7 @@ fi
 exec dwm
 ```
 
-In case of that you choosed [slstatus:](https://github.com/brookiestein/slstatus)
+In case your choice had been [slstatus:](https://github.com/brookiestein/slstatus)
 
 **Only add this to your .xinitrc:**
 ```
