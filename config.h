@@ -16,8 +16,8 @@ static const unsigned int borderpx      = 1;        /* border pixel of windows *
 static const unsigned int snap          = 32;       /* snap pixel */
 static const unsigned int showbar       = 1;        /* 0 means no bar */
 static const unsigned int topbar        = 1;        /* 0 means bottom bar */
-static const char *fonts[]              = { "monospace:size=10" };
-static const char dmenufont[]           = "monospace:size=10";
+static const char *fonts[]              = { "mononoki Nerd Font Mono:size=10" };
+static const char dmenufont[]           = "mononoki Nerd Font Mono:size=10";
 static const char col_gray1[]           = "#222222";
 static const char col_gray2[]           = "#444444";
 static const char col_gray3[]           = "#bbbbbb";
