@@ -82,7 +82,7 @@ static const char *dmenucmd[]                   = {
         col_cyan, "-sf", col_gray4, NULL
 };
 static const char *scrot[]                      = {
-        "scrot", "BrookieShot_\%F_\%H-\%M-\%S.png",
+        "scrot", "BrookieShot_%F_%H-%M-%S.png",
         "-e", "viewnior ~/$f",
         NULL
 };
@@ -101,9 +101,7 @@ static const char *dec_brightness[]             = { "xbacklight", "-dec", "10", 
 static const char *inc_brightness[]             = { "xbacklight", "-inc", "10", NULL };
 /* You must have installed gtk3-nocsd! */
 static const char *evince[]                     = { "gtk3-nocsd", "evince", NULL };
-static const char *glade[]                      = { "gtk3-nocsd", "glade", NULL };
 static const char *flameshot[]                  = { "flameshot", NULL };
-static const char *libreoffice[]                = { "libreoffice", NULL };
 static const char *keepassxc[]                  = { "keepassxc", NULL };
 static const char *pavucontrol[]                = { "pavucontrol", NULL };
 static const char *qbittorrent[]                = { "qbittorrent", NULL };
@@ -194,7 +192,7 @@ static Key keys[] = {
         { 0,            XF86XK_MonBrightnessDown,       spawn,          {.v = dec_brightness } },
         { 0,            XF86XK_MonBrightnessUp,         spawn,          {.v = inc_brightness } },
         /* Enable and disable touchpad. See xinput's output if you want know your touchpad's name. */
-        { MODKEY,                       XK_l,           spawn,          {.v = slock } }, /* Lock the screen */
+        { MODKEY|ShiftMask,             XK_l,           spawn,          {.v = slock } }, /* Lock the screen */
         { MODKEY|ControlMask,           XK_comma,       spawn,          {.v = turn_off_tpad } },
         { MODKEY|ControlMask,           XK_period,      spawn,          {.v = turn_on_tpad } },
         /* Key bindings for change the keyboard layout */
@@ -203,7 +201,6 @@ static Key keys[] = {
         { MODKEY|ShiftMask,             XK_f,           spawn,          {.v = thunar } }, /* File explorer */
         { MODKEY,                       XK_Print,       spawn,          {.v = flameshot } }, /* "Professional screenshoter." */
         { MODKEY|ShiftMask,             XK_k,           spawn,          {.v = keepassxc } }, /* Password manager. */
-        { MODKEY|ShiftMask,             XK_l,           spawn,          {.v = libreoffice } }, /* Office suite. */
         { 0,                            XK_Print,       spawn,          {.v = scrot } }, /* Take fast screenshots. */
         { MODKEY|ShiftMask,             XK_p,           spawn,          {.v = pavucontrol } }, /* Sound devices manager. */
         { MODKEY,                       XK_q,           spawn,          {.v = qbittorrent } }, /* Bittorrent admin. */
