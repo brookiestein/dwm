@@ -1,7 +1,4 @@
 /* See LICENSE file for copyright and license details. */
-
-/* Used Libraries */
-/* To have some keys */
 #include <X11/XF86keysym.h>
 #include <X11/keysymdef.h>
 
@@ -47,7 +44,6 @@ static const Rule rules[] = {
         { "mpv",                        "gl",                           NULL,           0,              1,              1,              -1 },
         { "wpa_gui",                    "wpa_gui",                      NULL,           0,              1,              1,              -1 },
         { "Thunar",                     "thunar",                       NULL,           0,              1,              1,              -1 },
-        { "Java",                       "java",                         "Eclipse",      0,              1,              1,              -1 },
         /* Other programs without floating setting */
         { "Firefox",                    NULL,                           NULL,           1,              0,              0,              -1 },
         { "KeePassXC",                  "keepassxc",                    NULL,           1 << 2,         1,              0,              -1 },
@@ -86,7 +82,7 @@ static const char *dmenucmd[]                   = {
         col_cyan, "-sf", col_gray4, NULL
 };
 static const char *scrot[]                      = {
-        "scrot", "BrookieShot_\%F_\%T.png",
+        "scrot", "BrookieShot_\%F_\%H-\%M-\%S.png",
         "-e", "viewnior ~/$f",
         NULL
 };
@@ -99,22 +95,10 @@ static const char *turn_on_tpad[]               = {
         "xinput", "enable",
         "SynPS/2 Synaptics TouchPad", NULL
 };
-static const char *torbrowser[]                 = {
-        "/opt/tor-browser_en-US/Browser/start-tor-browser",
-        "--detach", NULL
-};
-static const char *k_latam[]                    = {
-        "setxkbmap", "-layout",
-        "latam", NULL
-};
-static const char *k_us_intl[]                  = {
-        "setxkbmap", "-layout", "us",
-        "-variant", "intl", NULL
-};
+static const char *torbrowser[]                 = { "torbrowser", NULL };
 static const char *thunar[]                     = { "thunar", NULL };
 static const char *dec_brightness[]             = { "xbacklight", "-dec", "10", NULL };
 static const char *inc_brightness[]             = { "xbacklight", "-inc", "10", NULL };
-static const char *eclipse[]                    = { "eclipse", NULL };
 /* You must have installed gtk3-nocsd! */
 static const char *evince[]                     = { "gtk3-nocsd", "evince", NULL };
 static const char *glade[]                      = { "gtk3-nocsd", "glade", NULL };
@@ -127,11 +111,11 @@ static const char *spm[]                        = { "spm", NULL };
 static const char *slock[]                      = { "slock", NULL };
 static const char *telegram[]                   = { "telegram", NULL };
 static const char *termcmd[]                    = { "st", "-e", "tmux", NULL };
-static const char *webcam[]                     = { "guvcview", NULL };
 static const char *webbrowser[]                 = { "firefox", NULL };
 static const char *privatebrowser[]             = { "firefox", "--private-window", NULL };
 
 /* Multimedia commands */
+/* Notice that this command will use PulseAudio! */
 static const char *upvol[]      = {
         "amixer", "-q", "-D", "pulse",
         "sset", "Master", "5%+", NULL
@@ -207,35 +191,20 @@ static Key keys[] = {
         /* Increase and decrease 10+ the volume */
         { ShiftMask,      XF86XK_AudioRaiseVolume,      spawn,          {.v = upvol2 } },
         { ShiftMask,      XF86XK_AudioLowerVolume,      spawn,          {.v = downvol2 } },
-        /* Increase and decrease the screen brightness. */
-        /* It works only if your user belongs to video's group and is allowed by udev. */
-        /* If that isn't so, please see the next repository for make a rule that allow it. */
-        /* https://github.com/brookiestein/dotfiles/tree/master/etc/udev/rules.d/ */
-        /* Only copy that file to the same directory (as root obviously). */
-        /* If you wish know if your user belongs to video's group, execute the next command in a terminal: */
-        /* $ groups $USER | grep video */
-        /* If command's output is empty, log in as root and add your user to that group: */
-        /* # gpasswd -a $USER video */
-        /* Note: Here you have to change $USER to your username, since so as it is, that command will add */
-        /* to the user root to that group. */
         { 0,            XF86XK_MonBrightnessDown,       spawn,          {.v = dec_brightness } },
         { 0,            XF86XK_MonBrightnessUp,         spawn,          {.v = inc_brightness } },
         /* Enable and disable touchpad. See xinput's output if you want know your touchpad's name. */
-        { MODKEY,                       XK_F1,          spawn,          {.v = k_latam } }, /* Put the keyboard layout to LATAM. */
-        { MODKEY,                       XK_F2,          spawn,          {.v = k_us_intl } }, /* Put the keyboard layout to US-Intl. */
-        { MODKEY,                       XK_F3,          spawn,          {.v = slock } }, /* Lock the screen */
+        { MODKEY,                       XK_l,           spawn,          {.v = slock } }, /* Lock the screen */
         { MODKEY|ControlMask,           XK_comma,       spawn,          {.v = turn_off_tpad } },
         { MODKEY|ControlMask,           XK_period,      spawn,          {.v = turn_on_tpad } },
         /* Key bindings for change the keyboard layout */
         /* Key bindings for launch programs. Ordered alphabetically. (Mainly) */
         { MODKEY,                       XK_e,           spawn,          {.v = evince } }, /* PDF Viewer */
-        { MODKEY|ControlMask,           XK_e,           spawn,          {.v = eclipse } }, /* Eclipse IDE For Java Developers */
         { MODKEY|ShiftMask,             XK_f,           spawn,          {.v = thunar } }, /* File explorer */
         { MODKEY,                       XK_Print,       spawn,          {.v = flameshot } }, /* "Professional screenshoter." */
-        { MODKEY,                       XK_g,           spawn,          {.v = glade } },
         { MODKEY|ShiftMask,             XK_k,           spawn,          {.v = keepassxc } }, /* Password manager. */
         { MODKEY|ShiftMask,             XK_l,           spawn,          {.v = libreoffice } }, /* Office suite. */
-        { 0,                            XK_Print,       spawn,          {.v = scrot } }, /* Take screenshots. */
+        { 0,                            XK_Print,       spawn,          {.v = scrot } }, /* Take fast screenshots. */
         { MODKEY|ShiftMask,             XK_p,           spawn,          {.v = pavucontrol } }, /* Sound devices manager. */
         { MODKEY,                       XK_q,           spawn,          {.v = qbittorrent } }, /* Bittorrent admin. */
         { MODKEY|ShiftMask,             XK_Delete,      spawn,          {.v = spm } }, /* GUI to shutdown, reboot, etc. */
@@ -243,7 +212,6 @@ static Key keys[] = {
         { 0,                            XF86XK_Sleep,   spawn,          {.v = slock } },
         { MODKEY|ShiftMask,             XK_t,           spawn,          {.v = telegram } }, /* Telegram messenger. */
         { MODKEY|ControlMask,           XK_t,           spawn,          {.v = torbrowser } }, /* Tor Browser. */
-        { 0,                            XF86XK_WebCam,  spawn,          {.v = webcam } }, /* Web browser. */
         { MODKEY,                       XK_w,           spawn,          {.v = webbrowser } }, /* Web browser. */
         { MODKEY|ShiftMask,             XK_w,           spawn,          {.v = privatebrowser } }, /* Web browser in private mode. */
 };
