@@ -111,6 +111,8 @@ static const char *telegram[]                   = { "telegram", NULL };
 static const char *termcmd[]                    = { "st", "-e", "tmux", NULL };
 static const char *webbrowser[]                 = { "firefox", NULL };
 static const char *privatebrowser[]             = { "firefox", "--private-window", NULL };
+/* This is a own script. If you want to watch it, see my dotfiles script repository. */
+static const char *toggle_keyboard[]            = { "toggle-keyboard", NULL };
 
 /* Multimedia commands */
 /* Notice that this command will use PulseAudio! */
@@ -199,6 +201,7 @@ static Key keys[] = {
         /* Key bindings for launch programs. Ordered alphabetically. (Mainly) */
         { MODKEY,                       XK_e,           spawn,          {.v = evince } }, /* PDF Viewer */
         { MODKEY|ShiftMask,             XK_f,           spawn,          {.v = thunar } }, /* File explorer */
+        { MODKEY,                       XK_Tab,         spawn,          {.v = toggle_keyboard } }, /* See my dotfiles script directory. */
         { MODKEY,                       XK_Print,       spawn,          {.v = flameshot } }, /* "Professional screenshoter." */
         { MODKEY|ShiftMask,             XK_k,           spawn,          {.v = keepassxc } }, /* Password manager. */
         { 0,                            XK_Print,       spawn,          {.v = scrot } }, /* Take fast screenshots. */
