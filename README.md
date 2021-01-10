@@ -23,9 +23,6 @@ In that case, delete them.
 
 **If you use this setting, these keyboard shortcuts might interest you:**
 ```
-Windows key + F1 = Set keyboard layout in Latin American Spanish
-Windows key + F2 = Set keyboard layout in alternative American English
-
 # For this keyboard shortcuts you will need: syspoweradmin
 Windows key + Shift key + Delete = Show a window with power options
 
@@ -52,13 +49,10 @@ Windows key + Shift key + q
 Edit config.mk to match your local setup (dwm is installed into
 the /usr/local namespace by default).
 
+Take special care when patching. You probably need to patch some manually.
 Afterwards enter the following command to build and install dwm (if
 necessary as root):
 ```
-$ p=patches
-$ for i in `ls -1 $p`; do
-        patch -i ${p}/${i}
-done
 # make clean install
 ```
 
@@ -66,7 +60,7 @@ done
 -----------
 Add the following line to your .xinitrc to start dwm using startx:
 ```
-exec /usr/bin/dwm
+exec /usr/bin/local/dwm
 ```
 In order to connect dwm to a specific display, make sure that
 the DISPLAY environment variable is set correctly, e.g.:
@@ -95,9 +89,9 @@ exec dwm
 
 In case your choice had been [slstatus:](https://github.com/brookiestein/slstatus)
 
-**Only add this to your .xinitrc:**
+Add this value to the autostart array in config.h
 ```
-slstatus &
+slstatus
 ```
 
 **Configuration**
