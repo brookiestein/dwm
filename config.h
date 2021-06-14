@@ -11,8 +11,8 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "mononoki Nerd Font Mono:size=10" };
-static const char dmenufont[]       = "mononoki Nerd Font Mono:size=10";
+static const char *fonts[]          = { "mononoki Nerd Font Mono:size=12" };
+static const char dmenufont[]       = "mononoki Nerd Font Mono:size=12";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -25,7 +25,7 @@ static const char *colors[][3]      = {
 };
 
 static const char *const autostart[] = {
-        "nitrogen", "--set-zoom-fill", "/home/brayan/Wallpapers/PC/Magician.png", NULL,
+        "xwallpaper", "--stretch", "/home/brayan/Wallpapers/PC/Magician.png", NULL,
         "setxkbmap", "-layout", "us", "-variant", "intl", NULL,
         "compton", "--backend", "glx", "--paint-on-overlay", "--vsync", "opengl-swc", NULL,
         "spm", "--daemon", "--file=/tmp/spm.log", "--monitor", "--verbose", NULL,
@@ -194,8 +194,8 @@ static Key keys[] = {
         { 1, MODKEY,                       XK_s,           spawn,  SHCMD("spm") },
         { 2, MODKEY,                       XK_s,           spawn,  {.v = toggle_keyboard } }, /* See my dotfiles script directory. */
         { 0, MODKEY|ShiftMask,             XK_t,           spawn,  SHCMD("telegram-desktop") }, /* Telegram messenger. */
-        { 1, MODKEY,                       XK_w,           spawn,  {.v = surf } },
-        { 2, MODKEY,                       XK_w,           spawn,  SHCMD("firefox") }, /* Web browser. */
+        { 1, MODKEY,                       XK_w,           spawn,  SHCMD("firefox") }, /* Web browser. */
+        { 2, MODKEY,                       XK_w,           spawn,  {.v = surf } },
         { 3, MODKEY,                       XK_w,           spawn,  SHCMD("firefox --private-window") } /* Web browser in private mode. */
 };
 
@@ -214,4 +214,3 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-
