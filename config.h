@@ -11,8 +11,8 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "mononoki Nerd Font Mono:size=12" };
-static const char dmenufont[]       = "mononoki Nerd Font Mono:size=12";
+static const char *fonts[]          = { "mononoki Nerd Font Mono:size=10.5" };
+static const char dmenufont[]       = "mononoki Nerd Font Mono:size=11.5";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -25,15 +25,17 @@ static const char *colors[][3]      = {
 };
 
 static const char *const autostart[] = {
-        "xwallpaper", "--stretch", "/home/brayan/Wallpapers/PC/Magician.png", NULL,
+        "xwallpaper", "--stretch", "/home/brayan/Wallpapers/PC/Wolf.png", NULL,
         "setxkbmap", "-layout", "us", "-variant", "intl", NULL,
-        "compton", "--backend", "glx", "--paint-on-overlay", "--vsync", "opengl-swc", NULL,
+        "picom", "-bCGf", "--no-fading-openclose", "--backend", "glx", "--vsync", NULL,
         "spm", "--daemon", "--file=/tmp/spm.log", "--monitor", "--verbose", NULL,
-        "pulseaudio", "--start", NULL,
         "slstatus", NULL,
         "dunst", NULL,
         "clipmenud", NULL,
-        "/home/brayan/.config/scripts/resolution", "on", NULL,
+        "xset", "r", "rate", "300", "50", NULL, /* In order to move faster while writing. Useful, e.g., in vim. */
+        "xpad", NULL,
+        "blueman-applet", NULL,
+        "wpa_gui", NULL,
         NULL /* terminate */
 };
 
@@ -49,8 +51,8 @@ static const Rule rules[] = {
         { "Pavucontrol","pavucontrol",  NULL,   0,      1,      1,      -1 },
         { "mpv",        "gl",           NULL,   0,      1,      1,      -1 },
         { "Sxiv",       "sxiv",         NULL,   0,      1,      1,      -1 },
-        { "Caja",       "caja",         NULL,   0,      1,      1,      -1 },
-        { "Engrampa",   "engrampa",     NULL,   0,      1,      1,      -1 },
+        { "xpad",       "xpad",         NULL,   0,      1,      1,      -1 },
+        { "Blueman-manager", "blueman-manager", NULL, 0, 1, 1, -1 },
         /* Other programs without floating setting */
         { "Firefox",    NULL,           NULL,   1,      0,      0,      -1 }
 };
@@ -69,6 +71,7 @@ static const Layout layouts[] = {
 
 /* key definitions */
 #define MODKEY Mod4Mask
+#define ALTKEY Mod1Mask
 #define TAGKEYS(KEY,TAG) \
 	{ 0, MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ 0, MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -84,7 +87,6 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *termcmd[]    = { "tabbed", "-c", "-r", "2", "st", "-w", "''", NULL };
-static const char *surf[]       = { "tabbed", "-c", "-r", "2", "surf", "-e", "''", NULL };
 static const char *dmenucmd[]                   = {
         "dmenu_run", "-m", dmenumon,
         "-fn", dmenufont, "-nb", col_gray1,
@@ -98,8 +100,6 @@ static const char *scrot[]                      = {
 };
 static const char *dec_brightness[]             = { "xbacklight", "-dec", "10", NULL };
 static const char *inc_brightness[]             = { "xbacklight", "-inc", "10", NULL };
-/* This is a own script. If you want to watch it, see my dotfiles script repository. */
-static const char *toggle_keyboard[]            = { "toggle-keyboard", NULL };
 
 /* Multimedia commands */
 /* Notice that this command will use PulseAudio! */
@@ -135,21 +135,21 @@ static const char *mutemic[]    = {
 
 static Key keys[] = {
 	/* npress, modifier                key        function        argument */
-	{ 0, MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ 1, MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ 0, MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ 0, MODKEY,                       XK_b,      togglebar,      {0} },
 	{ 0, MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ 0, MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
+	{ 1, MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ 0, MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ 0, MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ 0, MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ 0, MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	{ 1, MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ 0, MODKEY,                       XK_Return, zoom,           {0} },
 	{ 0, MODKEY,                       XK_Tab,    view,           {0} },
 	{ 0, MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
-	{ 0, MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+	{ 1, MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ 0, MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ 0, MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ 1, MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ 0, MODKEY,                       XK_space,  setlayout,      {0} },
 	{ 0, MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ 0, MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -178,25 +178,26 @@ static Key keys[] = {
         { 0, ShiftMask,      XF86XK_AudioLowerVolume,      spawn,  {.v = downvol2 } },
         { 0, 0,            XF86XK_MonBrightnessDown,       spawn,  {.v = dec_brightness } },
         { 0, 0,            XF86XK_MonBrightnessUp,         spawn,  {.v = inc_brightness } },
-        /* Enable and disable touchpad. See xinput's output if you want know your touchpad's name. */
-        /* Key bindings for change the keyboard layout */
         /* Key bindings for launch programs. Ordered alphabetically. (Mainly) */
-        { 0, MODKEY|ShiftMask,             XK_m,           spawn,  SHCMD("android-mount -m") },
-        { 0, MODKEY|ShiftMask,             XK_u,           spawn,  SHCMD("android-mount -u") },
-        { 0, MODKEY,                       XK_c,           spawn,  SHCMD("clipmenu") },
-        { 0, MODKEY|ShiftMask,             XK_k,           spawn,  SHCMD("keepassxc") },
-        { 0, MODKEY|ShiftMask,             XK_l,           spawn,  SHCMD("slock") },
-        { 0, MODKEY|ShiftMask,             XK_p,           spawn,  SHCMD("pavucontrol") },
-        { 1, 0,                            XK_Print,          spawn,  {.v = scrot } }, /* Take fast screenshots. */
-        { 2, 0,                            XK_Print,          spawn,  SHCMD("flameshot") }, /* "Professional screenshoter." */
+        { 2, MODKEY,                       XK_m,           spawn,  SHCMD("android-mount -m") },
+        { 3, MODKEY,                       XK_m,           spawn,  SHCMD("android-mount -u") },
+        { 1, MODKEY,                       XK_c,           spawn,  SHCMD("clipmenu") },
+        { 2, MODKEY,                       XK_c,           spawn,  SHCMD("caja") },
+        { 0, MODKEY|ShiftMask,             XK_c,           spawn,  SHCMD("center_window") },
+        { 2, MODKEY,                       XK_k,           spawn,  SHCMD("keepassxc") },
+        { 2, MODKEY,                       XK_l,           spawn,  SHCMD("slock") },
+        { 2, MODKEY,                       XK_p,           spawn,  SHCMD("pavucontrol") },
+        { 1, 0,                            XK_Print,       spawn,  {.v = scrot } }, /* Take fast screenshots. */
+        { 2, 0,                            XK_Print,       spawn,  SHCMD("flameshot") }, /* "Professional screenshoter." */
         /* Lock the screen because of double suspension in the old way. Look at: 55a8e9f */
         { 0, 0,                            XF86XK_Sleep,   spawn,  SHCMD("slock") },
-        { 1, MODKEY,                       XK_s,           spawn,  SHCMD("spm") },
-        { 2, MODKEY,                       XK_s,           spawn,  {.v = toggle_keyboard } }, /* See my dotfiles script directory. */
-        { 0, MODKEY|ShiftMask,             XK_t,           spawn,  SHCMD("telegram-desktop") }, /* Telegram messenger. */
+        { 0, MODKEY,                       XK_s,           spawn,  SHCMD("spm") },
+        { 0, MODKEY|ShiftMask,             XK_s,           spawn,  SHCMD("toggle-keyboard") }, /* See my dotfiles scripts directory. */
+        { 2, MODKEY,                       XK_t,           spawn,  SHCMD("telegram-desktop") }, /* Telegram messenger. */
+        { 0, MODKEY,                       XK_q,           spawn,  SHCMD("qbittorrent") },
         { 1, MODKEY,                       XK_w,           spawn,  SHCMD("firefox") }, /* Web browser. */
-        { 2, MODKEY,                       XK_w,           spawn,  {.v = surf } },
-        { 3, MODKEY,                       XK_w,           spawn,  SHCMD("firefox --private-window") } /* Web browser in private mode. */
+        { 2, MODKEY,                       XK_w,           spawn,  SHCMD("firefox --private-window") }, /* Web browser in private mode. */
+        { 0, MODKEY|ShiftMask,             XK_w,           spawn,  SHCMD("wpagtk") }, /* GUI to add Wi-Fi networks */
 };
 
 /* button definitions */
