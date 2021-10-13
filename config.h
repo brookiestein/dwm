@@ -27,7 +27,7 @@ static const char *colors[][3]      = {
 static const char *const autostart[] = {
         "xwallpaper", "--stretch", "/home/brayan/Wallpapers/PC/Wolf.png", NULL,
         "setxkbmap", "-layout", "us", "-variant", "intl", NULL,
-        "picom", "-bCGf", "--no-fading-openclose", "--backend", "glx", "--vsync", NULL,
+        "picom", "--daemon", "--backend", "glx", "--vsync", "--sw-opti", NULL,
         "spm", "--daemon", "--file=/tmp/spm.log", "--monitor", "--verbose", NULL,
         "slstatus", NULL,
         "dunst", NULL,
@@ -53,6 +53,7 @@ static const Rule rules[] = {
         { "Sxiv",       "sxiv",         NULL,   0,      1,      1,      -1 },
         { "xpad",       "xpad",         NULL,   0,      1,      1,      -1 },
         { "Blueman-manager", "blueman-manager", NULL, 0, 1, 1, -1 },
+        { "System-config-printer.py", "system-config-printer", 0, 1, 1, -1 },
         /* Other programs without floating setting */
         { "Firefox",    NULL,           NULL,   1,      0,      0,      -1 }
 };
