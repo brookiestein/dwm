@@ -27,7 +27,7 @@ static const char *colors[][3]      = {
 static const char *const autostart[] = {
         "xwallpaper", "--stretch", "/home/brayan/Wallpapers/PC/Wolf.png", NULL,
         "setxkbmap", "-layout", "us", "-variant", "intl", NULL,
-        "picom", "--daemon", "--backend", "glx", "--vsync", "--sw-opti", NULL,
+        "picom", "--daemon", NULL,
         "spm", "--daemon", "--file=/tmp/spm.log", "--monitor", "--verbose", NULL,
         "slstatus", NULL,
         "dunst", NULL,
@@ -48,14 +48,17 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     iscentered   isfloating   monitor */
-        { "Pavucontrol","pavucontrol",  NULL,   0,      1,      1,      -1 },
-        { "mpv",        "gl",           NULL,   0,      1,      1,      -1 },
-        { "Sxiv",       "sxiv",         NULL,   0,      1,      1,      -1 },
-        { "xpad",       "xpad",         NULL,   0,      1,      1,      -1 },
-        { "Blueman-manager", "blueman-manager", NULL, 0, 1, 1, -1 },
-        { "System-config-printer.py", "system-config-printer", 0, 1, 1, -1 },
+        { "Pavucontrol","pavucontrol",  NULL,   0,              1,      1,      -1 },
+        { "mpv",        "gl",           NULL,   0,              1,      1,      -1 },
+        { "Sxiv",       "sxiv",         NULL,   0,              1,      1,      -1 },
+        { "xpad",       "xpad",         NULL,   0,              1,      1,      -1 },
+        { "Caja",       "caja",         NULL,   0,              1,      1,      -1 },
+        { "Engrampa",   "engrampa",     NULL,   0,              1,      1,      -1 },
+        { "Virt-manager", "virt-manager", NULL, 0,              1,      1,      -1 },
+        { "Blueman-manager", "blueman-manager", NULL, 0,        1,      1,      -1 },
+        { "System-config-printer.py", "system-config-printer", 0, 1,    1,      -1 },
         /* Other programs without floating setting */
-        { "Firefox",    NULL,           NULL,   1,      0,      0,      -1 }
+        { "Firefox",    NULL,           NULL,   1,              0,      0,      -1 }
 };
 
 /* layout(s) */
