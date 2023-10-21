@@ -7,9 +7,13 @@ dwm is an extremely fast, small, and dynamic window manager for X.
 ------------
 In order to build dwm you need the Xlib header files.
 
+This dwm is already patched. I left the patches' files here for you (and me) to know which patches I use in my dwm config.
+
+_You just need to compile it._
+
 Optionally you need:
 
-[syspowermanager](https://github.com/brookiestein/syspowermanager/)
+[spm](https://github.com/brookiestein/spm/)
 
 [slock](https://github.com/brookiestein/slock/)
 
