@@ -6,13 +6,14 @@ static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int gappx     = 8;        /* gap pixel between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
+static const unsigned int systrayonleft = 0;    /* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "mononoki Nerd Font Mono:size=10.5" };
-static const char dmenufont[]       = "mononoki Nerd Font Mono:size=11.5";
+static const char *fonts[]          = { "mononoki Nerd Font Mono:size=12" };
+static const char dmenufont[]       = "mononoki Nerd Font Mono:size=14";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -25,7 +26,7 @@ static const char *colors[][3]      = {
 };
 
 static const char *const autostart[] = {
-        "xwallpaper", "--stretch", "/home/brayan/Wallpapers/PC/Wolf.png", NULL,
+        "xwallpaper", "--stretch", "/home/brayan/Wallpapers/1326068.jpeg", NULL,
         "setxkbmap", "-layout", "us", "-variant", "intl", NULL,
         "picom", "--daemon", NULL,
         "spm", "--daemon", "--file=/tmp/spm.log", "--monitor", "--verbose", NULL,
@@ -33,9 +34,9 @@ static const char *const autostart[] = {
         "dunst", NULL,
         "clipmenud", NULL,
         "xset", "r", "rate", "300", "50", NULL, /* In order to move faster while writing. Useful, e.g., in vim. */
-        "xpad", NULL,
-        "blueman-applet", NULL,
-        "wpa_gui", NULL,
+        /* "xpad", NULL, */
+        /* "blueman-applet", NULL, */
+        /* "wpa_gui", NULL, */
         NULL /* terminate */
 };
 
@@ -54,7 +55,6 @@ static const Rule rules[] = {
         { "xpad",       "xpad",         NULL,   0,              1,      1,      -1 },
         { "Caja",       "caja",         NULL,   0,              1,      1,      -1 },
         { "Engrampa",   "engrampa",     NULL,   0,              1,      1,      -1 },
-        { "Virt-manager", "virt-manager", NULL, 0,              1,      1,      -1 },
         { "Blueman-manager", "blueman-manager", NULL, 0,        1,      1,      -1 },
         { "System-config-printer.py", "system-config-printer", 0, 1,    1,      -1 },
         /* Other programs without floating setting */
@@ -65,6 +65,7 @@ static const Rule rules[] = {
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -90,7 +91,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *termcmd[]    = { "tabbed", "-c", "-r", "2", "st", "-w", "''", NULL };
+static const char *termcmd[]    = { "st", NULL };
 static const char *dmenucmd[]                   = {
         "dmenu_run", "-m", dmenumon,
         "-fn", dmenufont, "-nb", col_gray1,
@@ -183,12 +184,9 @@ static Key keys[] = {
         { 0, 0,            XF86XK_MonBrightnessDown,       spawn,  {.v = dec_brightness } },
         { 0, 0,            XF86XK_MonBrightnessUp,         spawn,  {.v = inc_brightness } },
         /* Key bindings for launch programs. Ordered alphabetically. (Mainly) */
-        { 2, MODKEY,                       XK_m,           spawn,  SHCMD("android-mount -m") },
-        { 3, MODKEY,                       XK_m,           spawn,  SHCMD("android-mount -u") },
         { 1, MODKEY,                       XK_c,           spawn,  SHCMD("clipmenu") },
         { 2, MODKEY,                       XK_c,           spawn,  SHCMD("caja") },
         { 0, MODKEY|ShiftMask,             XK_c,           spawn,  SHCMD("center_window") },
-        { 2, MODKEY,                       XK_k,           spawn,  SHCMD("keepassxc") },
         { 2, MODKEY,                       XK_l,           spawn,  SHCMD("slock") },
         { 2, MODKEY,                       XK_p,           spawn,  SHCMD("pavucontrol") },
         { 1, 0,                            XK_Print,       spawn,  {.v = scrot } }, /* Take fast screenshots. */
@@ -201,7 +199,6 @@ static Key keys[] = {
         { 0, MODKEY,                       XK_q,           spawn,  SHCMD("qbittorrent") },
         { 1, MODKEY,                       XK_w,           spawn,  SHCMD("firefox") }, /* Web browser. */
         { 2, MODKEY,                       XK_w,           spawn,  SHCMD("firefox --private-window") }, /* Web browser in private mode. */
-        { 0, MODKEY|ShiftMask,             XK_w,           spawn,  SHCMD("wpagtk") }, /* GUI to add Wi-Fi networks */
 };
 
 /* button definitions */
