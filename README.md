@@ -102,11 +102,3 @@ slstatus
 -------------
 The configuration of dwm is done by creating a custom config.h
 and (re)compiling the source code.
-
-**Some screenshots:**
-
-**With dwmrc statusbar**
-![](screenshots/1.png)
-
-**With slstatus**
-![](screenshots/2.png)
