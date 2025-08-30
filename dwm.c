@@ -92,6 +92,11 @@ typedef union {
 } Arg;
 
 typedef struct {
+	const char *variable;
+	const char *value;
+} Env;
+
+typedef struct {
 	unsigned int click;
 	unsigned int mask;
 	unsigned int button;
@@ -235,6 +240,7 @@ static void scan(void);
 static int sendevent(Window w, Atom proto, int m, long d0, long d1, long d2, long d3, long d4);
 static void sendmon(Client *c, Monitor *m);
 static void setclientstate(Client *c, long state);
+static void setenvvars(void);
 static void setfocus(Client *c);
 static void setfullscreen(Client *c, int fullscreen);
 static void setlayout(const Arg *arg);
@@ -1850,6 +1856,13 @@ sendevent(Window w, Atom proto, int mask, long d0, long d1, long d2, long d3, lo
 	return exists;
 }
 
+static void
+setenvvars(void)
+{
+	for (size_t i = 0; i < LENGTH(envs); i++)
+		setenv(envs[i].variable, envs[i].value, 1);
+}
+
 void
 setfocus(Client *c)
 {
@@ -2781,6 +2794,7 @@ main(int argc, char *argv[])
 		die("dwm: cannot open display");
 	XkbSetDetectableAutoRepeat(dpy, True, NULL);
 	checkotherwm();
+	setenvvars();
 	autostart_exec();
 	setup();
 #ifdef __OpenBSD__

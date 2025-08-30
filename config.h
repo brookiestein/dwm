@@ -31,6 +31,7 @@ static const char *const autostart[] = {
 	 "gentoo-pipewire-launcher", "restart", NULL,
 	 "setxkbmap", "-layout", "us", "-variant", "intl", NULL,
 	 "slstatus", NULL,
+	 "wmname", "LG3D", NULL,
 	 "xset", "r", "rate", "300", "50", NULL,
 	 "xset", "-dpms", NULL,
 	 "xset", "s", "off", NULL,
@@ -49,7 +50,7 @@ static const Rule rules[] = {
 	 */
 	/* class                        instance                   title       tags mask     iscentered   isfloating   monitor */
 	{ "mpv",                        "gl",                      NULL,       0,              1,          1,           -1 },
-    { "Sxiv",                       "sxiv",                    NULL,       0,              1,          1,           -1 },
+    	{ "Sxiv",                       "sxiv",                    NULL,       0,              1,          1,           -1 },
 	{ "System-config-printer.py",   "system-config-printer",   NULL,       0,              1,          1,           -1 },
 	{ "Firefox",                    NULL,                      NULL,       1 << 0,         0,          0,           -1 },
 };
@@ -65,6 +66,13 @@ static const Layout layouts[] = {
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+};
+
+static const Env envs[] = {
+	/* variable				value */
+	{ "_JAVA_AWT_WM_NONREPARENTING",	"1" },
+	{ "CM_SELECTIONS",			"clipboard" },
+	{ "CM_HISTLENGTH",			"1000" }
 };
 
 /* key definitions */
