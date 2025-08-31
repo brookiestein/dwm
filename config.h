@@ -29,10 +29,11 @@ static const char *const autostart[] = {
 	 "emacs", "--daemon", NULL,
 	 "dunst", NULL,
 	 "gentoo-pipewire-launcher", "restart", NULL,
+	 "picom", "--daemon", NULL,
 	 "setxkbmap", "-layout", "us", "-variant", "intl", NULL,
 	 "slstatus", NULL,
 	 "wmname", "LG3D", NULL,
-	 "xset", "r", "rate", "300", "50", NULL,
+	 "xset", "r", "rate", "200", "50", NULL,
 	 "xset", "-dpms", NULL,
 	 "xset", "s", "off", NULL,
 	 "xset", "s", "noblank", NULL,
@@ -50,7 +51,7 @@ static const Rule rules[] = {
 	 */
 	/* class                        instance                   title       tags mask     iscentered   isfloating   monitor */
 	{ "mpv",                        "gl",                      NULL,       0,              1,          1,           -1 },
-    	{ "Sxiv",                       "sxiv",                    NULL,       0,              1,          1,           -1 },
+	{ "Sxiv",                       "sxiv",                    NULL,       0,              1,          1,           -1 },
 	{ "System-config-printer.py",   "system-config-printer",   NULL,       0,              1,          1,           -1 },
 	{ "Firefox",                    NULL,                      NULL,       1 << 0,         0,          0,           -1 },
 };
@@ -185,6 +186,7 @@ static const Key keys[] = {
 	{ 1, MODKEY,                    XK_q,                       spawn,  SHCMD("qbittorrent") },
 	{ 1, MODKEY|ShiftMask,          XK_f,                       spawn,  SHCMD("firefox") }, /* Web browser. */
     { 2, MODKEY|ShiftMask,          XK_f,                       spawn,  SHCMD("firefox --private-window") }, /* Web browser in private mode. */
+	{ 1, MODKEY,                    XK_x,                       spawn,  SHCMD("emacsclient -nc") },
 	
 	{ 0,           MODKEY|ShiftMask,             XK_e,      quit,           {0} },
 };
