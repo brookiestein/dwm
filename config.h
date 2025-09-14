@@ -25,19 +25,24 @@ static const char *colors[][3]      = {
 	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
 };
 
+static const Env envs[] = {
+	 /* Variable                         Value */
+	 { "MOZ_DISABLE_GMP_SANDBOX",        "1" }, /* Workaround to play DRM content in my musl setup. */
+	 { "QT_QPA_PLATFORMTHEME",           "qt6ct" },
+	 { "_JAVA_AWT_WM_NONREPARENTING",    "1" },
+	 /* For clipmenu */
+	 { "CM_SELECTIONS",			         "clipboard" },
+	 { "CM_HISTLENGTH",			         "1000" }
+};
+
 static const char *const autostart[] = {
 	 "emacs", "--daemon", NULL,
 	 "dunst", NULL,
 	 "gentoo-pipewire-launcher", "restart", NULL,
-	 "picom", "--daemon", NULL,
+	 "picom", "--daemon", "--log-file", "/tmp/picom.log", NULL,
 	 "setxkbmap", "-layout", "us", "-variant", "intl", NULL,
 	 "slstatus", NULL,
-	 "wmname", "LG3D", NULL,
-	 "xset", "r", "rate", "200", "50", NULL,
-	 "xset", "-dpms", NULL,
-	 "xset", "s", "off", NULL,
-	 "xset", "s", "noblank", NULL,
-	 "xwallpaper", "--stretch", "/home/brayan/Wallpapers/wallhaven-731180.jpg", NULL,
+	 "xwallpaper", "--stretch", "/home/brayan/wallpapers/wallhaven-3qzm1v_1920x1080.png", NULL,
 	 NULL /* terminate */
 };
 
@@ -51,8 +56,9 @@ static const Rule rules[] = {
 	 */
 	/* class                        instance                   title       tags mask     iscentered   isfloating   monitor */
 	{ "mpv",                        "gl",                      NULL,       0,              1,          1,           -1 },
-	{ "Sxiv",                       "sxiv",                    NULL,       0,              1,          1,           -1 },
+    { "Sxiv",                       "sxiv",                    NULL,       0,              1,          1,           -1 },
 	{ "System-config-printer.py",   "system-config-printer",   NULL,       0,              1,          1,           -1 },
+	{ "QBitMPlayer",                "qbitmplayer",             NULL,       0,              1,          1,           -1 },
 	{ "Firefox",                    NULL,                      NULL,       1 << 0,         0,          0,           -1 },
 };
 
@@ -69,13 +75,6 @@ static const Layout layouts[] = {
 	{ "[M]",      monocle },
 };
 
-static const Env envs[] = {
-	/* variable				value */
-	{ "_JAVA_AWT_WM_NONREPARENTING",	"1" },
-	{ "CM_SELECTIONS",			"clipboard" },
-	{ "CM_HISTLENGTH",			"1000" }
-};
-
 /* key definitions */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
@@ -90,7 +89,7 @@ static const Env envs[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { "emacsclient", "-n", "-c", "-e", "(my/vterm-in-current-frame)", NULL };
 
 static const char *dec_brightness[] = { "xbacklight", "-dec", "10", NULL };
 static const char *inc_brightness[] = { "xbacklight", "-inc", "10", NULL };
@@ -181,12 +180,13 @@ static const Key keys[] = {
     { 0, 0,                         XF86XK_MonBrightnessUp,     spawn,  {.v = inc_brightness } },
 
 	{ 0, 0,                         XF86XK_Sleep,               spawn,  SHCMD("slock") },
+	{ 1, MODKEY|ShiftMask,          XK_l,                       spawn,  SHCMD("slock") },
     { 1, MODKEY,                    XK_s,                       spawn,  SHCMD("spm") },
 	{ 1, MODKEY|ShiftMask,          XK_t,                       spawn,  SHCMD("Telegram") },
 	{ 1, MODKEY,                    XK_q,                       spawn,  SHCMD("qbittorrent") },
 	{ 1, MODKEY|ShiftMask,          XK_f,                       spawn,  SHCMD("firefox") }, /* Web browser. */
     { 2, MODKEY|ShiftMask,          XK_f,                       spawn,  SHCMD("firefox --private-window") }, /* Web browser in private mode. */
-	{ 1, MODKEY,                    XK_x,                       spawn,  SHCMD("emacsclient -nc") },
+	{ 1, MODKEY|ShiftMask,          XK_x,                       spawn,  SHCMD("emacsclient -nc") },
 	
 	{ 0,           MODKEY|ShiftMask,             XK_e,      quit,           {0} },
 };
