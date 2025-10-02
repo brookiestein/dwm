@@ -42,7 +42,7 @@ static const char *const autostart[] = {
 	 "picom", "--daemon", "--log-file", "/tmp/picom.log", NULL,
 	 "setxkbmap", "-layout", "us", "-variant", "intl", NULL,
 	 "slstatus", NULL,
-	 "xwallpaper", "--stretch", "/home/brayan/wallpapers/wallhaven-3qzm1v_1920x1080.png", NULL,
+	 "xwallpaper", "--stretch", "/home/brayan/Wallpapers/wallhaven-zpy8wg_1920x1080.png", NULL,
 	 NULL /* terminate */
 };
 
@@ -88,8 +88,18 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "emacsclient", "-n", "-c", "-e", "(my/vterm-in-current-frame)", NULL };
+static const char *dmenucmd[] = {
+	 "dmenu_run",
+	 "-m", dmenumon,
+	 "-fn", dmenufont,
+	 "-nb", col_gray1,
+	 "-nf", col_gray3,
+	 "-sb", col_cyan,
+	 "-sf", col_gray4,
+	 NULL
+};
+
+static const char *termcmd[]  = { "st", NULL };
 
 static const char *dec_brightness[] = { "xbacklight", "-dec", "10", NULL };
 static const char *inc_brightness[] = { "xbacklight", "-inc", "10", NULL };
@@ -184,6 +194,7 @@ static const Key keys[] = {
     { 1, MODKEY,                    XK_s,                       spawn,  SHCMD("spm") },
 	{ 1, MODKEY|ShiftMask,          XK_t,                       spawn,  SHCMD("Telegram") },
 	{ 1, MODKEY,                    XK_q,                       spawn,  SHCMD("qbittorrent") },
+	{ 2, MODKEY,                    XK_q,                       spawn,  SHCMD("qtcreator") },
 	{ 1, MODKEY|ShiftMask,          XK_f,                       spawn,  SHCMD("firefox") }, /* Web browser. */
     { 2, MODKEY|ShiftMask,          XK_f,                       spawn,  SHCMD("firefox --private-window") }, /* Web browser in private mode. */
 	{ 1, MODKEY|ShiftMask,          XK_x,                       spawn,  SHCMD("emacsclient -nc") },
