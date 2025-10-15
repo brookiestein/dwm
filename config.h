@@ -3,23 +3,23 @@
 #include <X11/XF86keysym.h>
 
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
-static const unsigned int snap      = 32;       /* snap pixel */
+static const unsigned int borderpx       = 1;        /* border pixel of windows */
+static const unsigned int snap           = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
-static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
+static const unsigned int systrayonleft  = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
-static const int showsystray        = 1;     /* 0 means no systray */
-static const int showbar            = 1;     /* 0 means no bar */
-static const int topbar             = 1;     /* 0 means bottom bar */
-static const char *fonts[]          = { "Jetbrains Mono Nerd Font:size=12.5" };
-static const char dmenufont[]       = "Jetbrains Mono Nerd Font:size=12.5";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#633ec2";
-static const char *colors[][3]      = {
+static const int showsystray             = 1;     /* 0 means no systray */
+static const int showbar                 = 1;     /* 0 means no bar */
+static const int topbar                  = 1;     /* 0 means bottom bar */
+static const char *fonts[]               = { "Jetbrains Mono Nerd Font:size=12.5" };
+static const char dmenufont[]            = "Jetbrains Mono Nerd Font:size=12.5";
+static const char col_gray1[]            = "#222222";
+static const char col_gray2[]            = "#444444";
+static const char col_gray3[]            = "#bbbbbb";
+static const char col_gray4[]            = "#eeeeee";
+static const char col_cyan[]             = "#633ec2";
+static const char *colors[][3]           = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
 	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
@@ -27,6 +27,8 @@ static const char *colors[][3]      = {
 
 static const Env envs[] = {
 	 /* Variable                         Value */
+	 { "XCURSOR_THEME",                  "Adwaita" },
+	 { "XCURSOR_SIZE",                   "16" },
 	 { "MOZ_DISABLE_GMP_SANDBOX",        "1" }, /* Workaround to play DRM content in my musl setup. */
 	 { "QT_QPA_PLATFORMTHEME",           "qt6ct" },
 	 { "_JAVA_AWT_WM_NONREPARENTING",    "1" },
@@ -36,8 +38,9 @@ static const Env envs[] = {
 };
 
 static const char *const autostart[] = {
-	 "emacs", "--daemon", NULL,
+	 "clipmenud", NULL,
 	 "dunst", NULL,
+	 "emacs", "--daemon", NULL,
 	 "gentoo-pipewire-launcher", "restart", NULL,
 	 "picom", "--daemon", "--log-file", "/tmp/picom.log", NULL,
 	 "setxkbmap", "-layout", "us", "-variant", "intl", NULL,
@@ -59,6 +62,7 @@ static const Rule rules[] = {
     { "Sxiv",                       "sxiv",                    NULL,       0,              1,          1,           -1 },
 	{ "System-config-printer.py",   "system-config-printer",   NULL,       0,              1,          1,           -1 },
 	{ "QBitMPlayer",                "qbitmplayer",             NULL,       0,              1,          1,           -1 },
+	{ "Caja",                       "caja",                    NULL,       0,              1,          1,           -1 },
 	{ "Firefox",                    NULL,                      NULL,       1 << 0,         0,          0,           -1 },
 };
 
@@ -189,15 +193,16 @@ static const Key keys[] = {
     { 0, 0,                         XF86XK_MonBrightnessDown,   spawn,  {.v = dec_brightness } },
     { 0, 0,                         XF86XK_MonBrightnessUp,     spawn,  {.v = inc_brightness } },
 
+	{ 1, MODKEY,                    XK_c,                       spawn,  SHCMD("clipmenu") },
+	{ 1, MODKEY|ShiftMask,          XK_x,                       spawn,  SHCMD("emacsclient -nc || notify-send 'Error' 'Emacs is not running as daemon.'") },
+	{ 1, MODKEY|ShiftMask,          XK_f,                       spawn,  SHCMD("firefox") }, /* Web browser. */
+    { 2, MODKEY|ShiftMask,          XK_f,                       spawn,  SHCMD("firefox --private-window") }, /* Web browser in private mode. */
 	{ 0, 0,                         XF86XK_Sleep,               spawn,  SHCMD("slock") },
 	{ 1, MODKEY|ShiftMask,          XK_l,                       spawn,  SHCMD("slock") },
     { 1, MODKEY,                    XK_s,                       spawn,  SHCMD("spm") },
 	{ 1, MODKEY|ShiftMask,          XK_t,                       spawn,  SHCMD("Telegram") },
 	{ 1, MODKEY,                    XK_q,                       spawn,  SHCMD("qbittorrent") },
 	{ 2, MODKEY,                    XK_q,                       spawn,  SHCMD("qtcreator") },
-	{ 1, MODKEY|ShiftMask,          XK_f,                       spawn,  SHCMD("firefox") }, /* Web browser. */
-    { 2, MODKEY|ShiftMask,          XK_f,                       spawn,  SHCMD("firefox --private-window") }, /* Web browser in private mode. */
-	{ 1, MODKEY|ShiftMask,          XK_x,                       spawn,  SHCMD("emacsclient -nc") },
 	
 	{ 0,           MODKEY|ShiftMask,             XK_e,      quit,           {0} },
 };
