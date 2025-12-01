@@ -34,7 +34,9 @@ static const Env envs[] = {
 	 { "_JAVA_AWT_WM_NONREPARENTING",    "1" },
 	 /* For clipmenu */
 	 { "CM_SELECTIONS",			         "clipboard" },
-	 { "CM_HISTLENGTH",			         "1000" }
+	 { "CM_HISTLENGTH",			         "1000" },
+	 { "CC",                             "clang" },
+	 { "CXX",                            "clang++" }
 };
 
 static const char *const autostart[] = {
@@ -46,6 +48,7 @@ static const char *const autostart[] = {
 	 "setxkbmap", "-layout", "us", "-variant", "intl", NULL,
 	 "slstatus", NULL,
 	 "xwallpaper", "--stretch", "/home/brayan/Wallpapers/wallhaven-zpy8wg_1920x1080.png", NULL,
+	 "blueman-applet", NULL,
 	 NULL /* terminate */
 };
 
@@ -63,6 +66,7 @@ static const Rule rules[] = {
 	{ "System-config-printer.py",   "system-config-printer",   NULL,       0,              1,          1,           -1 },
 	{ "QBitMPlayer",                "qbitmplayer",             NULL,       0,              1,          1,           -1 },
 	{ "Caja",                       "caja",                    NULL,       0,              1,          1,           -1 },
+	{ "Blueman-manager",            "blueman-manager",         NULL,       0,              1,          1,           -1 },
 	{ "Firefox",                    NULL,                      NULL,       1 << 0,         0,          0,           -1 },
 };
 
