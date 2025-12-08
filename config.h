@@ -47,7 +47,7 @@ static const char *const autostart[] = {
 	 "picom", "--daemon", "--log-file", "/tmp/picom.log", NULL,
 	 "setxkbmap", "-layout", "us", "-variant", "intl", NULL,
 	 "slstatus", NULL,
-	 "xwallpaper", "--stretch", "/home/brayan/Wallpapers/wallhaven-zpy8wg_1920x1080.png", NULL,
+	 "xwallpaper", "--stretch", "/home/brayan/Wallpapers/wallhaven-1qqwgg_1920x1080.png", NULL,
 	 "blueman-applet", NULL,
 	 NULL /* terminate */
 };
@@ -217,7 +217,6 @@ static const Button buttons[] = {
 	/* click                event mask      button          function        argument */
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
-	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
 	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
