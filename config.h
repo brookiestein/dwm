@@ -49,6 +49,7 @@ static const char *const autostart[] = {
 	 "slstatus", NULL,
 	 "xwallpaper", "--stretch", "/home/brayan/Wallpapers/wallhaven-1qqwgg_1920x1080.png", NULL,
 	 "blueman-applet", NULL,
+	 "/usr/libexec/polkit-mate-authentication-agent-1", NULL,
 	 NULL /* terminate */
 };
 
@@ -207,7 +208,7 @@ static const Key keys[] = {
 	{ 1, MODKEY|ShiftMask,          XK_t,                       spawn,  SHCMD("Telegram") },
 	{ 1, MODKEY,                    XK_q,                       spawn,  SHCMD("qbittorrent") },
 	{ 2, MODKEY,                    XK_q,                       spawn,  SHCMD("qtcreator") },
-	
+
 	{ 0,           MODKEY|ShiftMask,             XK_e,      quit,           {0} },
 };
 
