@@ -106,6 +106,7 @@ static const Key keys[] = {
 	{ 0,           MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ 0,           MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ 0,           MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ 0,           MODKEY,                       XK_x,      movecenter,     {0} },
 
 	{ 1,           MODKEY,                       XK_w,      setlayout,      {.v = &layouts[0]} },
 	{ 2,           MODKEY,                       XK_w,      setlayout,      {.v = &layouts[1]} },
