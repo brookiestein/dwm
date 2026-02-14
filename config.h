@@ -47,9 +47,7 @@ static const char *const autostart[] = {
 	 "picom", "--daemon", "--log-file", "/tmp/picom.log", NULL,
 	 "setxkbmap", "-layout", "us", "-variant", "intl", NULL,
 	 "slstatus", NULL,
-	 "xwallpaper", "--stretch", "/home/brayan/Wallpapers/hollow-knight.jpg", NULL,
-	 "blueman-applet", NULL,
-	 "/usr/libexec/polkit-mate-authentication-agent-1", NULL,
+	 "xwallpaper", "--stretch", "/home/brayan/Wallpapers/Gentoo.png", NULL,
 	 NULL /* terminate */
 };
 
@@ -66,8 +64,6 @@ static const Rule rules[] = {
     { "Sxiv",                       "sxiv",                    NULL,       0,              1,          1,           -1 },
 	{ "System-config-printer.py",   "system-config-printer",   NULL,       0,              1,          1,           -1 },
 	{ "QBitMPlayer",                "qbitmplayer",             NULL,       0,              1,          1,           -1 },
-	{ "Caja",                       "caja",                    NULL,       0,              1,          1,           -1 },
-	{ "Blueman-manager",            "blueman-manager",         NULL,       0,              1,          1,           -1 },
 	{ "powerprofilesgui",           "powerprofilesgui",        NULL,       0,              1,          1,           -1 },
 	{ "projectstracker",            "projectstracker",         NULL,       0,              1,          1,           -1 },
 
@@ -115,7 +111,7 @@ static const char *dmenucmd[] = {
 	 NULL
 };
 
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { "emacsclient", "-n", "-c", "-e", "(my/vterm-in-current-frame)", NULL };
 
 static const char *dec_brightness[] = { "xbacklight", "-dec", "10", NULL };
 static const char *inc_brightness[] = { "xbacklight", "-inc", "10", NULL };
@@ -241,4 +237,3 @@ static const Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-
